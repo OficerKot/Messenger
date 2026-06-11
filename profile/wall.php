@@ -1,3 +1,6 @@
+<?php session_start();
+$login = $_SESSION['login'];
+?>
 <!DOCTYPE html>
 <html>
 
@@ -29,24 +32,19 @@
 
 		<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 		<div class="header-right">
+			<?php if (isset($_SESSION['login'])):?>
+			<a href="logout.php" style="text-decoration: none;">Выход</a>
 			<div class="avatar">А</div>
+			<?php else:?>
+			<div>Вы вошли как гость</div>
+			<?php endif;?>
 		</div>
 	</div>
 
 	<!-- КОНТЕЙНЕР С ТРЕМЯ КОЛОНКАМИ -->
 	<div class="columns-container">
 		<!-- Левая колонка (меню) -->
-		<div class="left-panel">
-			<h2>Меню</h2>
-			<ul>
-				<li>Профиль</li>
-				<li>Лента</li>
-				<li>Чат</li>
-				<li>Звонки</li>
-				<li>Друзья</li>
-				<li>Настройки</li>
-			</ul>
-		</div>
+		<?php include "menuLeft.php";?>
 
 		<!-- Центральная колонка (контент) -->
 		<div class="center-panel">
@@ -133,33 +131,10 @@
 		</div>
 
 		<!-- Правая колонка -->
-		<div class="right">
-			<div class="right-panel">
-				<h2>События</h2>
-				<div class="event-item">
-					<div class="event-title">Новость</div>
-					<div class="event-desc">Начало новости</div>
-					<a href="#" class="event-link">Подробнее →</a>
-				</div>
-				<div class="event-item">
-					<div class="event-title">Новый пост</div>
-					<div class="event-desc">Обновления в ленте</div>
-					<a href="#" class="event-link">Посмотреть →</a>
-				</div>
-			</div>
-
-			<div class="right-panel">
-				<h2>Интересно</h2>
-				<p>Новости и рекомендации</p>
-				<div class="event-item">
-					<div class="event-title">Реклама</div>
-					<div class="event-desc">Текст рекламы</div>
-				</div>
-			</div>
-		</div>
+		<?php include "menuRight.php";?>
 	</div>
 
-	<script src="js/script.js" defer></script>
+	<script src="../assets/js/script.js" defer></script>
 </body>
 
 </html>

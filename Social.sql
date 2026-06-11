@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 02 2026 г., 13:35
+-- Время создания: Июн 11 2026 г., 09:24
 -- Версия сервера: 5.6.51
 -- Версия PHP: 7.2.34
 
@@ -137,12 +137,22 @@ CREATE TABLE `post_images` (
 CREATE TABLE `users` (
   `user_id` int(255) NOT NULL,
   `login` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_private` tinyint(1) NOT NULL,
+  `birthday_date` date NOT NULL,
   `creation_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, `role`, `is_private`, `birthday_date`, `creation_date`) VALUES
+(1, 'hacker001', 'Hacker', 'Hackerovich', '$2y$10$47tInV7bU59Ak.m9dIGee.7cIl.GmNMMWnt/HdgZEch7mscLI1mmq', '0', 0, '2020-06-19', '2026-06-11'),
+(2, 'admin', 'Admin', 'Administrator', '$2y$10$il.YtAUf6k8yXplXrQqsDuphCw4IVkAVxHKtJZsBmoJx6tE7m1xQO', '1', 0, '2006-08-02', '2026-06-11');
 
 --
 -- Индексы сохранённых таблиц
@@ -253,7 +263,7 @@ ALTER TABLE `post_comments`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,3 +1,9 @@
+<?php
+$activeTab = isset($_GET['tab'])? $_GET['tab'] : null;
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,15 +24,18 @@
 				</button>
 
 				<button id="btn-reg" class="auth-button" onclick="show_reg()">
-					Зарегистрироваться</button>
+					Зарегистрироваться
+				</button>
 			</div>
 
 			<a href="profile/wall.php">Продолжить как гость</a>
+
+			<div id="authStatus"></div>
 		</div>
 	</div>
 
 	<div id="login-window" class="login-window" style="visibility: hidden;">
-		<form action="" method="post">
+		<form action="" method="post" id="loginForm">
 			<div style="display: flex; flex-direction: column;">
 				<label for="login">Логин</label>
 				<input type="text" name="login">
@@ -40,18 +49,18 @@
 	</div>
 
 	<div id="register-window" style="visibility: hidden">
-		<form action="" method="post">
+		<form action="" method="post" id="registForm">
 			<div style="display: flex; flex-direction: column;">
 				<label for="login">Логин</label>
 				<input type="text" name="login" id="login">
 				<label for="password">Пароль</label>
 				<input type="password" name="password" id="password">
-				<label for="first-name">Имя</label>
-				<input type="text" name="first-name" id="first-name">
-				<label for="last-name">Фамилия</label>
-				<input type="text" name="last-name" id="last-name">
-				<label for="b-date">Дата рождения</label>
-				<input type="date" name="b-date" id="b-date">
+				<label for="first_name">Имя</label>
+				<input type="text" name="first_name" id="first_name">
+				<label for="last_name">Фамилия</label>
+				<input type="text" name="last_name" id="last_name">
+				<label for="birthday_date">Дата рождения</label>
+				<input type="date" name="birthday_date" id="birthday_date">
 			</div>
 
 			<button type="submit">Регистрация</button>
@@ -62,5 +71,15 @@
 </body>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/login.js"></script>
+<script src="assets/js/regist.js"></script>
+
+<script>
+<?php if ($activeTab == 'register'): ?>
+show_reg();
+<?php elseif ($activeTab == 'login'): ?>
+show_auth();
+<?php endif; ?>
+</script>
 
 </html>
