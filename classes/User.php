@@ -1,7 +1,7 @@
 <?php
 
 class UserField {
-    // Константы вместо enum
+
     public const AVATAR = 'avatar';
     public const FIRST_NAME = 'first_name';
     public const LAST_NAME = 'last_name';
@@ -13,6 +13,7 @@ class UserField {
 }
 
 class User {
+	
     private $data = [];
     private $id;
     private $editable = [
@@ -30,16 +31,13 @@ class User {
         $this->data = $result->fetch_assoc();
     }
     
-    // Константы - это строки, передаем просто string
     public function get($field) {
-        // $field уже строка, не нужно .value
         return $this->data[$field] ?? '';
     }
     
     public function getEditableFields() {
         $fields = [];
         foreach ($this->editable as $field) {
-            // $field - это строка (например 'first_name')
             $fields[$field] = $this->get($field);
         }
         return $fields;
@@ -48,7 +46,6 @@ class User {
     public function update($data, $conn) {
         $updates = [];
         foreach ($this->editable as $field) {
-            // $field уже строка, не нужно .value
             if (isset($data[$field])) {
                 $safeValue = $conn->real_escape_string($data[$field]);
                 $updates[] = "$field = '$safeValue'";

@@ -30,7 +30,7 @@ $editableFields = $user->getEditableFields();
 		<?php include '../includes/menuLeft.php'; ?>
 		<div class="center-panel">
 			Настройки пользователя <?php echo $user->get(UserField::LOGIN); ?>
-			<form method="POST" action="save_settings.php" enctype="multipart/form-data">
+			<form id="settingsForm" method="POST" enctype="multipart/form-data">
 				<div>
 					<label>Имя:</label>
 					<input type="text" name="first_name" value="<?php echo $user->get(UserField::FIRST_NAME); ?>">
@@ -47,18 +47,28 @@ $editableFields = $user->getEditableFields();
 				</div>
 
 				<div>
+					<label>Закрыть профиль:</label>
+					<input type="checkbox" name="is_private" value="1"
+						<?php echo $user->get(UserField::PRIVATE) == 1 ? 'checked' : ''; ?>>
+					<small>(Только друзья увидят ваши записи)</small>
+				</div>
+
+				<div>
 					<label>Аватар:</label>
 					<input type="file" name="avatar">
-					<?php if($user->get(UserField::AVATAR)): ?>
-					<img src="../assets/uploads/<?php echo $user->get(UserField::AVATAR); ?>" width="50">
-					<?php endif; ?>
+					<img src="../assets/uploads/<?php echo $user->get(UserField::AVATAR); ?>" width="200">
 				</div>
+
 
 				<button type="submit">Сохранить</button>
 			</form>
+
+			<div id="savingStatus"></div>
 		</div>
 		<?php 	include '../includes/menuRight.php'; ?>
 	</div>
+
+	<script src="../assets/js/saveSettings.js"></script>
 </body>
 
 </html>
