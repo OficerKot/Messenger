@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 11 2026 г., 09:24
+-- Время создания: Июн 12 2026 г., 05:54
 -- Версия сервера: 5.6.51
--- Версия PHP: 7.2.34
+-- Версия PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -143,16 +143,20 @@ CREATE TABLE `users` (
   `role` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_private` tinyint(1) NOT NULL,
   `birthday_date` date NOT NULL,
-  `creation_date` date NOT NULL
+  `creation_date` date NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, `role`, `is_private`, `birthday_date`, `creation_date`) VALUES
-(1, 'hacker001', 'Hacker', 'Hackerovich', '$2y$10$47tInV7bU59Ak.m9dIGee.7cIl.GmNMMWnt/HdgZEch7mscLI1mmq', '0', 0, '2020-06-19', '2026-06-11'),
-(2, 'admin', 'Admin', 'Administrator', '$2y$10$il.YtAUf6k8yXplXrQqsDuphCw4IVkAVxHKtJZsBmoJx6tE7m1xQO', '1', 0, '2006-08-02', '2026-06-11');
+INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, `role`, `is_private`, `birthday_date`, `creation_date`, `avatar`) VALUES
+(1, 'hacker001', 'Hacker', 'Hackerovich', '$2y$10$47tInV7bU59Ak.m9dIGee.7cIl.GmNMMWnt/HdgZEch7mscLI1mmq', '0', 0, '2020-06-19', '2026-06-11', 'baseimage.jpg'),
+(2, 'admin', 'Admin', 'Administrator', '$2y$10$il.YtAUf6k8yXplXrQqsDuphCw4IVkAVxHKtJZsBmoJx6tE7m1xQO', '1', 0, '2006-08-02', '2026-06-11', 'baseimage.jpg'),
+(3, 'd', 'd', 'd', '$2y$10$p51tWb7DXxHvY4ztHrgvSOojh3trLMzT9puow2ZQN5oLqyM6XUs2u', '0', 0, '2432-03-31', '2026-06-12', 'baseimage.jpg'),
+(4, 'ds', 'd', 'd', '$2y$10$HNe1k08dfA5Gm0sAEKyPW.MICudA.7iqEWU8FG4ccMRlkl2NCMmva', '0', 0, '2432-03-31', '2026-06-12', 'baseimage.jpg'),
+(6, 'логин', 'имя', 'фамилия', '$2y$10$4oSWq9AVamP2Jwj3W.lZZOq/rMbjHuahmxHDWlJSHj42seudVe6Lu', '0', 0, '0001-01-01', '2026-06-12', 'baseimage.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -263,7 +267,7 @@ ALTER TABLE `post_comments`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

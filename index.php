@@ -28,7 +28,7 @@ $activeTab = isset($_GET['tab'])? $_GET['tab'] : null;
 				</button>
 			</div>
 
-			<a href="profile/wall.php">Продолжить как гость</a>
+			<a href="profile/globalWall.php">Продолжить как гость</a>
 
 			<div id="authStatus"></div>
 		</div>

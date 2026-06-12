@@ -1,18 +1,21 @@
 <?php 
 session_start();
-$login = $_SESSION['login'];
 ?>
 
 <div class="left-panel">
 	<h2>Меню</h2>
 	<ul>
-		<?php if(isset($_SESSION['login'])):?>
-		<li>Профиль</li>
-		<li>Лента</li>
+		<?php if(isset($_SESSION['id'])):
+			$id = $_SESSION['id'];
+			$user = new User($id, $conn);?>
+		<li> <a href="../profile/userWall.php?user=<?php echo $user->get(UserField::LOGIN); ?>"
+				style="text-decoration: none;">Профиль</a>
+		</li>
+		<li><a href="../profile/globalWall.php" style="text-decoration: none;">Лента</a></li>
 		<li>Чат</li>
 		<li>Звонки</li>
 		<li>Друзья</li>
-		<li>Настройки</li>
+		<li><a href="../profile/settings.php" style="text-decoration: none;">Настройки</a></li>
 		<?php else: ?>
 
 

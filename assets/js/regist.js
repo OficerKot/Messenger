@@ -16,8 +16,8 @@ document
 
       if (!result.includes("Ошибка")) {
         setTimeout(() => {
-          window.location.href = "../profile/wall.php";
-        }, 1500);
+          window.location.href = "../../profile/globalWall.php";
+        }, 500);
       }
     } catch (error) {
       document.getElementById("authStatus").innerHTML =

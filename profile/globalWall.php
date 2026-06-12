@@ -1,5 +1,6 @@
 <?php session_start();
-$login = $_SESSION['login'];
+include '../includes/connectDB.php';
+include '../classes/User.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,35 +17,12 @@ $login = $_SESSION['login'];
 	<div class="menu-btn" id="menuBtn">&#9776;</div>
 
 	<!-- ВЕРХНИЙ БЛОК С ПОИСКОМ -->
-	<div class="header-fullwidth">
-		<h1>Название</h1>
-
-		<!-- ПОИСКОВАЯ СТРОКА -->
-		<div class="search-container">
-			<div class="search-box">
-				<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<circle cx="10.5" cy="10.5" r="6.5" />
-					<line x1="21" y1="21" x2="15" y2="15" />
-				</svg>
-				<input type="text" class="search-input" placeholder="Поиск">
-			</div>
-		</div>
-
-		<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
-		<div class="header-right">
-			<?php if (isset($_SESSION['login'])):?>
-			<a href="logout.php" style="text-decoration: none;">Выход</a>
-			<div class="avatar">А</div>
-			<?php else:?>
-			<div>Вы вошли как гость</div>
-			<?php endif;?>
-		</div>
-	</div>
+	<?php include "../includes/header.php";?>
 
 	<!-- КОНТЕЙНЕР С ТРЕМЯ КОЛОНКАМИ -->
 	<div class="columns-container">
 		<!-- Левая колонка (меню) -->
-		<?php include "menuLeft.php";?>
+		<?php include "../includes/menuLeft.php";?>
 
 		<!-- Центральная колонка (контент) -->
 		<div class="center-panel">
@@ -115,23 +93,23 @@ $login = $_SESSION['login'];
 
 				<div class="post">
 					<div class="post-header">
-						<div class="post-avatar">М</div>
-						<div class="post-author">Мария Савченко</div>
+						<div class="post-avatar">А</div>
+						<div class="post-author">Алина Гдалёва</div>
 						<div class="post-time">Вчера</div>
 					</div>
 					<div class="post-content">
-						Фотография
+						Хочу спать
 					</div>
 					<div class="post-actions">
-						<div class="post-action">❤️ 128</div>
-						<div class="post-action">💬 34</div>
+						<div class="post-action">❤️ 1933</div>
+						<div class="post-action">💬 340</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- Правая колонка -->
-		<?php include "menuRight.php";?>
+		<?php include "../includes/menuRight.php";?>
 	</div>
 
 	<script src="../assets/js/script.js" defer></script>

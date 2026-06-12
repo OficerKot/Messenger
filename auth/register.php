@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../includes/connectDB.php";
+include "../classes/User.php";
 $login = $_POST['login'];
 $password = $_POST['password'];
 $first_name = $_POST['first_name'];
@@ -16,12 +17,18 @@ else{
 	$hashpass = password_hash($password, PASSWORD_BCRYPT);
 	$creation_date = date('Y-m-d');
 	$role = 0; // чтобы сделать кого то админом, редактируем через phpMyAdmin
-	$sql = "INSERT INTO users (login, password, first_name, last_name, birthday_date, creation_date, role) 
-	VALUES ('$login', '$hashpass', '$first_name', '$last_name', '$birthday_date', '$creation_date', '$role')";
+	$avatar = 'baseimage.jpg';
+	$sql = "INSERT INTO users (login, password, first_name, last_name, birthday_date, creation_date, role, avatar) 
+	VALUES ('$login', '$hashpass', '$first_name', '$last_name', '$birthday_date', '$creation_date', '$role', '$avatar')";
 	
 	$conn->query($sql);
+
+	$user_id = $conn->insert_id; 
+	$_SESSION['id'] = $user_id;
+
 	$conn->close();
-	
+
+ 
 	echo("Пользователь $login успешно зарегистрирован");
 }
 ?>

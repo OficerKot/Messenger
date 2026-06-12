@@ -16,7 +16,7 @@ else{
 $hasphass = $row['password'];
 
 if(password_verify($password, $hasphass)){
-	$_SESSION['login'] = $login;
+	$_SESSION['id'] = $row['user_id'];
 	echo("Успешная авторизация.");
 }
 else{
