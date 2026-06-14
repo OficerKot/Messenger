@@ -8,14 +8,45 @@ session_start();
 		<?php if(isset($_SESSION['id'])):
 			$id = $_SESSION['id'];
 			$user = new User($id, $conn);?>
-		<li> <a href="../profile/userWall.php?user=<?php echo $user->get(UserField::LOGIN); ?>"
-				style="text-decoration: none;">Профиль</a>
+		<li>
+			<a
+				href="../profile/userWall.php?user=<?php echo $user->get(UserField::LOGIN); ?>"
+				>
+				Профиль
+			</a>
 		</li>
-		<li><a href="../profile/globalWall.php" style="text-decoration: none;">Лента</a></li>
+		<li>
+			<a 
+				href="../profile/globalWall.php"
+				style="
+				text-decoration: none;
+				display: block;
+				">
+				Лента
+			</a>
+		</li>
 		<li>Чат</li>
 		<li>Звонки</li>
-		<li>Друзья</li>
-		<li><a href="../profile/settings.php" style="text-decoration: none;">Настройки</a></li>
+		<li>
+			<a 
+				href="../friends/friends.php"
+				style="
+				text-decoration: none;
+				display: block;
+				">
+				Друзья
+			</a>
+		</li>
+		<li>
+			<a 
+				href="../profile/settings.php"
+				style="
+				text-decoration: none;
+				display: block;
+				">
+				Настройки
+			</a>
+		</li>
 		<?php else: ?>
 
 
@@ -29,7 +60,9 @@ session_start();
 		</div>
 
 
-		<li>Лента</li>
+		<li>
+			Лента
+		</li>
 		<?php endif;?>
 	</ul>
 </div>

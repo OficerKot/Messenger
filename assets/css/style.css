@@ -173,23 +173,30 @@ h1 {
 }
 
 .left-panel li {
-    padding: 10px 16px;
-    margin: 2px 8px;
+    padding: 0;
+    margin: 0;
     background-color: transparent;
-    border-radius: 8px;
-    cursor: pointer;
     font-size: 14px;
     font-weight: 500;
     color: #2c3e50;
+}
+.left-panel li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #2c3e50;
+    padding: 10px 16px;
+    margin: 2px 8px;
+    border-radius: 8px;
     transition: all 0.1s;
+    min-height: 20px;
 }
 
-.left-panel li:hover {
+.left-panel li a:hover {
     background-color: #edeef0;
 }
 
-/* АКТИВНЫЙ ПУНКТ МЕНЮ */
-.left-panel li.active {
+.left-panel li a.active {
     background-color: #e7e8ec;
     color: #2c3e50;
 }
@@ -432,6 +439,77 @@ h1 {
     transform: scale(1.05); 
     background-color: #edeef0; 
 }
+
+/* СТРАНИЦА ДРУЗЕЙ */
+.top-block {
+    padding: 16px 20px 8px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e7e8ec;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.top-block h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.users-list {
+    padding: 0;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e7e8ec;
+    transition: background 0.1s;
+}
+
+.user-card:hover {
+    background-color: #fafbfc;
+}
+
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #5c9ce6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-first_name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #2c3e50;
+}
+
+.user-last_name {
+    font-size: 13px;
+    color: #818c99;
+    margin-top: 2px;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #818c99;
+}
+
 
 /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
 @media (max-width: 768px) {
