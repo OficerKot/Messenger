@@ -9,16 +9,12 @@ session_start();
 			$id = $_SESSION['id'];
 			$user = new User($id, $conn);?>
 		<li>
-			<a
-				href="../profile/userWall.php?user=<?php echo $user->get(UserField::LOGIN); ?>"
-				>
+			<a href="../profile/userWall.php?user_id=<?php echo $user->get(UserField::ID); ?>">
 				Профиль
 			</a>
 		</li>
 		<li>
-			<a 
-				href="../profile/globalWall.php"
-				style="
+			<a href="../profile/globalWall.php" style="
 				text-decoration: none;
 				display: block;
 				">
@@ -28,9 +24,7 @@ session_start();
 		<li>Чат</li>
 		<li>Звонки</li>
 		<li>
-			<a 
-				href="../friends/friends.php"
-				style="
+			<a href="../friends/friends.php" style="
 				text-decoration: none;
 				display: block;
 				">
@@ -38,9 +32,7 @@ session_start();
 			</a>
 		</li>
 		<li>
-			<a 
-				href="../profile/settings.php"
-				style="
+			<a href="../profile/settings.php" style="
 				text-decoration: none;
 				display: block;
 				">
