@@ -1,7 +1,8 @@
 <?php 
 session_start();
+/** @var mysqli $conn */
 ?>
-
+<link rel="stylesheet" href="../assets/css/menuLeft.css">
 <div class="left-panel">
 	<h2>Меню</h2>
 	<ul>
