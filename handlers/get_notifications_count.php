@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-include '../includes/connectDB.php';
+include '../includes/init.php';  // ← используем init.php
 include '../classes/NotificationManager.php';
 
 if (!isset($_SESSION['id'])) {
@@ -9,6 +9,6 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-$notificationManager = new NotificationManager($conn, $_SESSION['id']);
+$notificationManager = new NotificationManager($db, $_SESSION['id']);
 echo json_encode(['count' => $notificationManager->getUnreadCount()]);
 ?>

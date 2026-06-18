@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-include '../includes/connectDB.php';
+include '../includes/init.php';  // ← используем init.php
 include '../classes/NotificationManager.php';
 
 if (!isset($_SESSION['id'])) {
@@ -9,10 +9,10 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-$notificationManager = new NotificationManager($conn, $_SESSION['id']);
+$notificationManager = new NotificationManager($db, $_SESSION['id']);
 
 if (isset($_POST['all'])) {
-    $success = $notificationManager->markAsRead();
+    $success = $notificationManager->markAllAsRead();
 } elseif (isset($_POST['ids'])) {
     $ids = json_decode($_POST['ids'], true);
     $success = $notificationManager->markAsRead($ids);
@@ -21,5 +21,5 @@ if (isset($_POST['all'])) {
     exit();
 }
 
-echo json_encode(['success' => $success]);
+echo json_encode(['success' => $success !== false]);
 ?>
