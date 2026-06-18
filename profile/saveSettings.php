@@ -1,13 +1,13 @@
 <?php 
 session_start();
-include "../includes/connectDB.php";
-include "../classes/User.php";
+include "../includes/init.php";
+
 $first_name = $_POST['first_name'] ?? '';
 $last_name = $_POST['last_name'] ?? '';
 $birthday_date = $_POST['birthday_date'] ?? '';
 $is_private = isset($_POST['is_private']) ? 1 : 0;
 
-$user = new User($_SESSION['id'], $conn);
+$user = User::getUserById($_SESSION['id'], $db);
 $data = [
     UserField::FIRST_NAME => $first_name,
     UserField::LAST_NAME => $last_name,
@@ -30,7 +30,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 0) {
     }
 }
 
-if($user->update($data, $conn))
+if($user->update($data))
 	echo("Настройки успешно сохранены");
 else
 	echo("Ошибка");

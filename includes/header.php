@@ -15,29 +15,28 @@
 	<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 	<div class="header-right">
 		<?php
-		// session_start() уже должен быть в начале каждой страницы, 
-		// но если нет - раскомментируйте:
-		// session_start();
+		require_once __DIR__ . '/../classes/Database.php';
 		
 		if (isset($_SESSION['id'])):
 		?>
-			<!-- ВЫХОД -->
-			<a href="../auth/logout.php" style="text-decoration: none; color: #2c3e50; font-size: 14px;">Выход</a>
+		<!-- ВЫХОД -->
+		<a href="../auth/logout.php" style="text-decoration: none; color: #2c3e50; font-size: 14px;">Выход</a>
 
-			<!-- УВЕДОМЛЕНИЯ -->
-			<?php include '../includes/notificationBell.php'; ?>
+		<!-- УВЕДОМЛЕНИЯ -->
+		<?php include '../includes/notificationBell.php'; ?>
 
-			<!-- АВАТАРКА -->
-			<div class="avatar">
-				<?php 
-				$user = new User($_SESSION['id'], $conn);
+		<!-- АВАТАРКА -->
+		<div class="avatar">
+			<?php 
+				$db = new Database();
+				$user = User::getUserById($_SESSION['id'], $db);
 				$image_name = $user->get(UserField::AVATAR);
 				?>
-				<img src="../assets/uploads/<?php echo ($image_name);?>"
-					style="width: 32px; height: 32px; border-radius: 100%;">
-			</div>
+			<img src="../assets/uploads/<?php echo ($image_name);?>"
+				style="width: 32px; height: 32px; border-radius: 100%;">
+		</div>
 		<?php else:?>
-			<div>Вы вошли как гость</div>
+		<div>Вы вошли как гость</div>
 		<?php endif;?>
 	</div>
 </div>

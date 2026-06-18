@@ -1,9 +1,8 @@
 <?php
-session_start();
 header('Content-Type: application/json');
 
 require_once '../classes/Post.php';
-require_once '../includes/connectDB.php';
+require_once '../includes/init.php';
 
 
 if (!isset($_SESSION['id'])) {
@@ -28,7 +27,7 @@ $post = new Post();
 $result = $post->createPost($author_id, $wall_owner_id, $message, $image_path);
 
 if ($result) {
-	$user = new User($author_id, $conn);
+	$user = User::getUserById($author_id, $db);
 
     echo json_encode([
         'success' => true,

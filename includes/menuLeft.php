@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include "init.php";
 ?>
 
 <div class="left-panel">
@@ -7,7 +7,7 @@ session_start();
 	<ul>
 		<?php if(isset($_SESSION['id'])):
 			$id = $_SESSION['id'];
-			$user = new User($id, $conn);?>
+			$user = User::getUserById($id, $db)?>
 		<li>
 			<a href="../profile/userWall.php?user_id=<?php echo $user->get(UserField::ID); ?>">
 				Профиль

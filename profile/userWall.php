@@ -1,10 +1,7 @@
 <?php 
-session_start();
-include '../includes/connectDB.php';
-include '../classes/User.php';
+include "../includes/init.php";
 
-
-$wall_owner = new User($_GET['user_id'], $conn);
+$wall_owner = User::getUserById($_GET['user_id'], $db);
 $editableFields = $wall_owner->getEditableFields();
 $profile_img = $wall_owner->get(UserField::AVATAR);?>
 
@@ -27,9 +24,10 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 	<div class="columns-container">
 
 		<?php include '../includes/menuLeft.php'; ?>
-		<div class="center-panel">
-			<div class="center-panel1">
 
+		<div class="center-panel">
+			<?php if($wall_owner != null){?>
+			<div class="center-panel1">
 				<!-- Верхняя часть страницы-->
 				<div class="userInfoContainer">
 					<div style="display: flex; flex-direction: column;">
@@ -40,7 +38,8 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 
 						<div class="userLogin"> @<?php echo $wall_owner->get(UserField::LOGIN); ?></div>
 						<div class="otherInfo">
-							<?php include("countAge.php");?>
+							День рождения <?php echo $wall_owner->getFormattedBirthday();?>
+							(<?php echo $wall_owner->getAge();?> лет)
 
 						</div>
 					</div>
@@ -65,8 +64,12 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 					<script src="../assets/js/PostView.js"></script>
 					<script type="module" src="../assets/js/userWall.js"></script>
 				</div>
-
 			</div>
+			<?php } else {?>
+			<div class="pageNotFound">
+				Как вы тут оказались?
+			</div>
+			<?php } ?>
 		</div>
 		<?php 	include '../includes/menuRight.php'; ?>
 	</div>
