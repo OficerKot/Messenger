@@ -40,3 +40,4 @@
 		<?php endif;?>
 	</div>
 </div>
+<script src="../assets/js/notifications.js" defer></script>
