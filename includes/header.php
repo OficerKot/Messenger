@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="assets/css/header.css">
+
 <div class="header-fullwidth">
 	<h1>Название</h1>
 
@@ -17,6 +19,7 @@
 		<?php
 		
 		session_start();
+		/** @var mysqli $conn */
 		if (isset($_SESSION['id'])):?>
 		<a href="../auth/logout.php" style="text-decoration: none;">Выход</a>
 

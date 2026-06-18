@@ -15,7 +15,7 @@ $editableFields = $user->getEditableFields();
 
 <!DOCTYPE html>
 <html lang="en">
-
+<link rel="stylesheet" href="../assets/css/profile.css">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

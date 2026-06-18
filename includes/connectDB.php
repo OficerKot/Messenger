@@ -1,4 +1,5 @@
 <?php
+	/*$servername = "localhost";*/
 	$servername = "messenger";
 	$username = "root";
 	$password = "";
