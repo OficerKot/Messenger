@@ -1,6 +1,5 @@
 <?php 
-require_once 'DataBase.php'; 
-require_once 'User.php'; 
+include "../includes/init.php";
 
 class PostField {
 
@@ -15,8 +14,8 @@ class PostField {
 class Post{
 	 private $db;  
     
-    public function __construct() {
-        $this->db = new Database();
+    public function __construct(Database $db) {
+        $this->db = $db;
     }
 public function getUserPosts($wall_owner_id){
     $sql = "SELECT 
@@ -50,7 +49,7 @@ public function getPostInfo($postId){
                 p.*,
                 u." . UserField::FIRST_NAME . " as author_first_name,
                 u." . UserField::LAST_NAME . " as author_last_name,
-				u." . UserField::AVATAR . " as author_avatar,
+				u." . UserField::AVATAR . " as author_avatar
             FROM posts p
             JOIN users u ON p." . PostField::AUTHOR_ID . " = u." . UserField::ID . "
             WHERE p." . PostField::POST_ID . " = ?";
@@ -58,24 +57,26 @@ public function getPostInfo($postId){
     $resArr = $this->db->fetchOne($sql, [$postId]);
     return $resArr;
 }
+public function createPost($autor_id, $wall_owner_id, $message, $image_path)
+{
+    $data = [
+        PostField::AUTHOR_ID => $autor_id,
+        PostField::OWNER_ID => $wall_owner_id,
+        PostField::MSG => $message,
+        PostField::IMG => $image_path,
+        PostField::DATE => date('Y-m-d H:i:s')
+    ];
+    
+    return $this->db->insert('posts', $data);
+}
 
-	public function createPost($autor_id, $wall_owner_id, $message, $image_path)
-	{
-		 $sql = "INSERT INTO posts (
-                    " . PostField::POST_ID . ",
-                    " . PostField::AUTHOR_ID . ",
-                    " . PostField::OWNER_ID . ",
-                    " . PostField::MSG . ",
-                    " . PostField::IMG . ",
-                    " . PostField::DATE . "
-                ) VALUES (
-                    NULL, ?, ?, ?, ?, NOW()
-                )";
+public function updatePost($post_id, $message="", $image_path=null){
+	$new_data = [
+        PostField::MSG => $message,
+        PostField::IMG => $image_path,
+    ];
+	return $this->db->update('posts', $new_data, 'post_id = ?', [$post_id]);
+}
 
-		$params = [$autor_id, $wall_owner_id, $message, $image_path];
-        
-        return $this->db->query1($sql, $params);
-	}
-	
 }
 ?>

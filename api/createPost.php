@@ -23,7 +23,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 }
 
 
-$post = new Post();
+$post = new Post($db);
 $result = $post->createPost($author_id, $wall_owner_id, $message, $image_path);
 
 if ($result) {
@@ -32,11 +32,16 @@ if ($result) {
     echo json_encode([
         'success' => true,
         'post' => [
+			'post_id' => $result,
             'message' => $message,
             'image_path' => $image_path,
             'author_first_name' => $user->get(UserField::FIRST_NAME),
             'author_last_name' => $user->get(UserField::LAST_NAME),
 			'author_avatar' => $user->get(UserField::AVATAR),
+			'autor_id' => $author_id,     
+            'wall_owner_id' => $wall_owner_id,
+            'can_edit' => true,           
+            'can_delete' => true, 
             'date' => date('Y-m-d H:i:s')
         ]
     ]);

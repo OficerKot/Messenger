@@ -1,4 +1,13 @@
-const postView = new PostView();
+window.postView = new PostView();
+
+// события View
+postView.on("delete", (postId) => {
+  onDeletePost(postId);
+});
+
+postView.on("edit", (postId) => {
+  postView.showPostEditForm(postId, savePostEdit);
+});
 
 // Функция для получения GET параметров из URL
 function getUrlParam(name) {
@@ -21,6 +30,58 @@ async function loadPosts(wall_owner_id) {
     console.error("Ошибка загрузки:", error);
     document.getElementById("postsContainer").innerHTML =
       '<div class="error">Не удалось загрузить посты</div>';
+  }
+}
+
+async function onDeletePost(postId) {
+  try {
+    const response = await fetch("../../api/deletePost.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `post_id=${postId}`,
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      postView.removePost(postId);
+    } else {
+      alert("Ошибка: " + result.error);
+    }
+  } catch (error) {
+    console.error("Ошибка удаления:", error);
+    alert("Не удалось удалить пост");
+  }
+}
+
+async function savePostEdit(postId, message, imagePath) {
+  const formData = new FormData();
+  formData.append("post_id", postId);
+  formData.append("message", message);
+  if (imagePath) {
+    formData.append("image", imagePath);
+  }
+
+  try {
+    const response = await fetch("../../api/updatePost.php", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      postView.updatePost(postId, result.post.message, result.post.image_path);
+      return true;
+    } else {
+      alert("Ошибка: " + result.error);
+      return false;
+    }
+  } catch (error) {
+    console.error("Ошибка:", error);
+    return false;
   }
 }
 

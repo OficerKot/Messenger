@@ -334,6 +334,12 @@ h1 {
 	color: #5c9ce6;
 }
 
+.post-menu {
+	width: 140px;
+	background-color: white;
+	outline: solid black 1px;
+}
+
 /* ПРАВАЯ КОЛОНКА - БЛОКИ КАК В VK */
 .right {
 	width: 280px;
