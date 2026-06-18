@@ -40,7 +40,8 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 
 						<div class="userLogin"> @<?php echo $wall_owner->get(UserField::LOGIN); ?></div>
 						<div class="otherInfo">
-							<?php include("countAge.php");?>
+							День рождения <?php echo $wall_owner->getFormattedBirthday();?>
+							(<?php echo $wall_owner->getAge();?> лет)
 
 						</div>
 					</div>

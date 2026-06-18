@@ -21,7 +21,7 @@ class Database {
     }
     
     // Все записи
-    public function fetchAll($sql, $params = []) {
+    public function fetchAll($sql, $params = []){
         return $this->query1($sql, $params)->fetchAll();
     }
     

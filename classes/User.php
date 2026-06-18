@@ -15,6 +15,7 @@ class UserField {
 class User {
 	
     private $data = [];
+	private $db;
     private $id;
     private $editable = [
         UserField::FIRST_NAME, 
@@ -24,12 +25,20 @@ class User {
         UserField::PRIVATE
     ];
     
-    public function __construct($user_id, $conn) {
-        $sql = "SELECT * FROM users WHERE user_id = $user_id";
-        $result = $conn->query($sql);
+    public function __construct(int $user_id, array $data, Database $db) {
         $this->id = $user_id;
-        $this->data = $result->fetch_assoc();
+		$this->db = $db;
+        $this->data = $data;
     }
+
+	public static function getUserById($id, Database $db){
+		$sql = "SELECT * FROM users WHERE user_id = $id";
+		$data = $db->fetchOne($sql);
+		if($data==null){
+			return null;
+		} 
+		return new self($id, $data, $db);
+	}
     
     public function get($field) {
         return $this->data[$field] ?? '';
@@ -58,6 +67,18 @@ class User {
         }
         return true; 
     }
+
+	public function getAge(){
+		$curDate = new DateTime();
+		$birthday_date = new DateTime($this->get(UserField::BIRTHDAY));
+		$age = $curDate->diff($birthday_date);
+		return $age->y;
+	}
+
+	public function getFormattedBirthday(){
+		$birthday_date = new DateTime($this->get(UserField::BIRTHDAY));
+		return $birthday_date->format('d.m.Y');
+	}
 
     // РАБОТА С ФУНКЦИЕЙ ДОБАВЛЕНИЯ В ДРУЗЬЯ //
 
