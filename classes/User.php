@@ -1,4 +1,5 @@
 <?php
+include "../includes/init.php";
 
 class UserField {
 
@@ -32,8 +33,8 @@ class User {
     }
 
 	public static function getUserById($id, Database $db){
-		$sql = "SELECT * FROM users WHERE user_id = $id";
-		$data = $db->fetchOne($sql);
+		$sql = "SELECT * FROM users WHERE user_id = ?";
+		$data = $db->fetchOne($sql, [$id]);
 		if($data==null){
 			return null;
 		} 
@@ -52,18 +53,16 @@ class User {
         return $fields;
     }
     
-    public function update($data, $conn) {
-        $updates = [];
+    public function update($data) {
+        $updateData = [];
         foreach ($this->editable as $field) {
             if (isset($data[$field])) {
-                $safeValue = $conn->real_escape_string($data[$field]);
-                $updates[] = "$field = '$safeValue'";
+                $updateData[$field] = $data[$field];
             }
         }
         
-        if (!empty($updates)) {
-            $sql = "UPDATE users SET " . implode(', ', $updates) . " WHERE user_id = $this->id";
-            return $conn->query($sql);
+        if (!empty($updateData)) {
+             return $this->db->update('users', $updateData, 'user_id = ?', [$this->id]);
         }
         return true; 
     }
@@ -83,54 +82,56 @@ class User {
     // РАБОТА С ФУНКЦИЕЙ ДОБАВЛЕНИЯ В ДРУЗЬЯ //
 
     //ТЕКУЩИЙ СТАТУС ДРУЖБЫ
-    public function getFriendshipStatus($other_user_id, $conn) {
-        $query = "SELECT status FROM friends 
-                  WHERE (user_id = $this->id AND friend_id = $other_user_id) 
-                     OR (user_id = $other_user_id AND friend_id = $this->id)";
-        $result = $conn->query($query);
+      public function getFriendshipStatus($other_user_id) {
+        $sql = "SELECT status FROM friends 
+                WHERE (user_id = ? AND friend_id = ?) 
+                   OR (user_id = ? AND friend_id = ?)";
         
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            return $row['status']; // 'pending', 'accepted', 'rejected'
+        $result = $this->db->fetchOne($sql, [
+            $this->id, $other_user_id,  
+            $other_user_id, $this->id   
+        ]);
+        
+        if ($result) {
+            return $result['status']; // 'pending', 'accepted', 'rejected'
         }
         return 'none'; // нет заявки
     }
     
     //ОТПРАВКА ФРЕНД РЕКВЕСТА
-    public function sendFriendRequest($receiver_id, $conn) {
-        // Проверяем, нет ли уже заявки
-        $status = $this->getFriendshipStatus($receiver_id, $conn);
-        
-        if ($status !== 'none') {
-            return ['success' => false, 'message' => 'Заявка уже существует'];
-        }
-        
-        if ($this->id == $receiver_id) {
-            return ['success' => false, 'message' => 'Нельзя добавить самого себя'];
-        }
-        
-        $query = "INSERT INTO friends (user_id, friend_id, status, date) 
-                  VALUES ($this->id, $receiver_id, 'pending', NOW())";
-        
-        if ($conn->query($query)) {
-            return ['success' => true, 'message' => 'Заявка отправлена'];
-        }
-        
-        return ['success' => false, 'message' => 'Ошибка базы данных'];
+ public function sendFriendRequest($receiver_id) {
+    $status = $this->getFriendshipStatus($receiver_id);
+    
+    if ($status !== 'none') {
+        return ['success' => false, 'message' => 'Заявка уже существует'];
     }
     
-    //ДОСТАТЬ СПИСОК ВСЕХ ЮЗЕРОВ КРОМЕ ТЕКУЩЕГО
-    public static function getAllUsersExcept($user_id, $conn) {
+    if ($this->id == $receiver_id) {
+        return ['success' => false, 'message' => 'Нельзя добавить самого себя'];
+    }
+    
+    $data = [
+        'user_id' => $this->id,
+        'friend_id' => $receiver_id,
+        'status' => 'pending',
+        'date' => date('Y-m-d H:i:s')
+    ];
+    
+    $result = $this->db->insert('friends', $data);
+    
+    if ($result) {
+        return ['success' => true, 'message' => 'Заявка отправлена'];
+    }
+    
+    return ['success' => false, 'message' => 'Ошибка базы данных'];
+}
+    
+    public static function getAllUsersExcept($user_id, $db) {
         $query = "SELECT user_id, first_name, last_name, login 
                   FROM users 
-                  WHERE user_id != $user_id";
-        $result = $conn->query($query);
-        
-        $users = [];
-        while ($row = $result->fetch_assoc()) {
-            $users[] = $row;
-        }
-        return $users;
+                  WHERE user_id != ?";
+        $result = $db->fetchAll($query, [$user_id]);
+		return $result;
     }
 
 }

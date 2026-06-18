@@ -44,3 +44,13 @@
 	resize: none;
 	width: 100%;
 }
+
+.pageNotFound {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 50px;
+	font-weight: bold;
+}
