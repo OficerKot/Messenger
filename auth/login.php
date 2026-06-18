@@ -1,26 +1,27 @@
 <?php 
 session_start();
-include "../includes/connectDB.php";
-$login = $_POST['login'];
-$password = $_POST['password'];
+include "../includes/init.php";
 
-$sql = "SELECT * FROM users WHERE login = '$login'";
+$login = $_POST['login'] ?? '';
+$password = $_POST['password'] ?? '';
 
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-
-if($result->num_rows == 0){
-	echo("Ошибка: Пользователь с таким логином не найден.");
+if (empty($login) || empty($password)) {
+    echo "Ошибка: Все поля обязательны для заполнения";
+    exit;
 }
-else{
-$hasphass = $row['password'];
 
-if(password_verify($password, $hasphass)){
-	$_SESSION['id'] = $row['user_id'];
-	echo("Успешная авторизация.");
+$sql = "SELECT * FROM users WHERE login = ?";
+$user = $db->fetchOne($sql, [$login]);
+
+if (!$user) {
+    echo "Ошибка: Пользователь с таким логином не найден.";
+    exit;
 }
-else{
-	echo("Ошибка: Введён неверный пароль.");
-}
+
+if (password_verify($password, $user['password'])) {
+    $_SESSION['id'] = $user['user_id'];
+    echo "Успешная авторизация.";
+} else {
+    echo "Ошибка: Введён неверный пароль.";
 }
 ?>

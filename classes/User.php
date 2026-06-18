@@ -11,6 +11,8 @@ class UserField {
     public const ID = 'user_id';
     public const PRIVATE = 'is_private';
     public const PASSWORD = 'password';
+
+	public const ROLE = 'role';
 }
 
 class User {
@@ -45,6 +47,9 @@ class User {
         return $this->data[$field] ?? '';
     }
     
+	public function isAdmin(){
+		return $this->data[UserField::ROLE] == 1;
+	}
     public function getEditableFields() {
         $fields = [];
         foreach ($this->editable as $field) {

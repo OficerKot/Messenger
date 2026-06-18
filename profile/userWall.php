@@ -2,8 +2,13 @@
 include "../includes/init.php";
 
 $wall_owner = User::getUserById($_GET['user_id'], $db);
-$editableFields = $wall_owner->getEditableFields();
-$profile_img = $wall_owner->get(UserField::AVATAR);?>
+	$editableFields = $wall_owner? $wall_owner->getEditableFields(): [];
+	$profile_img = $wall_owner? $wall_owner->get(UserField::AVATAR): 'baseimage.jpg';
+	$first_name = $wall_owner? $wall_owner->get(UserField::FIRST_NAME): 'Пользователь';
+	$last_name = $wall_owner? $wall_owner->get(UserField::LAST_NAME): 'Несуществующий';	
+	$login = $wall_owner? $wall_owner->get(UserField::LOGIN): 'does_not_exist';
+	
+?>
 
 
 
@@ -15,7 +20,7 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/user_wall.css">
-	<title><?php echo  $wall_owner->get(UserField::FIRST_NAME);?> <?php echo  $wall_owner->get(UserField::LAST_NAME);?>
+	<title><?php echo $first_name ?> <?php echo $last_name ?>
 	</title>
 </head>
 
@@ -26,26 +31,31 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 		<?php include '../includes/menuLeft.php'; ?>
 
 		<div class="center-panel">
-			<?php if($wall_owner != null){?>
+
 			<div class="center-panel1">
 				<!-- Верхняя часть страницы-->
+
 				<div class="userInfoContainer">
 					<div style="display: flex; flex-direction: column;">
 						<div class="userName">
-							<?php echo $wall_owner->get(UserField::FIRST_NAME); ?>
-							<?php echo $wall_owner->get(UserField::LAST_NAME); ?>
+							<?php echo $first_name ?>
+							<?php echo $last_name ?>
 						</div>
 
-						<div class="userLogin"> @<?php echo $wall_owner->get(UserField::LOGIN); ?></div>
+						<div class="userLogin"> @<?php echo $login ?></div>
+
+						<?php if($wall_owner != null){?>
 						<div class="otherInfo">
 							День рождения <?php echo $wall_owner->getFormattedBirthday();?>
 							(<?php echo $wall_owner->getAge();?> лет)
 
 						</div>
+						<?php } ?>
 					</div>
 					<img src="../assets/uploads/<?php echo $profile_img; ?>" style="height: 200px;">
 				</div>
 
+				<?php if($wall_owner != null){?>
 				<!--Форма для создания поста -->
 				<div>
 					<form id="postForm" class="postForm">
@@ -64,12 +74,12 @@ $profile_img = $wall_owner->get(UserField::AVATAR);?>
 					<script src="../assets/js/PostView.js"></script>
 					<script type="module" src="../assets/js/userWall.js"></script>
 				</div>
+				<?php } else {?>
+				<div class="pageNotFound">
+					Как вы тут оказались?
+				</div>
+				<?php } ?>
 			</div>
-			<?php } else {?>
-			<div class="pageNotFound">
-				Как вы тут оказались?
-			</div>
-			<?php } ?>
 		</div>
 		<?php 	include '../includes/menuRight.php'; ?>
 	</div>
