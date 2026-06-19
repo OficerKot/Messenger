@@ -1,21 +1,23 @@
 <?php 
 session_start();
-include '../includes/connectDB.php';
-include '../classes/User.php';
-if(!isset($_SESSION['id'])){ //защита от особо умных
+include '../includes/init.php';
+if(!isset($_SESSION['id'])){ 
 	header('Location:../index.php');
 	exit;
 };
 
 include '../includes/connectDB.php';
-$user = new User($_SESSION['id'], $conn);
+
+$user = User::getUserById($_SESSION['id'], $db);
 $editableFields = $user->getEditableFields();
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <link rel="stylesheet" href="../assets/css/profile.css">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

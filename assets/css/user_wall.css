@@ -1,0 +1,56 @@
+/* Блок с информацией о пользователе: фото профиля, имя и т.п.*/
+.userInfoContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: start;
+
+	margin: 20px
+}
+
+.userName {
+	font-size: 32px;
+	font-weight: bold;
+}
+
+.userLogin {
+	font-size: 24px;
+	margin: 2px 0px 16px;
+}
+
+.postsContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: start;
+}
+
+
+.postImg {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 16px;
+}
+
+.postForm {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	padding: 8px;
+}
+
+.postForm textarea {
+	resize: none;
+	width: 100%;
+}
+
+.pageNotFound {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 50px;
+	font-weight: bold;
+}

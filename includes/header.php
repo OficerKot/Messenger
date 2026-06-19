@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="assets/css/header.css">
 
 <div class="header-fullwidth">
@@ -17,16 +18,24 @@
 	<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 	<div class="header-right">
 		<?php
-		
-		session_start();
-		/** @var mysqli $conn */
-		if (isset($_SESSION['id'])):?>
-		<a href="../auth/logout.php" style="text-decoration: none;">Выход</a>
 
+		require_once __DIR__ . '/../classes/Database.php';
+		
+		if (isset($_SESSION['id'])):
+		?>
+		<!-- ВЫХОД -->
+		<a href="../auth/logout.php" style="text-decoration: none; color: #2c3e50; font-size: 14px;">Выход</a>
+
+		<!-- УВЕДОМЛЕНИЯ -->
+		<?php include '../includes/notificationBell.php'; ?>
+
+		<!-- АВАТАРКА -->
 		<div class="avatar">
 			<?php 
-			$user = new User($_SESSION['id'], $conn);
-			$image_name = $user->get(UserField::AVATAR);?>
+				$db = new Database();
+				$user = User::getUserById($_SESSION['id'], $db);
+				$image_name = $user->get(UserField::AVATAR);
+				?>
 			<img src="../assets/uploads/<?php echo ($image_name);?>"
 				style="width: 32px; height: 32px; border-radius: 100%;">
 		</div>
@@ -35,3 +44,5 @@
 		<?php endif;?>
 	</div>
 </div>
+<script src="../assets/js/notifications.js" defer></script>
+

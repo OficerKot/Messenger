@@ -1,25 +1,27 @@
 <?php 
+
 session_start();
 /** @var mysqli $conn */
 ?>
 <link rel="stylesheet" href="../assets/css/menuLeft.css">
+
+
 <div class="left-panel">
 	<h2>Меню</h2>
 	<ul>
 		<?php if(isset($_SESSION['id'])):
 			$id = $_SESSION['id'];
-			$user = new User($id, $conn);?>
+			$user = User::getUserById($id, $db)?>
 		<li>
-			<a
-				href="../profile/userWall.php?user=<?php echo $user->get(UserField::LOGIN); ?>"
-				>
+			<a href="../profile/userWall.php?user_id=<?php echo $user->get(UserField::ID); ?>">
+
 				Профиль
 			</a>
 		</li>
 		<li>
-			<a 
-				href="../profile/globalWall.php"
-				style="
+
+			<a href="../profile/globalWall.php" style="
+
 				text-decoration: none;
 				display: block;
 				">
@@ -29,9 +31,8 @@ session_start();
 		<li>Чат</li>
 		<li>Звонки</li>
 		<li>
-			<a 
-				href="../friends/friends.php"
-				style="
+
+			<a href="../friends/friends.php" style="
 				text-decoration: none;
 				display: block;
 				">
@@ -39,9 +40,8 @@ session_start();
 			</a>
 		</li>
 		<li>
-			<a 
-				href="../profile/settings.php"
-				style="
+
+			<a href="../profile/settings.php" style="
 				text-decoration: none;
 				display: block;
 				">
