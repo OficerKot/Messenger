@@ -15,7 +15,7 @@ $message = $_POST['message'] ?? '';
 $current_user_id = $_SESSION['id'];
 
 $postModel = new Post($db);
-$post = Post::getPostInfo($post_id, $db);
+$post = $postModel->getPostInfo($post_id);
 
 // Проверка прав
 if (!$post || $post['autor_id'] != $current_user_id) {

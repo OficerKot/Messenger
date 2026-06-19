@@ -22,9 +22,10 @@ class PostView {
             </div>
             ${this.createPostContent(post.post_id, post.message, post.image_path)}
 			<div class="post-actions">
-						<div class="post-action">❤️ 0</div>
-						<div class="post-action">💬 0</div>
-					</div>
+						 <button class="comment-btn" data-post-id="${post.post_id}">💬Посмотреть комментарии</button>
+			</div>
+
+			<div class="comments-section" id="comments-${post.post_id}" style="display:none;"></div>
         </div>
     `;
   }
@@ -214,7 +215,7 @@ class PostView {
     document.getElementById(postId).remove();
   }
 
-  // Система событий (втф)
+  // Система событий
   on(event, callback) {
     if (!this._events) this._events = {};
     if (!this._events[event]) this._events[event] = [];
@@ -235,6 +236,13 @@ class PostView {
         const canEdit = btn.dataset.canEdit === "true";
         const canDelete = btn.dataset.canDelete === "true";
         this.showPostActionsMenu(postId, canEdit, canDelete);
+      });
+    });
+
+    document.querySelectorAll(".comment-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const postId = btn.dataset.postId;
+        this.emit("toggleComments", postId);
       });
     });
   }

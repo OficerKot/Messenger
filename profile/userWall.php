@@ -84,8 +84,10 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 		<?php 	include '../includes/menuRight.php'; ?>
 
 		<script src="../assets/js/postView.js"></script>
-
 		<script src="../assets/js/postApi.js"></script>
+
+		<script src="../assets/js/comments/CommentView.js"></script>
+		<script src="../assets/js/comments/commentApi.js"></script>
 
 		<script src="../assets/js/userWall.js"></script>
 	</div>

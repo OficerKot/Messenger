@@ -1,5 +1,5 @@
 <?php 
-include "../includes/init.php";
+
 
 class PostField {
 
@@ -46,7 +46,7 @@ public function getNewestPosts(){
     return $this->db->fetchAll($sql);
 }
 
-public static function getPostInfo($postId, $db){
+public function getPostInfo($postId){
     $sql = "SELECT 
                 p.*,
                 u." . UserField::FIRST_NAME . " as author_first_name,
@@ -56,7 +56,7 @@ public static function getPostInfo($postId, $db){
             JOIN users u ON p." . PostField::AUTHOR_ID . " = u." . UserField::ID . "
             WHERE p." . PostField::POST_ID . " = ?";
     
-    $resArr = $db->fetchOne($sql, [$postId]);
+    $resArr = $this->db->fetchOne($sql, [$postId]);
     return $resArr;
 }
 public function createPost($autor_id, $wall_owner_id, $message, $image_path)
@@ -72,15 +72,6 @@ public function createPost($autor_id, $wall_owner_id, $message, $image_path)
     return $this->db->insert('posts', $data);
 }
 
-public function commentPost($post_id, $comment, $author_id){
-	  $data = [
-		PostField::POST_ID =>$post_id,
-        'comment' => $comment,
-		'date' => date('Y-m-d H:i:s'),
-		'author_id' => $author_id
-    ];
-	return $this->db->insert('post_comments', $data);
-}
 
 public function updatePost($post_id, $message, $image_path){
 	$new_data = [
