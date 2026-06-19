@@ -55,7 +55,7 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 					<img src="../assets/uploads/<?php echo $profile_img; ?>" style="height: 200px;">
 				</div>
 
-				<?php if($wall_owner != null){?>
+				<?php if($wall_owner != null && isset($_SESSION['id'])){?>
 				<!--Форма для создания поста -->
 				<div>
 					<form id="postForm" class="postForm">
@@ -64,15 +64,15 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 						<button>Поделиться</button>
 					</form>
 				</div>
-
+				<?php } 
+				if ($wall_owner != null){?>
 
 				<!-- Посты -->
 				<div style="width:100%; display: flex; justify-content: center; align-items: center;">
 					<h3>Все посты</h3>
 				</div>
 				<div class="postsContainer" id="postsContainer">
-					<script src="../assets/js/PostView.js"></script>
-					<script type="module" src="../assets/js/userWall.js"></script>
+
 				</div>
 				<?php } else {?>
 				<div class="pageNotFound">
@@ -82,6 +82,12 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 			</div>
 		</div>
 		<?php 	include '../includes/menuRight.php'; ?>
+
+		<script src="../assets/js/postView.js"></script>
+
+		<script src="../assets/js/postApi.js"></script>
+
+		<script src="../assets/js/userWall.js"></script>
 	</div>
 </body>
 

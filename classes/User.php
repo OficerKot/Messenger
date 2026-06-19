@@ -15,6 +15,12 @@ class UserField {
 	public const ROLE = 'role';
 }
 
+class FriendshipStatus{
+	public const PENDING = 'pending';
+	public const ACCEPTED = 'accepted';
+	public const REJECTED = 'rejected';
+}
+
 class User {
 	
     private $data = [];
@@ -138,6 +144,10 @@ class User {
         $result = $db->fetchAll($query, [$user_id]);
 		return $result;
     }
+
+	function areFriends(User $user1, User $user2){
+		return  $user1->getFriendshipStatus($user2) == FriendshipStatus::ACCEPTED;
+	}
 
 }
 ?>

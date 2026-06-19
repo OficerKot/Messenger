@@ -44,7 +44,9 @@ class Database {
         $sql = "UPDATE {$table} SET " . implode(', ', $fields) . " WHERE {$where}";
         
         $params = array_merge(array_values($data), $whereParams);
-        return $this->query1($sql, $params)->rowCount();
+        $result = $this->query1($sql, $params)->rowCount();
+
+		return true;
     }
     
     // Удаление данных

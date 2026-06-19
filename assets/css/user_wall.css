@@ -38,11 +38,39 @@
 	flex-direction: column;
 	align-items: start;
 	padding: 8px;
+
+	font-size: 14px;
+	line-height: 1.5;
+	color: #2c3e50;
+	margin-bottom: 12px;
+}
+
+.postFormEdit {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	padding: 8px;
+
+	font-size: 14px;
+	line-height: 1.5;
+	color: #2c3e50;
+	margin-bottom: 12px;
+}
+
+.postFormEdit textarea {
+	resize: none;
+	min-height: 150px;
+
+	width: 100%;
 }
 
 .postForm textarea {
 	resize: none;
 	width: 100%;
+}
+
+.post-menu-wrapper {
+	position: relative;
 }
 
 .pageNotFound {

@@ -14,7 +14,7 @@ $post_id = $_POST['post_id'] ?? 0;
 $current_user_id = $_SESSION['id'];
 
 $postModel = new Post($db);
-$post = $postModel->getPostInfo($post_id);
+$post = Post::getPostInfo($post_id, $db);
 
 if (!$post) {
     echo json_encode(['success' => false, 'error' => 'Пост не найден']);
