@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 19 2026 г., 06:36
+-- Время создания: Июн 19 2026 г., 16:16
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -146,7 +146,9 @@ INSERT INTO `posts` (`post_id`, `autor_id`, `wall_owner_id`, `message`, `image_p
 (12, 1, 1, 'ПОДПИСЧИКИ ВСЕМ ПРИВЕТ!! ДОБРОГО СЧАСТЛИВОГО ВЕЧЕРА 🙌🙌🙌😉😉😉😉 Я СЕГОДНЯ НА УЖИН ЕЛА ЧЕЧЕВИЦУ И ОНА МЕНЯ ПОРАДОВАЛА 🤗🤗🤗 СВОЕЙ СТРУКТУРОЙ И ВКУСОМ 😛😛😛 А ПОТОМ Я ЕЙ ПОДАВИЛАСЬ И ЧУТЬ НЕ ЗАДОХНУЛАСЬ 🤣🤣🤣🤣😂😂😂 ВСЕМ ДОБРОГО ВЕЧЕРА ЗДОРОВЬЯ И СЧАСТЬЯ!!!!', '6a33ef1b3770f_dobryj-vecher.gif', '2026-06-18 15:31:31'),
 (14, 12, 12, 'Добрый день.', NULL, '2026-06-18 16:06:19'),
 (17, 1, 2, 'ДОБРОЕ УТРО!!! 🤗🤗🤣🤣😉😉', '6a34851880c99_dobroe-utro.gif', '2026-06-19 02:52:04'),
-(18, 1, 1, 'ВСЕМ УТРА! УТРО НЕ ДОБРОЕ - ЗАКОНЧИЛОСЬ МОЛОКО. ЭТА ПЕЧАЛЬНАЯ НОВОСТЬ ПОВЕРГЛА МЕНЯ В ШОК, НО Я СПРАВЛЯЮСЬ ❤️❤️❤️\r\nЛЕНОЧКА ПРИВЕТ ДА ХРАНИТ ТЕБЯ БОГ', NULL, '2026-06-19 04:35:37');
+(18, 1, 1, 'ВСЕМ УТРА! УТРО НЕ ДОБРОЕ - ЗАКОНЧИЛОСЬ МОЛОКО. ЭТА ПЕЧАЛЬНАЯ НОВОСТЬ ПОВЕРГЛА МЕНЯ В ШОК, НО Я СПРАВЛЯЮСЬ ❤️❤️❤️\r\nЛЕНОЧКА ПРИВЕТ ДА ХРАНИТ ТЕБЯ БОГ', NULL, '2026-06-19 04:35:37'),
+(21, 1, 7, '', '6a34eb070a00e_s-maslenicej (1).gif', '2026-06-19 10:08:55'),
+(22, 1, 7, 'ДОБРЫЙ ДЕНЬ 👍👍👍👍👍👍👍👍👍', NULL, '2026-06-19 10:09:21');
 
 -- --------------------------------------------------------
 
@@ -159,8 +161,17 @@ CREATE TABLE `post_comments` (
   `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `post_id` int NOT NULL,
   `author_id` int NOT NULL,
-  `date` int NOT NULL
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `post_comments`
+--
+
+INSERT INTO `post_comments` (`comment_id`, `comment`, `post_id`, `author_id`, `date`) VALUES
+(8, 'Почему у вас айди 1', 18, 13, '2026-06-19 15:52:14'),
+(9, 'Вы первый юзер?', 18, 13, '2026-06-19 15:52:20'),
+(10, 'Наталья, вы вызываете подозрения', 18, 13, '2026-06-19 15:52:31');
 
 -- --------------------------------------------------------
 
@@ -206,7 +217,8 @@ INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, 
 (7, 'BEBE', 'BOBO', 'PEPE', '$2y$10$hsTSifcvbHYOMOTopunQ4eVBjePnv0XLANAKSGip4MgC45wUkjroy', '0', 0, '9999-09-23', '2026-06-13', 'user_7_1781338757.jpg'),
 (8, 'KEKE', 'K', 'E', '$2y$10$BUFRuB6rH3t/fDMyXExyY.eKCoiQPXy0quoWt7PijdYOEGpzfh1F6', '0', 0, '0004-03-12', '2026-06-16', 'baseimage.jpg'),
 (9, 'GEGE', 'G', 'E', '$2y$10$SwYuPrkfrTAPhgj4yK/GC.hc36CgyHeb19R0j1xbvoZpIF/PyQZjW', '0', 0, '0024-03-05', '2026-06-16', 'baseimage.jpg'),
-(12, 'abramovCryptoAnalytic1986', 'Cryptograph', 'Abramov', '$2y$10$nzmHs9y1S8hs29nHkMOv..q4TQXoltdaD31h8wEmJWrdC5yN93P36', '0', 0, '1986-02-02', '2026-06-18', 'user_12_1781787526.webp');
+(12, 'abramovCryptoAnalytic1986', 'Cryptograph', 'Abramov', '$2y$10$nzmHs9y1S8hs29nHkMOv..q4TQXoltdaD31h8wEmJWrdC5yN93P36', '0', 0, '1986-02-02', '2026-06-18', 'user_12_1781787526.webp'),
+(13, 'user228', 'User', 'Krutoi', '$2y$10$Z0iHEIxaCvj7VW/8fXYK9.qE36GBYMTtCpR.2ejH87sUA.qQkul/2', '0', 0, '2020-04-02', '2026-06-19', 'baseimage.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -305,19 +317,19 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT для таблицы `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
