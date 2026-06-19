@@ -35,21 +35,44 @@ class CommentView {
 
   renderAll(container, comments) {
     container.innerHTML = "";
+
+    // Комментарии в скроллящемся контейнере
+    const commentsList = document.createElement("div");
+    commentsList.className = "comments-list";
+
     if (!comments || comments.length === 0) {
-      container.innerHTML = '<div class="no-comments">Нет комментариев</div>';
-      return;
+      const empty = document.createElement("div");
+      empty.className = "no-comments";
+      empty.textContent = "Нет комментариев";
+      commentsList.appendChild(empty);
+    } else {
+      comments.forEach((comment) => {
+        commentsList.innerHTML += this.renderComment(comment);
+      });
     }
-    comments.forEach((comment) => {
-      container.innerHTML += this.renderComment(comment);
-    });
+
+    container.appendChild(commentsList);
+
+    // Форма всегда снизу
+    this.showCommentForm(container);
+  }
+
+  showCommentForm(container) {
+    const formHTML = `
+        <form class="commentForm">
+            <textarea placeholder="Что вы об этом думаете?"></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    `;
+    container.innerHTML += formHTML;
   }
 
   add(container, comment) {
-    if (this.empty) {
-      container.innerHTML = "";
-      this.empty = false;
-    }
-    container.insertAdjacentHTML("beforeend", this.renderComment(comment));
+    const commentsList = container.querySelector(".comments-list");
+    const empty = commentsList.querySelector(".no-comments");
+    if (empty) empty.remove();
+
+    commentsList.insertAdjacentHTML("beforeend", this.renderComment(comment));
   }
 
   remove(commentId) {

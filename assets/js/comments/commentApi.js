@@ -1,7 +1,7 @@
 const CommentApi = {
   async getComments(postId) {
     const response = await fetch(
-      `../../api/comments/getComments.php?post_id=${postId}`,
+      `/api/comments/getComments.php?post_id=${postId}`,
     );
     return response.json();
   },
@@ -11,10 +11,11 @@ const CommentApi = {
     formData.append("post_id", postId);
     formData.append("comment", comment);
 
-    const response = await fetch("../../api/comments/createComment.php", {
+    const response = await fetch("/api/comments/createComment.php", {
       method: "POST",
       body: formData,
     });
+
     return response.json();
   },
 
@@ -23,7 +24,7 @@ const CommentApi = {
     formData.append("comment_id", commentId);
     formData.append("comment", comment);
 
-    const response = await fetch("../../api/comments/updateComment.php", {
+    const response = await fetch("/api/comments/updateComment.php", {
       method: "POST",
       body: formData,
     });
@@ -31,7 +32,7 @@ const CommentApi = {
   },
 
   async delete(commentId) {
-    const response = await fetch("../../api/comments/deleteComment.php", {
+    const response = await fetch("/api/comments/deleteComment.php", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `comment_id=${commentId}`,
