@@ -9,6 +9,7 @@ if (!isset($_SESSION['id'])) {
     exit;
 }
 
+
 $post_id = $_POST['post_id'] ?? 0;
 $message = $_POST['message'] ?? '';
 $current_user_id = $_SESSION['id'];
@@ -22,14 +23,18 @@ if (!$post || $post['autor_id'] != $current_user_id) {
     exit;
 }
 
+if (isset($_POST['removeImage']) && $_POST['removeImage'] === '1') {
+    $image_path = null;
+} else {
 // Обработка изображения
-$image_path = $post['image_path']; // Оставляем старое
+$image_path = $post['image_path']; 
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $filename = uniqid() . '_' . basename($_FILES['image']['name']);
     move_uploaded_file($_FILES['image']['tmp_name'], '../assets/uploads/' . $filename);
     $image_path = $filename;
 }
 
+}
 // Обновляем
 $result = $postModel->updatePost($post_id, $message, $image_path);
 

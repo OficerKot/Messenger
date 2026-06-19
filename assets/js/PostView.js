@@ -14,18 +14,25 @@ class PostView {
                 <div class="post-time">
                     ${post.date}
                 </div>
-                <button class="post-menu-btn" data-post-id="${post.post_id}" data-can-edit="${post.can_edit || false}" data-can-delete="${post.can_delete || false}">
-                    ...
-                </button>
+				<div class="post-menu-wrapper">
+                	<button class="post-menu-btn" data-post-id="${post.post_id}" data-can-edit="${post.can_edit || false}" data-can-delete="${post.can_delete || false}">
+                    	...
+                	</button>
+				</div>
             </div>
             ${this.createPostContent(post.post_id, post.message, post.image_path)}
+			<div class="post-actions">
+						 <button class="comment-btn" data-post-id="${post.post_id}">💬Посмотреть комментарии</button>
+			</div>
+
+			<div class="comments-section" id="comments-${post.post_id}" style="display:none;"></div>
         </div>
     `;
   }
 
   createPostContent(id, msg, img_path) {
     return `<div class="post-content" id="content-${id}">
-                ${msg}
+                <div id="content-msg-${id}">${msg}</div>
                 ${img_path ? `<img src="../assets/uploads/${img_path}" class="post-image">` : ""}
             </div>`;
   }
@@ -94,20 +101,39 @@ class PostView {
       });
     }, 0);
 
-    document.getElementById(postId).appendChild(menu);
+    const post = document.getElementById(postId);
+    const wrapper = post.querySelector(".post-menu-wrapper");
+    if (wrapper) {
+      wrapper.appendChild(menu);
+    }
   }
 
+  //это потом надо поделить
   showPostEditForm(postId, saveCallback) {
-    const content = document.getElementById(`content-${postId}`);
+    const existingForm = document.querySelectorAll(".postFormEdit");
+    existingForm.forEach((form) => {
+      form.remove();
+    });
+
+    const content = document.getElementById(`content-msg-${postId}`);
     const message = content.textContent.trim();
+    const postImage = document
+      .getElementById(`content-${postId}`)
+      ?.querySelector(".post-image");
+    let removeImage = false;
 
     content.style.display = "none";
 
     const form = document.createElement("div");
-    form.className = "postForm";
+    form.className = "postFormEdit";
     form.innerHTML = `
         <textarea>${message}</textarea>
-        <input type="file">
+
+        <div style="display:flex; align-items:center; gap:10px; margin:10px 0;">
+            <input type="file" accept="image/*">
+            ${postImage ? '<button type="button" class="remove-image-btn">🗑️ Удалить фото</button>' : ""}
+        </div>
+
         <div style="margin-top:10px;">
             <button type="button" class="save-btn">Сохранить</button>
             <button type="button" class="cancel-btn">Отмена</button>
@@ -115,17 +141,36 @@ class PostView {
     `;
     content.parentElement.insertBefore(form, content.nextSibling);
 
+    const imageInput = form.querySelector('input[type="file"]');
+    const removeImageBtn = form.querySelector(".remove-image-btn");
+
+    // Кнопка удаления фото
+    if (removeImageBtn) {
+      removeImageBtn.onclick = () => {
+        imageInput.value = "";
+        removeImage = true;
+        removeImageBtn.textContent = "Фото будет удалено после сохранения";
+      };
+    }
+
     // Обработчики
+
     form.querySelector(".cancel-btn").onclick = () => {
       form.remove();
       content.style.display = "block";
     };
 
     form.querySelector(".save-btn").onclick = async () => {
-      const newMessage = form.querySelector("textarea").value;
+      const textarea = form.querySelector("textarea");
+      const newMessage = textarea.value.trim();
       const imageFile = form.querySelector("input[type='file']").files[0];
 
-      const success = await saveCallback(postId, newMessage, imageFile);
+      const success = await saveCallback(
+        postId,
+        newMessage,
+        imageFile,
+        removeImage,
+      );
 
       if (success) {
         form.remove();
@@ -133,6 +178,7 @@ class PostView {
       }
     };
   }
+
   renderAllPosts(posts, containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = "";
@@ -169,7 +215,7 @@ class PostView {
     document.getElementById(postId).remove();
   }
 
-  // Система событий (втф)
+  // Система событий
   on(event, callback) {
     if (!this._events) this._events = {};
     if (!this._events[event]) this._events[event] = [];
@@ -190,6 +236,13 @@ class PostView {
         const canEdit = btn.dataset.canEdit === "true";
         const canDelete = btn.dataset.canDelete === "true";
         this.showPostActionsMenu(postId, canEdit, canDelete);
+      });
+    });
+
+    document.querySelectorAll(".comment-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const postId = btn.dataset.postId;
+        this.emit("toggleComments", postId);
       });
     });
   }

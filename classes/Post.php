@@ -1,5 +1,5 @@
 <?php 
-include "../includes/init.php";
+
 
 class PostField {
 
@@ -11,6 +11,8 @@ class PostField {
     public const POST_ID = 'post_id';
 }
 
+
+//Его поидее полностью можно было сделать статическим, но уже ладно
 class Post{
 	 private $db;  
     
@@ -70,7 +72,8 @@ public function createPost($autor_id, $wall_owner_id, $message, $image_path)
     return $this->db->insert('posts', $data);
 }
 
-public function updatePost($post_id, $message="", $image_path=null){
+
+public function updatePost($post_id, $message, $image_path){
 	$new_data = [
         PostField::MSG => $message,
         PostField::IMG => $image_path,
