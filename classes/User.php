@@ -1,5 +1,4 @@
 <?php
-
 include "../includes/init.php";
 
 class UserField {
@@ -12,6 +11,14 @@ class UserField {
     public const ID = 'user_id';
     public const PRIVATE = 'is_private';
     public const PASSWORD = 'password';
+
+	public const ROLE = 'role';
+}
+
+class FriendshipStatus{
+	public const PENDING = 'pending';
+	public const ACCEPTED = 'accepted';
+	public const REJECTED = 'rejected';
 }
 
 class User {
@@ -48,6 +55,9 @@ class User {
         return $this->data[$field] ?? '';
     }
     
+	public function isAdmin(){
+		return $this->data[UserField::ROLE] == 1;
+	}
     public function getEditableFields() {
         $fields = [];
         foreach ($this->editable as $field) {
@@ -137,6 +147,10 @@ class User {
         $result = $db->fetchAll($query, [$user_id]);
 		return $result;
     }
+
+	function areFriends(User $user1, User $user2){
+		return  $user1->getFriendshipStatus($user2) == FriendshipStatus::ACCEPTED;
+	}
 
 }
 ?>
