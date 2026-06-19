@@ -96,40 +96,41 @@ if (isset($_SESSION['id'])) {
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         <img src="../assets/uploads/<?php echo $profile_img; ?>" style="height: 200px; border-radius: 12px;">
-                        
-                        <!-- ===== КНОПКА ДЕЙСТВИЯ С ДРУЗЬЯМИ ===== -->
+    
+                        <!-- Кнопки дружбы -->
                         <?php if (isset($_SESSION['id']) && !$is_owner): ?>
-    
-    <!-- 1️⃣ УЖЕ ДРУЗЬЯ -->
-    <?php if ($friendship_status == 'accepted'): ?>
-        <button class="friend-btn friends" disabled>
-            Вы друзья ✓
-        </button>
-    
-    <!-- 2️⃣ МЫ ОТПРАВИЛИ ЗАЯВКУ (исходящая) -->
-    <?php elseif ($sent_request): ?>
-        <button class="friend-btn pending" disabled>
-            Заявка отправлена
-        </button>
-    
-    <!-- 3️⃣ НАМ ОТПРАВИЛИ ЗАЯВКУ (входящая) -->
-    <?php elseif ($incoming_request): ?>
-        <button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
-            Принять заявку в друзья
-        </button>
-    
-    <!-- 4️⃣ НЕТ ЗАЯВОК -->
-    <?php else: ?>
-        <button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
-            Добавить в друзья
-        </button>
-    <?php endif; ?>
-    
-<?php elseif ($is_owner): ?>
-    <button class="friend-btn" style="background-color: #e7e8ec; color: #818c99; cursor: default;" disabled>
-        Это ваш профиль
-    </button>
-<?php endif; ?>
+                            
+                            <?php if ($friendship_status == 'accepted'): ?>
+                                <button class="friend-btn friends" disabled>
+                                    Вы друзья ✓
+                                </button>
+                            
+                            <?php elseif ($sent_request): ?>
+                                <button class="friend-btn pending" disabled>
+                                    Заявка отправлена
+                                </button>
+                            
+                            <?php elseif ($incoming_request): ?>
+                                <button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                    Принять заявку в друзья
+                                </button>
+                            
+                            <?php else: ?>
+                                <button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                    Добавить в друзья
+                                </button>
+                            <?php endif; ?>
+                            
+                            <!-- Кнопка жалобы -->
+                            <button class="complaint-btn" data-user-id="<?php echo $wall_owner_id; ?>">
+                                ⚠ Пожаловаться
+                            </button>
+                            
+                        <?php elseif ($is_owner): ?>
+                            <button class="friend-btn" style="background-color: #e7e8ec; color: #818c99; cursor: default;" disabled>
+                                Это ваш профиль
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -149,96 +150,54 @@ if (isset($_SESSION['id'])) {
                 <div class="postsContainer" id="postsContainer">
                     <script src="../assets/js/PostView.js"></script>
                     <script type="module" src="../assets/js/userWall.js"></script>
+                    
+                    <script src="../assets/js/friends.js" defer></script>
+                    <script src="../assets/js/complaints.js" defer></script>
                 </div>
             </div>
         </div>
         <?php include '../includes/menuRight.php'; ?>
     </div>
 
-    <!-- AJAX для отправки и принятия заявок -->
-    <script>
-    // Отправка заявки
-    document.querySelectorAll('.send-request').forEach(button => {
-        button.addEventListener('click', function() {
-            const userId = this.dataset.userId;
-            const button = this;
-            const originalText = button.textContent;
+    <!-- ===== МОДАЛЬНОЕ ОКНО ЖАЛОБЫ ===== -->
+    <div class="complaint-modal" id="complaintModal" style="display: none;">
+        <div class="complaint-modal-overlay" id="complaintModalOverlay"></div>
+        <div class="complaint-modal-content">
+            <div class="complaint-modal-header">
+                <h3>Пожаловаться на пользователя</h3>
+                <button class="complaint-modal-close" id="closeComplaintModal">&times;</button>
+            </div>
             
-            button.textContent = 'Отправка...';
-            button.disabled = true;
+            <div class="complaint-modal-body">
+                <p>Выберите причину жалобы:</p>
+                
+                <div class="complaint-types">
+                    <?php
+                    // Получаем типы жалоб из БД
+                    $types_sql = "SELECT complain_type_id, complain FROM complain_types";
+                    $types = $db->fetchAll($types_sql);
+                    foreach ($types as $type):
+                    ?>
+                        <label class="complaint-type-option">
+                            <input type="radio" name="complaint_type" value="<?php echo $type['complain_type_id']; ?>" 
+                                <?php echo ($type['complain_type_id'] == 4) ? 'checked' : ''; ?>>
+                            <?php echo htmlspecialchars($type['complain']); ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+                
+                <div class="complaint-message-field">
+                    <label for="complaintMessage">Дополнительный комментарий (необязательно):</label>
+                    <textarea id="complaintMessage" placeholder="Опишите подробнее причину жалобы..."></textarea>
+                </div>
+            </div>
             
-            fetch('../friends/requests.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'user_id=' + userId
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    button.textContent = '✓ Заявка отправлена';
-                    button.classList.remove('send-request');
-                    button.classList.add('pending');
-                    button.style.backgroundColor = '#e7e8ec';
-                    button.style.color = '#818c99';
-                    button.disabled = true;
-                } else {
-                    alert('Ошибка: ' + data.message);
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка');
-                button.textContent = originalText;
-                button.disabled = false;
-            });
-        });
-    });
-
-    // Принятие заявки
-    document.querySelectorAll('.accept-request').forEach(button => {
-        button.addEventListener('click', function() {
-            const userId = this.dataset.userId;
-            const button = this;
-            const originalText = button.textContent;
-            
-            button.textContent = 'Принятие...';
-            button.disabled = true;
-            
-            fetch('../friends/accept_request.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'user_id=' + userId
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    button.textContent = '✓ Вы друзья';
-                    button.classList.remove('accept-request');
-                    button.classList.add('friends');
-                    button.style.backgroundColor = '#e8f5e9';
-                    button.style.color = '#4caf50';
-                    button.disabled = true;
-                } else {
-                    alert('Ошибка: ' + data.message);
-                    button.textContent = originalText;
-                    button.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка');
-                button.textContent = originalText;
-                button.disabled = false;
-            });
-        });
-    });
-    </script>
+            <div class="complaint-modal-footer">
+                <button class="complaint-btn-cancel" id="cancelComplaintBtn">Отмена</button>
+                <button class="complaint-btn-send" id="sendComplaintBtn">Отправить жалобу</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 
