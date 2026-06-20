@@ -1,3 +1,7 @@
+<script>
+const IS_LOGGED_IN = <?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>;
+</script>
+
 <div class="header-fullwidth">
 	<h1>Название</h1>
 

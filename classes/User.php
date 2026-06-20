@@ -144,8 +144,8 @@ class User {
 		return $result;
     }
 
-	function areFriends(User $user1, User $user2){
-		return  $user1->getFriendshipStatus($user2) == FriendshipStatus::ACCEPTED;
+	static function areFriends(User $user1, User $user2){
+		return  $user1->getFriendshipStatus($user2->id) == FriendshipStatus::ACCEPTED;
 	}
 
 }

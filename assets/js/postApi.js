@@ -8,8 +8,19 @@ const PostApi = {
         throw new Error(`HTTP ошибка: ${response.status}`);
       }
 
-      const posts = await response.json();
-      postView.renderAllPosts(posts, "postsContainer");
+      const data = await response.json();
+
+      // Проверка на закрытую страницу
+      if (data.error && data.is_private) {
+        document.getElementById("postsContainer").innerHTML = `
+                <div class="private-message">
+                    🔒 Страница закрыта. Добавьте пользователя в друзья, чтобы видеть посты.
+                </div>
+            `;
+        return;
+      }
+
+      postView.renderAllPosts(data, "postsContainer");
     } catch (error) {
       console.error("Ошибка загрузки:", error);
       document.getElementById("postsContainer").innerHTML =

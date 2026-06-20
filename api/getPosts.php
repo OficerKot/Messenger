@@ -9,13 +9,35 @@ if(isset($_SESSION['id'])){
 else $current_user_id=null;
 
 
-
 if (isset($_GET['user_id'])) {
 	$wall_owner_id = $_GET['user_id'] ?? null;
-    $posts = $postModel->getUserPosts($wall_owner_id); //стена
+
+	
+	$wall_owner = User::getUserById($wall_owner_id, $db);
+	$curUser = User::getUserById($current_user_id, $db);
+	$isOwner = $current_user_id == $wall_owner_id;
+
+	//Проверка, открыта ли страница для просмотра постов
+	$canView = $wall_owner->get(UserField::PRIVATE) == 0;
+	
+	if($current_user_id){
+		$canView = $canView || User::areFriends($curUser, $wall_owner);
+
+	}
+	if(!$canView){
+		echo json_encode(['error' => 'Страница закрыта', 'is_private' => true]);
+        exit;
+	}
+
+	//стена
+	 $posts = $postModel->getUserPosts($wall_owner_id);
+
+
 } else {
-    $posts = $postModel->getNewestPosts(); //общая лента
+	//общая лента
+    $posts = $postModel->getNewestPosts(); 
 }
+
 
 foreach ($posts as &$post) {
 	$is_author = ($current_user_id && $post['autor_id'] == $current_user_id);
