@@ -1,4 +1,5 @@
-/* Блок с информацией о пользователе: фото профиля, имя и т.п.*/
+/* ================= Пользователи ================= */
+
 .userInfoContainer {
 	display: flex;
 	flex-direction: row;
@@ -17,6 +18,22 @@
 	font-size: 24px;
 	margin: 2px 0px 16px;
 }
+
+.pageNotFound {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	height: 60%;
+	width: 100%;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+
+/* ================= Посты ================= */
+
 
 .postsContainer {
 	display: flex;
@@ -73,18 +90,7 @@
 	position: relative;
 }
 
-.pageNotFound {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	height: 60%;
-	width: 100%;
-	font-size: 40px;
-	font-weight: bold;
-}
-
+/* ================= Комментарии ================= */
 .commentForm {
 	display: flex;
 	flex-direction: column;
@@ -138,4 +144,13 @@
 	max-height: 300px;
 	overflow-y: auto;
 	margin-bottom: 10px;
+}
+
+.comment-menu {
+	max-width: 150px;
+}
+
+
+.comment-menu-wrapper {
+	position: relative;
 }

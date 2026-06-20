@@ -19,7 +19,7 @@ const CommentApi = {
     return response.json();
   },
 
-  async update(commentId, comment) {
+  async saveCommentEdit(commentId, comment) {
     const formData = new FormData();
     formData.append("comment_id", commentId);
     formData.append("comment", comment);
@@ -28,7 +28,11 @@ const CommentApi = {
       method: "POST",
       body: formData,
     });
-    return response.json();
+    const result = await response.json();
+    if (result.success) {
+      commentView.update(commentId, comment);
+      return result;
+    }
   },
 
   async delete(commentId) {
@@ -37,6 +41,9 @@ const CommentApi = {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `comment_id=${commentId}`,
     });
-    return response.json();
+    const result = await response.json();
+    if (result.success) {
+      commentView.remove(commentId);
+    }
   },
 };
