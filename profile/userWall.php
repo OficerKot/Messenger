@@ -5,7 +5,7 @@ include "../includes/init.php";
 $wall_owner_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 
 if ($wall_owner_id == 0) {
-    header('Location: friends.php');
+    header('Location: ../friends/friends.php');
     exit;
 }
 
@@ -40,24 +40,36 @@ $profile_img = $wall_owner->get(UserField::AVATAR);
 // Проверяем статус дружбы
 $friendship_status = 'none';
 $is_owner = false;
-$incoming_request = false; // Есть ли входящая заявка от этого пользователя
+$sent_request = false;
+$incoming_request = false;
+
+// ===== ПРОВЕРКА НА АДМИНА =====
+$is_admin = false;
+$complaints_count = 0;
 
 if (isset($_SESSION['id'])) {
     $current_user_id = $_SESSION['id'];
     $is_owner = ($current_user_id == $wall_owner_id);
     
-    if (!$is_owner) {
-		$current_user = User::getUserById($current_user_id, $db);
-		if ($current_user) {
-			$friendship_status = $current_user->getFriendshipStatus($wall_owner_id);
-			
-			// Проверяем, отправил ли текущий пользователь заявку
-			$sent_request = $current_user->hasSentRequestTo($wall_owner_id);
-			
-			// Проверяем, есть ли входящая заявка
-			$incoming_request = $current_user->hasIncomingRequestFrom($wall_owner_id);
-		}
-	}
+    // Проверяем, является ли текущий пользователь админом
+    $current_user = User::getUserById($current_user_id, $db);
+    if ($current_user && $current_user->get('role') == '1') {
+        $is_admin = true;
+        
+        // Получаем количество жалоб на этого пользователя
+        $complaints_sql = "SELECT COUNT(*) as count FROM complains WHERE target_user_id = ?";
+        $complaints_result = $db->fetchOne($complaints_sql, [$wall_owner_id]);
+        $complaints_count = $complaints_result ? $complaints_result['count'] : 0;
+    }
+    
+    if (!$is_owner && !$is_admin) {
+        // Обычный пользователь - проверяем статус дружбы
+        if ($current_user) {
+            $friendship_status = $current_user->getFriendshipStatus($wall_owner_id);
+            $sent_request = $current_user->hasSentRequestTo($wall_owner_id);
+            $incoming_request = $current_user->hasIncomingRequestFrom($wall_owner_id);
+        }
+    }
 }
 ?>
 
@@ -96,35 +108,60 @@ if (isset($_SESSION['id'])) {
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         <img src="../assets/uploads/<?php echo $profile_img; ?>" style="height: 200px; border-radius: 12px;">
-    
-                        <!-- Кнопки дружбы -->
+                        
+                        <!-- ===== КНОПКИ ДЕЙСТВИЙ ===== -->
                         <?php if (isset($_SESSION['id']) && !$is_owner): ?>
                             
-                            <?php if ($friendship_status == 'accepted'): ?>
-                                <button class="friend-btn friends" disabled>
-                                    Вы друзья ✓
+                            <!-- АДМИН: показываем жалобы и кнопку удаления -->
+                            <?php if ($is_admin): ?>
+                                <?php if ($complaints_count > 0): ?>
+                                    <div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
+                                        <span style="color: #e74c3c; font-size: 14px;">
+                                            ⚠ Жалоб на пользователя: <strong><?php echo $complaints_count; ?></strong>
+                                        </span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
+                                        <span style="color: #818c99; font-size: 14px;">
+                                            ✅ Жалоб нет
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <button class="admin-delete-btn" data-user-id="<?php echo $wall_owner_id; ?>">
+                                    🗑 Удалить пользователя
                                 </button>
                             
-                            <?php elseif ($sent_request): ?>
-                                <button class="friend-btn pending" disabled>
-                                    Заявка отправлена
-                                </button>
-                            
-                            <?php elseif ($incoming_request): ?>
-                                <button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
-                                    Принять заявку в друзья
-                                </button>
-                            
+                            <!-- ОБЫЧНЫЙ ПОЛЬЗОВАТЕЛЬ: кнопки дружбы и жалобы -->
                             <?php else: ?>
-                                <button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
-                                    Добавить в друзья
+                                
+                                <?php if ($friendship_status == 'accepted'): ?>
+                                    <button class="friend-btn friends" disabled>
+                                        Вы друзья ✓
+                                    </button>
+                                
+                                <?php elseif ($sent_request): ?>
+                                    <button class="friend-btn pending" disabled>
+                                        Заявка отправлена
+                                    </button>
+                                
+                                <?php elseif ($incoming_request): ?>
+                                    <button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        Принять заявку в друзья
+                                    </button>
+                                
+                                <?php else: ?>
+                                    <button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        Добавить в друзья
+                                    </button>
+                                <?php endif; ?>
+                                
+                                <!-- Кнопка жалобы -->
+                                <button class="complaint-btn" data-user-id="<?php echo $wall_owner_id; ?>">
+                                    ⚠ Пожаловаться
                                 </button>
+                                
                             <?php endif; ?>
-                            
-                            <!-- Кнопка жалобы -->
-                            <button class="complaint-btn" data-user-id="<?php echo $wall_owner_id; ?>">
-                                ⚠ Пожаловаться
-                            </button>
                             
                         <?php elseif ($is_owner): ?>
                             <button class="friend-btn" style="background-color: #e7e8ec; color: #818c99; cursor: default;" disabled>
@@ -150,9 +187,6 @@ if (isset($_SESSION['id'])) {
                 <div class="postsContainer" id="postsContainer">
                     <script src="../assets/js/PostView.js"></script>
                     <script type="module" src="../assets/js/userWall.js"></script>
-                    
-                    <script src="../assets/js/friends.js" defer></script>
-                    <script src="../assets/js/complaints.js" defer></script>
                 </div>
             </div>
         </div>
@@ -173,7 +207,6 @@ if (isset($_SESSION['id'])) {
                 
                 <div class="complaint-types">
                     <?php
-                    // Получаем типы жалоб из БД
                     $types_sql = "SELECT complain_type_id, complain FROM complain_types";
                     $types = $db->fetchAll($types_sql);
                     foreach ($types as $type):
@@ -198,6 +231,11 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </div>
+
+    <!-- ===== ПОДКЛЮЧЕНИЕ СКРИПТОВ ===== -->
+    <script src="../assets/js/friends.js" defer></script>
+    <script src="../assets/js/complaints.js" defer></script>
+    <script src="../assets/js/admin.js" defer></script>
 
 </body>
 

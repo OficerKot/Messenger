@@ -18,8 +18,8 @@ else{
 	$creation_date = date('Y-m-d');
 	$role = 0; // чтобы сделать кого то админом, редактируем через phpMyAdmin
 	$avatar = 'baseimage.jpg';
-	$sql = "INSERT INTO users (login, password, first_name, last_name, birthday_date, creation_date, role, avatar) 
-	VALUES ('$login', '$hashpass', '$first_name', '$last_name', '$birthday_date', '$creation_date', '$role', '$avatar')";
+	$sql = "INSERT INTO users (login, password, first_name, last_name, birthday_date, creation_date, role, is_private, avatar) 
+	VALUES ('$login', '$hashpass', '$first_name', '$last_name', '$birthday_date', '$creation_date', '$role', 0, '$avatar')";
 	
 	$conn->query($sql);
 

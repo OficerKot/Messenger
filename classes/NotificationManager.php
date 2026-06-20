@@ -70,5 +70,6 @@ class NotificationManager {
                 WHERE receiver_id = ?";
         return $this->db->query1($sql, [$this->current_user_id])->rowCount();
     }
+    
 }
 ?>

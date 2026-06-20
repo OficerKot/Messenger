@@ -39,14 +39,23 @@ $notifications = $notificationManager->getRecent(5);
                     <p>Нет уведомлений</p>
                 </div>
             <?php else: ?>
-                <?php foreach ($notifications as $notif): ?>
-                    <!-- ОБЕРТАЕМ В ССЫЛКУ НА ПРОФИЛЬ ОТПРАВИТЕЛЯ -->
-                    <a href="../profile/userWall.php?user_id=<?php echo $notif['sender_id']; ?>" 
+                <?php foreach ($notifications as $notif): 
+                    // Получаем аватарку отправителя
+                    $sender_avatar = 'baseimage.jpg';
+                    $avatar_sql = "SELECT avatar FROM users WHERE user_id = ?";
+                    $avatar_result = $db->fetchOne($avatar_sql, [$notif['sender_id']]);
+                    if ($avatar_result && !empty($avatar_result['avatar'])) {
+                        $sender_avatar = $avatar_result['avatar'];
+                    }
+                ?>
+                    <a href="../friends/userWall.php?user_id=<?php echo $notif['sender_id']; ?>" 
                        style="text-decoration: none; color: inherit; display: block;">
                         <div class="notification-item <?php echo $notif['is_read'] ? 'read' : 'unread'; ?>" 
                              data-notification-id="<?php echo $notif['notification_id']; ?>">
                             <div class="notification-avatar">
-                                <?php echo strtoupper(substr($notif['sender_name'], 0, 1)); ?>
+                                <img src="../assets/uploads/<?php echo $sender_avatar; ?>" 
+                                     alt="Avatar" 
+                                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                             </div>
                             <div class="notification-content">
                                 <div class="notification-text">
