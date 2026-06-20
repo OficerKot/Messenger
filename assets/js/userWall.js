@@ -1,6 +1,6 @@
 window.postView = new PostView();
 window.commentView = new CommentView();
-// события View
+// ============ события PostView
 postView.on("delete", (postId) => {
   PostApi.onDeletePost(postId);
 });
@@ -32,8 +32,8 @@ postView.on("toggleComments", async (postId) => {
     const result = await CommentApi.create(postId, text);
 
     if (result.success) {
-      commentView.add(section, result.comment); // Только добавить новый
-      form.reset(); // Очистить поле
+      commentView.add(section, result.comment);
+      form.reset();
     }
   };
 
@@ -43,12 +43,25 @@ postView.on("toggleComments", async (postId) => {
   }
 });
 
+// ============ события CommentView
+
+commentView.on("delete", (commentId) => {
+  CommentApi.delete(commentId);
+});
+
+commentView.on("edit", (commentId) => {
+  commentView.showCommentEditForm(commentId, CommentApi.saveCommentEdit);
+});
+
+// ==================================
 // Функция для получения GET параметров из URL
 function getUrlParam(name) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(name);
 }
 
+// ==================================
+// Основная....программа т_т
 const wall_owner_id = getUrlParam("user_id");
 PostApi.loadPosts(wall_owner_id);
 document
