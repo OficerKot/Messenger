@@ -1,16 +1,16 @@
 const PostApi = {
   async loadPosts(wall_owner_id) {
     try {
-      const response = await fetch(
-        `../../api/getPosts.php?user_id=${wall_owner_id}`,
-      );
+      const id = wall_owner_id ? `?user_id=${wall_owner_id}` : ``;
+      const response = await fetch(`../../api/getPosts.php${id}`);
+
       if (!response.ok) {
         throw new Error(`HTTP ошибка: ${response.status}`);
       }
 
       const data = await response.json();
 
-      // Проверка на закрытую страницу
+      // Проверка на закрытую страницу (если смотрим именно стену пользователя!)
       if (data.error && data.is_private) {
         document.getElementById("postsContainer").innerHTML = `
                 <div class="private-message">

@@ -63,9 +63,7 @@ function getUrlParam(name) {
 // ==================================
 // Основная....программа т_т
 const wall_owner_id = getUrlParam("user_id");
-if (wall_owner_id) {
-  PostApi.loadPosts(wall_owner_id);
-}
+PostApi.loadPosts(wall_owner_id);
 
 const postForm = document.getElementById("postForm");
 if (postForm) {

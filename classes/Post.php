@@ -42,7 +42,6 @@ public function getNewestPosts(){
             FROM posts p
             JOIN users u ON p." . PostField::AUTHOR_ID . " = u." . UserField::ID . "
             ORDER BY p." . PostField::DATE . " DESC";
-    
     return $this->db->fetchAll($sql);
 }
 
