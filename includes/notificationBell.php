@@ -48,7 +48,7 @@ $notifications = $notificationManager->getRecent(5);
                         $sender_avatar = $avatar_result['avatar'];
                     }
                 ?>
-                    <a href="../friends/userWall.php?user_id=<?php echo $notif['sender_id']; ?>" 
+                    <a href="../profile/userWall.php?user_id=<?php echo $notif['sender_id']; ?>" 
                        style="text-decoration: none; color: inherit; display: block;">
                         <div class="notification-item <?php echo $notif['is_read'] ? 'read' : 'unread'; ?>" 
                              data-notification-id="<?php echo $notif['notification_id']; ?>">
