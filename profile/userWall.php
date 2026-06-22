@@ -55,7 +55,7 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 					<img src="../assets/uploads/<?php echo $profile_img; ?>" style="height: 200px;">
 				</div>
 
-				<?php if($wall_owner != null && isset($_SESSION['id'])){?>
+				<?php if($wall_owner && isset($_SESSION['id']) && AccessHelper::HasAccessToWall($_SESSION['id'], $_GET['user_id'], $db)){?>
 				<!--Форма для создания поста -->
 				<div>
 					<form id="postForm" class="postForm">
