@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json');
 include '../includes/init.php';
 include '../classes/NotificationManager.php';
@@ -7,6 +8,7 @@ if (!isset($_SESSION['id'])) {
     echo json_encode(['success' => false, 'message' => 'Вы не авторизованы']);
     exit();
 }
+
 
 $sender_id = $_SESSION['id'];
 $receiver_id = intval($_POST['user_id']);
@@ -34,4 +36,5 @@ if ($result['success']) {
 }
 
 echo json_encode($result);
+
 ?>

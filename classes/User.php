@@ -1,4 +1,5 @@
 <?php
+include "../includes/init.php";
 
 class UserField {
 
@@ -24,6 +25,7 @@ class User {
 	
     private $data = [];
 	private $db;
+
     private $id;
     private $editable = [
         UserField::FIRST_NAME, 
@@ -47,6 +49,7 @@ class User {
 		} 
 		return new self($id, $data, $db);
 	}
+
     
     public function get($field) {
         return $this->data[$field] ?? '';
@@ -76,6 +79,7 @@ class User {
         }
         return true; 
     }
+
 
 	public function getAge(){
 		$curDate = new DateTime();
@@ -109,32 +113,33 @@ class User {
     }
     
     //ОТПРАВКА ФРЕНД РЕКВЕСТА
- public function sendFriendRequest($receiver_id) {
-    $status = $this->getFriendshipStatus($receiver_id);
-    
-    if ($status !== 'none') {
-        return ['success' => false, 'message' => 'Заявка уже существует'];
+    public function sendFriendRequest($receiver_id) {
+        // Проверяем, есть ли уже заявка
+        $status = $this->getFriendshipStatus($receiver_id);
+        
+        if ($status !== 'none') {
+            return ['success' => false, 'message' => 'Заявка уже существует'];
+        }
+        
+        if ($this->id == $receiver_id) {
+            return ['success' => false, 'message' => 'Нельзя добавить самого себя'];
+        }
+        
+        $data = [
+            'user_id' => $this->id,
+            'friend_id' => $receiver_id,
+            'status' => 'pending',
+            'date' => date('Y-m-d H:i:s')
+        ];
+        
+        $result = $this->db->insert('friends', $data);
+        
+        if ($result) {
+            return ['success' => true, 'message' => 'Заявка отправлена'];
+        }
+        
+        return ['success' => false, 'message' => 'Ошибка базы данных'];
     }
-    
-    if ($this->id == $receiver_id) {
-        return ['success' => false, 'message' => 'Нельзя добавить самого себя'];
-    }
-    
-    $data = [
-        'user_id' => $this->id,
-        'friend_id' => $receiver_id,
-        'status' => 'pending',
-        'date' => date('Y-m-d H:i:s')
-    ];
-    
-    $result = $this->db->insert('friends', $data);
-    
-    if ($result) {
-        return ['success' => true, 'message' => 'Заявка отправлена'];
-    }
-    
-    return ['success' => false, 'message' => 'Ошибка базы данных'];
-}
     
     public static function getAllUsersExcept($user_id, $db) {
         $query = "SELECT user_id, first_name, last_name, login 
@@ -142,6 +147,21 @@ class User {
                   WHERE user_id != ?";
         $result = $db->fetchAll($query, [$user_id]);
 		return $result;
+    }
+    // Проверяет, отправил ли текущий пользователь заявку другому
+    public function hasSentRequestTo($other_user_id) {
+        $sql = "SELECT * FROM friends 
+                WHERE user_id = ? AND friend_id = ? AND status = 'pending'";
+        $result = $this->db->fetchOne($sql, [$this->id, $other_user_id]);
+        return $result !== null && $result !== false;
+    }
+
+    // Проверяет, есть ли входящая заявка от другого пользователя
+    public function hasIncomingRequestFrom($other_user_id) {
+        $sql = "SELECT * FROM friends 
+                WHERE user_id = ? AND friend_id = ? AND status = 'pending'";
+        $result = $this->db->fetchOne($sql, [$other_user_id, $this->id]);
+        return $result !== null && $result !== false;
     }
 
 	static function areFriends(User $user1, User $user2){

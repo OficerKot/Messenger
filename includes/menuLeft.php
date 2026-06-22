@@ -1,6 +1,10 @@
 <?php 
-include "init.php";
+
+session_start();
+/** @var mysqli $conn */
 ?>
+<link rel="stylesheet" href="../assets/css/menuLeft.css">
+
 
 <div class="left-panel">
 	<h2>Меню</h2>
@@ -10,11 +14,14 @@ include "init.php";
 			$user = User::getUserById($id, $db)?>
 		<li>
 			<a href="../profile/userWall.php?user_id=<?php echo $user->get(UserField::ID); ?>">
+
 				Профиль
 			</a>
 		</li>
 		<li>
+
 			<a href="../profile/globalWall.php" style="
+
 				text-decoration: none;
 				display: block;
 				">
@@ -30,6 +37,7 @@ include "init.php";
 			</a>
 		</li>
 		<li>
+
 			<a href="../friends/friends.php" style="
 				text-decoration: none;
 				display: block;
@@ -38,6 +46,7 @@ include "init.php";
 			</a>
 		</li>
 		<li>
+
 			<a href="../profile/settings.php" style="
 				text-decoration: none;
 				display: block;

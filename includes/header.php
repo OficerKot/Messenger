@@ -2,6 +2,9 @@
 const IS_LOGGED_IN = <?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>;
 </script>
 
+<link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="path/to/style.css">
+
 <div class="header-fullwidth">
 	<h1>Название</h1>
 
@@ -19,6 +22,7 @@ const IS_LOGGED_IN = <?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>;
 	<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 	<div class="header-right">
 		<?php
+
 		require_once __DIR__ . '/../classes/Database.php';
 		
 		if (isset($_SESSION['id'])):
@@ -45,3 +49,4 @@ const IS_LOGGED_IN = <?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>;
 	</div>
 </div>
 <script src="../assets/js/notifications.js" defer></script>
+
