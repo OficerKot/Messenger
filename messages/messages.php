@@ -39,22 +39,22 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 			<div class="top-block">
 				<!-- Заполняется через js -->
 			</div>
-			<div class="center-panel1" id="messagesContainer">
+			<div class="msg-container">
+				<div class="msg-list" id="messagesContainer"></div>
 
+				<!--Форма для отправки сообщения -->
+
+				<?php if(AccessHelper::HasAccessToWall($this_user, $other_user_id, $db)){ ?>
+				<form id="msg-form" class="msg-form">
+					<div style="display: flex; flex-direction: row;">
+						<textarea id="msgText" placeholder="Введите сообщение..."></textarea>
+						<button type="submit">Отправить</button>
+					</div>
+					<input id="msgImage" type="file">
+
+				</form>
+				<?php } ?>
 			</div>
-
-			<!--Форма для отправки сообщения -->
-
-			<?php if(AccessHelper::HasAccessToWall($this_user, $other_user_id, $db)){ ?>
-			<form id="msg-form" class="msg-form">
-				<div style="display: flex; flex-direction: row;">
-					<textarea id="msgText" placeholder="Введите сообщение..."></textarea>
-					<button type="submit">Отправить</button>
-				</div>
-				<input id="msgImage" type="file">
-
-			</form>
-			<?php } ?>
 		</div>
 
 		<!-- Правая колонка -->

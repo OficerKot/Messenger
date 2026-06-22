@@ -1,5 +1,5 @@
 <?php
-include "../includes/init.php";
+
 
 class UserField {
 
