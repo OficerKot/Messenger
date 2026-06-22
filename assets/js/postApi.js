@@ -54,6 +54,7 @@ const PostApi = {
       if (newPost.success) {
         postView.addPostToWall(newPost.post, "postsContainer");
 
+        //Очистка формы
         document.getElementById("postMessage").value = "";
         document.getElementById("postImage").value = "";
       } else {

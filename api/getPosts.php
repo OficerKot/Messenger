@@ -26,10 +26,10 @@ if (isset($_GET['user_id'])) {
 } else {
 	//общая лента
     $posts = $postModel->getNewestPosts(); 
-	//Из закрытых страниц посты не попадаюь
+	//Из закрытых страниц посты не попадают
 	$allowedPosts = [];
 	foreach($posts as $post){
-		$owner = $post[PostField::AUTHOR_ID] ;
+		$owner = $post[PostField::OWNER_ID] ;
 		if(AccessHelper::HasAccessToWall($current_user_id, $owner, $db)){
 			$allowedPosts[] = $post;
 		}

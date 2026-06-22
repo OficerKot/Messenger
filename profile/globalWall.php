@@ -46,7 +46,7 @@ include '../classes/User.php';
 	<script src="../assets/js/comments/CommentView.js"></script>
 	<script src="../assets/js/comments/commentApi.js"></script>
 
-	<script src="../assets/js/userWall.js"></script>
+	<script src="../assets/js/postsLoader.js"></script>
 </body>
 
 </html>
