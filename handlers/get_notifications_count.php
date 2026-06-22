@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-include '../includes/init.php';
+include '../includes/init.php';  // ← используем init.php
 include '../classes/NotificationManager.php';
 
 if (!isset($_SESSION['id'])) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 19 2026 г., 16:16
+-- Время создания: Июн 22 2026 г., 04:29
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -35,6 +35,13 @@ CREATE TABLE `complains` (
   `additional_message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Дамп данных таблицы `complains`
+--
+
+INSERT INTO `complains` (`complain_id`, `sender_id`, `target_user_id`, `complain_type_id`, `additional_message`) VALUES
+(1, 7, 12, 1, '');
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +52,16 @@ CREATE TABLE `complain_types` (
   `complain_type_id` int NOT NULL,
   `complain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `complain_types`
+--
+
+INSERT INTO `complain_types` (`complain_type_id`, `complain`) VALUES
+(1, 'Спам'),
+(2, 'Оскорбления'),
+(3, 'Неприемлемый контент'),
+(4, 'Другое');
 
 -- --------------------------------------------------------
 
@@ -149,7 +166,9 @@ INSERT INTO `posts` (`post_id`, `autor_id`, `wall_owner_id`, `message`, `image_p
 (17, 1, 2, 'ДОБРОЕ УТРО!!! 🤗🤗🤣🤣😉😉', '6a34851880c99_dobroe-utro.gif', '2026-06-19 02:52:04'),
 (18, 1, 1, 'ВСЕМ УТРА! УТРО НЕ ДОБРОЕ - ЗАКОНЧИЛОСЬ МОЛОКО. ЭТА ПЕЧАЛЬНАЯ НОВОСТЬ ПОВЕРГЛА МЕНЯ В ШОК, НО Я СПРАВЛЯЮСЬ ❤️❤️❤️\r\nЛЕНОЧКА ПРИВЕТ ДА ХРАНИТ ТЕБЯ БОГ', NULL, '2026-06-19 04:35:37'),
 (21, 1, 7, '', '6a34eb070a00e_s-maslenicej (1).gif', '2026-06-19 10:08:55'),
-(22, 1, 7, 'ДОБРЫЙ ДЕНЬ 👍👍👍👍👍👍👍👍👍', NULL, '2026-06-19 10:09:21');
+(22, 1, 7, 'ДОБРЫЙ ДЕНЬ 👍👍👍👍👍👍👍👍👍', NULL, '2026-06-19 10:09:21'),
+(26, 8, 7, 'БОБА', NULL, '2026-06-22 04:01:40'),
+(27, 8, 7, 'боба', '6a38898b48b1d_test.jpg', '2026-06-22 04:02:03');
 
 -- --------------------------------------------------------
 
@@ -172,7 +191,8 @@ CREATE TABLE `post_comments` (
 INSERT INTO `post_comments` (`comment_id`, `comment`, `post_id`, `author_id`, `date`) VALUES
 (8, 'Почему у вас айди 1', 18, 13, '2026-06-19 15:52:14'),
 (9, 'Вы первый юзер?', 18, 13, '2026-06-19 15:52:20'),
-(10, 'Наталья, вы вызываете подозрения', 18, 13, '2026-06-19 15:52:31');
+(10, 'Наталья, вы вызываете подозрения', 18, 13, '2026-06-19 15:52:31'),
+(17, 'fm,j\'', 22, 7, '2026-06-22 03:54:33');
 
 -- --------------------------------------------------------
 
@@ -216,8 +236,7 @@ INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, 
 (4, 'ds', 'd', 'd', '$2y$10$HNe1k08dfA5Gm0sAEKyPW.MICudA.7iqEWU8FG4ccMRlkl2NCMmva', '0', 0, '2432-03-31', '2026-06-12', 'baseimage.jpg'),
 (6, 'логин', 'имя', 'фамилия', '$2y$10$4oSWq9AVamP2Jwj3W.lZZOq/rMbjHuahmxHDWlJSHj42seudVe6Lu', '0', 0, '0001-01-01', '2026-06-12', 'baseimage.jpg'),
 (7, 'BEBE', 'BOBO', 'PEPE', '$2y$10$hsTSifcvbHYOMOTopunQ4eVBjePnv0XLANAKSGip4MgC45wUkjroy', '0', 0, '9999-09-23', '2026-06-13', 'user_7_1781338757.jpg'),
-(8, 'KEKE', 'K', 'E', '$2y$10$BUFRuB6rH3t/fDMyXExyY.eKCoiQPXy0quoWt7PijdYOEGpzfh1F6', '0', 0, '0004-03-12', '2026-06-16', 'baseimage.jpg'),
-(9, 'GEGE', 'G', 'E', '$2y$10$SwYuPrkfrTAPhgj4yK/GC.hc36CgyHeb19R0j1xbvoZpIF/PyQZjW', '0', 0, '0024-03-05', '2026-06-16', 'baseimage.jpg'),
+(8, 'KEKE', 'K', 'E', '$2y$10$BUFRuB6rH3t/fDMyXExyY.eKCoiQPXy0quoWt7PijdYOEGpzfh1F6', '1', 0, '0004-03-12', '2026-06-16', 'baseimage.jpg'),
 (12, 'abramovCryptoAnalytic1986', 'Cryptograph', 'Abramov', '$2y$10$nzmHs9y1S8hs29nHkMOv..q4TQXoltdaD31h8wEmJWrdC5yN93P36', '0', 0, '1986-02-02', '2026-06-18', 'user_12_1781787526.webp'),
 (13, 'user228', 'User', 'Krutoi', '$2y$10$Z0iHEIxaCvj7VW/8fXYK9.qE36GBYMTtCpR.2ejH87sUA.qQkul/2', '0', 0, '2020-04-02', '2026-06-19', 'baseimage.jpg');
 
@@ -288,13 +307,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `complains`
 --
 ALTER TABLE `complains`
-  MODIFY `complain_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `complain_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `complain_types`
 --
 ALTER TABLE `complain_types`
-  MODIFY `complain_type_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `complain_type_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `direct_message`
@@ -320,13 +339,13 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT для таблицы `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

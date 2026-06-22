@@ -31,7 +31,7 @@ $editableFields = $user->getEditableFields();
 
 		<?php include '../includes/menuLeft.php'; ?>
 		<div class="center-panel">
-			Настройки пользователя <?php echo $user->get(UserField::LOGIN); ?>
+			<h2>Настройки пользователя <?php echo $user->get(UserField::LOGIN); ?></h2>
 			<form id="settingsForm" method="POST" enctype="multipart/form-data">
 				<div>
 					<label>Имя:</label>
