@@ -1,0 +1,304 @@
+/* ========================================
+   СТРАНИЦЫ ПРОФИЛЯ И НАСТРОЕК
+   ======================================== */
+
+/* КОНТЕЙНЕР НАСТРОЕК */
+.center-panel form {
+    padding: 20px;
+    max-width: 600px;
+}
+
+.center-panel form > div {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* ЛЕЙБЛЫ ФОРМЫ */
+.center-panel label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+/* ПОЛЯ ВВОДА */
+.center-panel input[type="text"],
+.center-panel input[type="date"],
+.center-panel input[type="password"],
+.center-panel input[type="email"] {
+    padding: 10px 12px;
+    border: 1px solid #dfe2e5;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #ffffff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.center-panel input[type="text"]:focus,
+.center-panel input[type="date"]:focus,
+.center-panel input[type="password"]:focus,
+.center-panel input[type="email"]:focus {
+    outline: none;
+    border-color: #5c9ce6;
+    box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.15);
+}
+
+.center-panel input[type="text"]:hover,
+.center-panel input[type="date"]:hover {
+    border-color: #c4c7cc;
+}
+
+/* ЧЕКБОКСЫ */
+.center-panel input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: #5c9ce6;
+}
+
+/* ТЕКСТ ПОД ЧЕКБОКСОМ */
+.center-panel small {
+    color: #818c99;
+    font-size: 13px;
+    margin-left: 26px;
+    display: block;
+    margin-top: 4px;
+}
+
+/* КНОПКА СОХРАНЕНИЯ */
+.center-panel button[type="submit"] {
+    background-color: #5c9ce6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    margin-top: 12px;
+    width: fit-content;
+}
+
+.center-panel button[type="submit"]:hover {
+    background-color: #4a8fd6;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(92, 156, 230, 0.3);
+}
+
+.center-panel button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ЗАГРУЗКА ФАЙЛА (АВАТАР) */
+.center-panel input[type="file"] {
+    padding: 8px 0;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.center-panel input[type="file"]::-webkit-file-upload-button {
+    background-color: #edeef0;
+    border: 1px solid #dfe2e5;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background-color 0.15s ease;
+}
+
+.center-panel input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #e4e5e8;
+}
+
+/* ПРЕВЬЮ АВАТАРА */
+.center-panel img[src*="uploads"] {
+    display: block;
+    margin-top: 16px;
+    border-radius: 12px;
+    border: 2px solid #e7e8ec;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+}
+
+/* СТАТУС СОХРАНЕНИЯ */
+#savingStatus {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    display: none;
+}
+
+#savingStatus:has(:not(:empty)) {
+    display: block;
+}
+
+#savingStatus:not(:empty) {
+    display: block;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+/* СТРАНИЦА ПОЛЬЗОВАТЕЛЯ (userWall.php) */
+.center-panel:has(> :first-child:nth-child(1)) {
+    padding: 20px;
+}
+
+/* ЗАГОЛОВОК СТРАНИЦЫ ПОЛЬЗОВАТЕЛЯ */
+.center-panel h2,
+.center-panel h3 {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+/* СЕКЦИИ ПРОФИЛЯ */
+.profile-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.profile-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e7e8ec;
+}
+
+/* ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ */
+.profile-info-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.profile-info-row:last-child {
+    border-bottom: none;
+}
+
+.profile-info-label {
+    font-weight: 600;
+    color: #6f7885;
+    width: 150px;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.profile-info-value {
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+/* АВАТАР ПРОФИЛЯ БОЛЬШОЙ */
+.profile-avatar-large {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* КНОПКИ ДЕЙСТВИЙ НА СТРАНИЦЕ ПРОФИЛЯ */
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e7e8ec;
+}
+
+.profile-actions button,
+.profile-actions a {
+    background-color: #5c9ce6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.profile-actions button:hover,
+.profile-actions a:hover {
+    background-color: #4a8fd6;
+    transform: translateY(-1px);
+}
+
+.profile-actions button.secondary,
+.profile-actions a.secondary {
+    background-color: #edeef0;
+    color: #2c3e50;
+}
+
+.profile-actions button.secondary:hover,
+.profile-actions a.secondary:hover {
+    background-color: #e4e5e8;
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 768px) {
+    .center-panel form > div {
+        max-width: 100%;
+    }
+    
+    .center-panel input[type="text"],
+    .center-panel input[type="date"] {
+        max-width: 100%;
+    }
+    
+    .center-panel button[type="submit"] {
+        width: 100%;
+    }
+    
+    .profile-info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .profile-info-label {
+        width: 100%;
+        color: #818c99;
+    }
+    
+    .profile-avatar-large {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .profile-actions button,
+    .profile-actions a {
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -22,7 +22,7 @@ include "init.php";
 			</a>
 		</li>
 		<li>Чат</li>
-		<li>Звонки</li>
+
 		<li>
 			<a href="../friends/friends.php" style="
 				text-decoration: none;

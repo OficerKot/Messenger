@@ -4,7 +4,7 @@ class Database {
    private $pdo;
     
     public function __construct() {
-        $this->pdo = new PDO("mysql:host=messenger;dbname=Social", "root", "");
+        $this->pdo = new PDO("mysql:host=localhost;dbname=Social", "root", "");
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

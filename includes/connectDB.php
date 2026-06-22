@@ -1,5 +1,5 @@
 <?php
-	$servername = "messenger";
+	$servername = "localhost";
 	$username = "root";
 	$password = "";
 	$dbname = "Social";
