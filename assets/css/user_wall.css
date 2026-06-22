@@ -257,6 +257,7 @@
     border-top: 1px solid #e7e8ec;
     margin-top: 8px;
 }
+
 /* ========== ИЗОБРАЖЕНИЯ В ПОСТАХ ========== */
 .postImg,
 .post-img-wrapper {
@@ -325,139 +326,88 @@ button[class*="comment"] {
 button.comments-toggle-btn:hover {
     background-color: #e4e5e8 !important;
 }
-
-/* ========== МЕНЮ ПОСТА (ТРИ ТОЧКИ) ========== */
-.post-menu {
-    margin-left: auto;
+/* ========== МЕНЮ ПОСТА (ТРИ ТОЧКИ) - ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ========== *//* КОНТЕЙНЕР ПОСТА — должен быть relative */
+.post, .post-item, .post-wrapper {
     position: relative;
 }
 
-.post-menu button,
-.post-menu-wrapper button {
+/* КНОПКА МЕНЮ (три точки) */
+.post-menu-button, .post-menu-trigger {
     background: #f0f2f5;
     border: none;
     border-radius: 8px;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 18px;
     color: #818c99;
-    transition: background 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
 }
 
-.post-menu button:hover,
-.post-menu-wrapper button:hover {
+.post-menu-button:hover {
     background: #e4e5e8;
 }
 
-.post-menu-wrapper {
-    position: relative;
-}
-
-/* ВЫПАДАЮЩЕЕ МЕНЮ - ИСПРАВЛЕНО */
+/* ВЫПАДАЮЩЕЕ МЕНЮ */
 .post-menu-dropdown,
-.post-menu .dropdown,
 .post-dropdown,
-.menu-dropdown {
-    position: absolute !important;
-    right: 0 !important;
-    top: calc(100% + 4px) !important;
-    background: #ffffff !important;
-    border: 1px solid #e7e8ec !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    z-index: 1000 !important;
-    min-width: 180px !important;
-    padding: 4px 0 !important;
-    display: block !important;
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 40px; /* Отступ от кнопки */
+    background: #ffffff;
+    border: 1px solid #e7e8ec;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 180px;
+    padding: 4px 0;
+    display: none; /* Скрыто по умолчанию */
 }
 
-/* Пункты меню */
-.post-menu-dropdown a,
+/* Показываем меню */
+.post-menu-dropdown.active,
+.post-dropdown.active,
+.dropdown-menu.show {
+    display: block;
+    position: relative;
+    /*z-index: 10000;*/ /****************************************/
+}
+
+/* Кнопки внутри меню */
 .post-menu-dropdown button,
-.post-dropdown a,
 .post-dropdown button,
-.menu-dropdown a,
-.menu-dropdown button {
-    display: block !important;
-    width: 100% !important;
-    padding: 10px 16px !important;
-    font-size: 14px !important;
-    color: #2c3e50 !important;
-    text-decoration: none !important;
-    text-align: left !important;
-    background: transparent !important;
-    border: none !important;
-    cursor: pointer !important;
-    font-family: inherit !important;
-    box-sizing: border-box !important;
-}
-
-.post-menu-dropdown a:hover,
-.post-menu-dropdown button:hover,
-.post-dropdown a:hover,
-.post-dropdown button:hover,
-.menu-dropdown a:hover,
-.menu-dropdown button:hover {
-    background-color: #f0f2f5 !important;
-}
-
-/* Пункт "Удалить" - красным */
-.post-menu-dropdown a.delete,
-.post-menu-dropdown button.delete,
-.post-dropdown a.delete,
-.post-dropdown button.delete {
-    color: #e64646 !important;
-}
-
-.post-menu-dropdown a.delete:hover,
-.post-menu-dropdown button.delete:hover,
-.post-dropdown a.delete:hover,
-.post-dropdown button.delete:hover {
-    background-color: #ffebee !important;
-}
-
-/* Скрываем меню по умолчанию (если нужно) */
-.post-menu-dropdown.hidden,
-.post-dropdown.hidden,
-.menu-dropdown.hidden {
-    display: none !important;
-}
-
-/* ========== ФОРМА РЕДАКТИРОВАНИЯ ПОСТА ========== */
-.postFormEdit {
+.dropdown-menu button {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px;
-    margin: 8px auto;
-    background: #ffffff;
-    border-radius: 8px;
-    gap: 8px;
+    align-items: center;
     width: 100%;
-    max-width: 550px;
-    box-sizing: border-box;
-}
-
-.postFormEdit textarea {
-    resize: none;
-    min-height: 100px;
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #dfe2e5;
-    border-radius: 8px;
+    padding: 10px 16px;
     font-size: 14px;
-    font-family: inherit;
-    background: #ffffff;
-    box-sizing: border-box;
+    color: #2c3e50;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
 }
 
-.postFormEdit textarea:focus {
-    outline: none;
-    border-color: #5c9ce6;
+.post-menu-dropdown button:hover,
+.post-dropdown button:hover {
+    background: #f0f2f5;
+}
+
+/* Кнопка "Удалить" */
+.delete-btn,
+button[class*="delete"] {
+    color: #e64646;
+}
+
+.delete-btn:hover,
+button[class*="delete"]:hover {
+    background: #ffebee;
 }
 
 /* ========== ФОРМА КОММЕНТАРИЯ ========== */
@@ -582,6 +532,240 @@ button.comments-toggle-btn:hover {
     color: #dfe2e5;
     margin-bottom: 12px;
 }
+/* ========== ФОРМА РЕДАКТИРОВАНИЯ ПОСТА ========== */
+.post-edit-form,
+.postFormEdit {
+    background: #ffffff !important;
+    border: 1px solid #e7e8ec !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    margin: 12px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important; /* Все элементы по левому краю */
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Текстовое поле редактирования */
+.post-edit-form textarea,
+.postFormEdit textarea {
+    width: 100% !important;
+    min-height: 100px !important;
+    padding: 12px !important;
+    border: 1px solid #dfe2e5 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    resize: vertical !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    color: #2c3e50 !important;
+}
+
+.post-edit-form textarea:focus,
+.postFormEdit textarea:focus {
+    outline: none !important;
+    border-color: #5c9ce6 !important;
+    box-shadow: 0 0 0 2px rgba(92, 156, 230, 0.1) !important;
+}
+
+/* Контейнер для загрузки файла */
+.post-edit-form .file-input-wrapper,
+.postFormEdit .file-input-wrapper,
+.post-edit-form > input[type="file"],
+.postFormEdit > input[type="file"] {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+}
+
+/* Стилизуем input file */
+.post-edit-form input[type="file"],
+.postFormEdit input[type="file"] {
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    color: #818c99 !important;
+    cursor: pointer !important;
+}
+
+/* Кнопка выбора файла (стилизация через ::file-selector-button) */
+.post-edit-form input[type="file"]::file-selector-button,
+.post-edit-form input[type="file"]::-webkit-file-upload-button,
+.postFormEdit input[type="file"]::file-selector-button,
+.postFormEdit input[type="file"]::-webkit-file-upload-button {
+    background-color: #edeef0 !important;
+    color: #2c3e50 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background-color 0.15s ease !important;
+    margin-right: 12px !important;
+}
+
+.post-edit-form input[type="file"]:hover::file-selector-button,
+.post-edit-form input[type="file"]:hover::-webkit-file-upload-button,
+.postFormEdit input[type="file"]:hover::file-selector-button,
+.postFormEdit input[type="file"]:hover::-webkit-file-upload-button {
+    background-color: #e4e5e8 !important;
+}
+
+/* Кнопка удаления фото */
+.post-edit-form .delete-photo-btn,
+.postFormEdit .delete-photo-btn,
+.post-edit-form button[class*="delete"],
+.postFormEdit button[class*="delete"] {
+    background: #ffebee !important;
+    color: #e64646 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    align-self: flex-start !important;
+}
+
+.post-edit-form .delete-photo-btn:hover,
+.postFormEdit .delete-photo-btn:hover,
+.post-edit-form button[class*="delete"]:hover,
+.postFormEdit button[class*="delete"]:hover {
+    background: #ffcdd2 !important;
+}
+
+/* Контейнер кнопок действий */
+.post-edit-form .form-actions,
+.postFormEdit .form-actions {
+    display: flex !important;
+    /*align-items: center !important;*/
+    gap: 8px !important;
+    margin-top: 8px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #f0f2f5 !important;
+    width: 100% !important;
+}
+
+/* Все кнопки в форме редактирования */
+.post-edit-form button,
+.postFormEdit button {
+    align-self: flex-start !important; /* Все кнопки по левому краю */
+    
+} 
+
+/* Кнопка сохранения */
+.post-edit-form button[type="submit"],
+.postFormEdit button[type="submit"] {
+    background: #5c9ce6 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.post-edit-form button[type="submit"]:hover,
+.postFormEdit button[type="submit"]:hover {
+    background: #4a8fd6 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Кнопка отмены */
+.post-edit-form button[class*="cancel"],
+.postFormEdit button[class*="cancel"],
+.post-edit-form button:nth-of-type(2):not([type="submit"]),
+.postFormEdit button:nth-of-type(2):not([type="submit"]) {
+    background: #f0f2f5 !important;
+    color: #2c3e50 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.post-edit-form button[class*="cancel"]:hover,
+.postFormEdit button[class*="cancel"]:hover {
+    background: #e4e5e8 !important;
+}
+
+/* Предпросмотр изображения при редактировании */
+.post-edit-form .image-preview,
+.postFormEdit .image-preview,
+.post-edit-form img[src*="upload"],
+.postFormEdit img[src*="upload"] {
+    margin-top: 8px !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+    display: block !important;
+}
+
+.post-edit-form .image-preview img,
+.postFormEdit .image-preview img,
+.post-edit-form img[src*="upload"],
+.postFormEdit img[src*="upload"] {
+    max-width: 100% !important;
+    max-height: 300px !important;
+    object-fit: contain !important;
+    display: block !important;
+    border-radius: 8px !important;
+}
+
+/* ========== КНОПКА "ВЫБРАТЬ ФАЙЛ" ========== */
+
+/* Убираем стандартную рамку у самого инпута */
+.postFormEdit input[type="file"],
+.post-edit-form input[type="file"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #818c99; /* Цвет названия файла */
+}
+
+/* Стилизуем саму кнопку (кроссбраузерно) */
+.postFormEdit input[type="file"]::file-selector-button,
+.postFormEdit input[type="file"]::-webkit-file-upload-button,
+.post-edit-form input[type="file"]::file-selector-button,
+.post-edit-form input[type="file"]::-webkit-file-upload-button {
+    background-color: #edeef0; /* Светло-серый фон как у кнопки "Отмена" */
+    color: #2c3e50;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    margin-right: 12px; /* Отступ до названия файла */
+}
+
+/* Эффект при наведении */
+.postFormEdit input[type="file"]:hover::file-selector-button,
+.postFormEdit input[type="file"]:hover::-webkit-file-upload-button,
+.post-edit-form input[type="file"]:hover::file-selector-button,
+.post-edit-form input[type="file"]:hover::-webkit-file-upload-button {
+    background-color: #e4e5e8;
+}
 
 /* ========== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ========== */
 @media (max-width: 768px) {
@@ -638,5 +822,22 @@ button.comments-toggle-btn:hover {
         width: 28px !important;
         height: 28px !important;
         min-width: 28px !important;
+    }
+
+        .post-edit-form,
+    .postFormEdit {
+        padding: 12px !important;
+        gap: 10px !important;
+    }
+    
+    .post-edit-form .form-actions,
+    .postFormEdit .form-actions {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    
+    .post-edit-form button,
+    .postFormEdit button {
+        width: 100% !important;
     }
 }

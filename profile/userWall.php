@@ -80,7 +80,7 @@ $wall_owner = User::getUserById($_GET['user_id'], $db);
 				</div>
 				<?php } else {?>
 				<div class="pageNotFound">
-					Как вы тут оказались?
+					Как вы тут оказались? Страница не существует
 				</div>
 				<?php } ?>
 			</div>

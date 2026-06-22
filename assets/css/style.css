@@ -820,7 +820,52 @@ h1 {
 	margin-bottom: 12px;
 	opacity: 0.5;
 }
+/*****************кнопочки********************/
+/* Стили для меню поста */
+.post-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 8px;
+    z-index: 1000;
+    min-width: 150px;
+}
 
+/* Кнопка "Редактировать" */
+.edit-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    width: 100%;
+    text-align: left;
+}
+
+.edit-btn:hover {
+    background: #45a049;
+}
+
+/* Кнопка "Удалить" */
+.delete-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.delete-btn:hover {
+    background: #da190b;
+}
+/**************************************/
 /************УВЕДЫ*****************/
 /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
 @media (max-width: 768px) {

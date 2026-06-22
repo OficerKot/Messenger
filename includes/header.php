@@ -1,5 +1,6 @@
 
 <link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="path/to/style.css">
 
 <div class="header-fullwidth">
 	<h1>Название</h1>
