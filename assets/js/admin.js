@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.admin-delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const userId = this.dataset.userId;
-            const userName = this.closest('.userInfoContainer')?.querySelector('.userName')?.textContent?.trim() || 'пользователя';
-            const button = this;
+            const userName = this.closest('.userInfoContainer')?.querySelector('.userName')?.textContent?.trim().replace(/\s+/g, ' ') || 'пользователя';const button = this;
             
-            if (!confirm(`Вы уверены, что хотите удалить пользователя "${userName}"?\n\nЭто действие НЕОБРАТИМО!`)) {
+            // Чистый текст без лишних символов
+            if (!confirm('Удалить пользователя "' + userName + '"?')) {
                 return;
             }
             
@@ -26,11 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Полный путь к друзьям:', window.location.origin + '/friends/friends.php');
                 if (data.success) {
                     window.location.href = '/friends/friends.php';
+                } else {
+                    alert('Ошибка: ' + data.message);
+                    button.textContent = '🗑 Удалить пользователя';
+                    button.disabled = false;
                 }
             })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при удалении пользователя');
+                button.textContent = '🗑 Удалить пользователя';
+                button.disabled = false;
+            });
         });
     });
 });
