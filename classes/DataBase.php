@@ -17,7 +17,8 @@ class Database {
     
     // Одна запись 
     public function fetchOne($sql, $params = []) {
-        return $this->query1($sql, $params)->fetch();
+        $result = $this->query1($sql, $params)->fetch();
+        return $result === false ? null : $result;
     }
     
     // Все записи
