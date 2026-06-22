@@ -7,6 +7,7 @@ if(!isset($_SESSION['id'])){
 };
 
 include '../includes/connectDB.php';
+
 $user = User::getUserById($_SESSION['id'], $db);
 $editableFields = $user->getEditableFields();
 ?>
@@ -14,6 +15,8 @@ $editableFields = $user->getEditableFields();
 
 <!DOCTYPE html>
 <html lang="en">
+
+<link rel="stylesheet" href="../assets/css/profile.css">
 
 <head>
 	<meta charset="UTF-8">

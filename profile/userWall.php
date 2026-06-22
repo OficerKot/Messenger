@@ -1,4 +1,5 @@
 <?php 
+
 include "../includes/init.php";
 $wall_owner_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 $wall_owner = User::getUserById($_GET['user_id'], $db);
@@ -81,14 +82,17 @@ if (isset($_SESSION['id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="../assets/css/menuLeft.css">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../assets/css/style.css">
+
 	<link rel="stylesheet" href="../assets/css/user_wall.css">
 	<title><?php echo $first_name ?> <?php echo $last_name ?>
 	</title>
+
 </head>
 
 <body>
@@ -203,7 +207,7 @@ if (isset($_SESSION['id'])) {
                 }
                 } else {?>
 				<div class="pageNotFound">
-					Как вы тут оказались?
+					Как вы тут оказались? Страница не существует
 				</div>
 				<?php } ?>
             </div>

@@ -1,4 +1,5 @@
 <?php
+include "../includes/init.php";
 
 class UserField {
 
@@ -24,6 +25,7 @@ class User {
 	
     private $data = [];
 	private $db;
+
     private $id;
     private $editable = [
         UserField::FIRST_NAME, 
@@ -47,6 +49,7 @@ class User {
 		} 
 		return new self($id, $data, $db);
 	}
+
     
     public function get($field) {
         return $this->data[$field] ?? '';
@@ -76,6 +79,7 @@ class User {
         }
         return true; 
     }
+
 
 	public function getAge(){
 		$curDate = new DateTime();

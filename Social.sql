@@ -92,6 +92,7 @@ CREATE TABLE `friends` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 --
 -- Дамп данных таблицы `friends`
 --
@@ -326,11 +327,13 @@ ALTER TABLE `direct_message`
 ALTER TABLE `friends`
   MODIFY `friendship_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
+
 --
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
   MODIFY `notification_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 
 --
 -- AUTO_INCREMENT для таблицы `posts`

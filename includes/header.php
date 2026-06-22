@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="path/to/style.css">
+
 <div class="header-fullwidth">
 	<h1>Название</h1>
 
@@ -15,6 +19,7 @@
 	<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 	<div class="header-right">
 		<?php
+
 		require_once __DIR__ . '/../classes/Database.php';
 		
 		if (isset($_SESSION['id'])):
@@ -41,3 +46,4 @@
 	</div>
 </div>
 <script src="../assets/js/notifications.js" defer></script>
+

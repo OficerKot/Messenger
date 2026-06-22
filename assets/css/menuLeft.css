@@ -1,0 +1,152 @@
+/* ========================================
+   ЛЕВОЕ МЕНЮ - БАЗОВЫЕ СТИЛИ
+   ======================================== */
+
+.left-panel {
+    width: 220px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    padding: 12px 0;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: fit-content;
+    max-height: calc(100vh - 80px);
+    
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    
+    flex-shrink: 0;
+}
+
+/* ЗАГОЛОВОК МЕНЮ */
+.left-panel h2 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6f7885;
+    padding: 12px 16px 8px;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* СПИСОК МЕНЮ */
+.left-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ЭЛЕМЕНТЫ СПИСКА */
+.left-panel li {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+/* ССЫЛКИ В МЕНЮ */
+.left-panel li a {
+    display: block;
+    text-decoration: none;
+    color: #2c3e50;
+    padding: 10px 16px;
+    margin: 2px 8px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.left-panel li a:hover {
+    background-color: #edeef0;
+    color: #2c3e50;
+}
+
+.left-panel li a.active {
+    background-color: #e7e8ec;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* ПУНКТЫ МЕНЮ БЕЗ ССЫЛОК (ЧАТ, ЗВОНКИ) */
+.left-panel li:not(:has(a)) {
+    padding: 10px 16px;
+    margin: 2px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.left-panel li:not(:has(a)):hover {
+    background-color: #edeef0;
+}
+
+/* ========================================
+   КНОПКИ ВХОДА И РЕГИСТРАЦИИ
+   ======================================== */
+
+/* Переопределение inline-стилей для кнопок */
+.left-panel > ul > div {
+    padding: 8px !important;
+    gap: 4px !important;
+}
+
+.left-panel > ul > div > a {
+    display: block !important;
+    background-color: #d3d6db !important;
+    border-radius: 8px !important;
+    padding: 10px 16px !important;
+    text-decoration: none !important;
+    color: #2c3e50 !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.15s ease;
+    margin: 2px 0;
+}
+
+.left-panel > ul > div > a:hover {
+    background-color: #c5c9d1 !important;
+    transform: translateX(2px);
+}
+
+.left-panel > ul > div > a:active {
+    background-color: #b8bcc4 !important;
+    transform: translateX(0);
+}
+
+/* ========================================
+   АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ
+   ======================================== */
+
+@media (max-width: 768px) {
+    .left-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        margin: 0;
+        padding-top: 70px;
+        z-index: 90;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        border-radius: 0 16px 16px 0;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .left-panel.open {
+        transform: translateX(0);
+    }
+    
+    .left-panel li a,
+    .left-panel li:not(:has(a)) {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+    
+    .left-panel > ul > div > a {
+        padding: 12px 16px !important;
+        font-size: 15px;
+    }
+}

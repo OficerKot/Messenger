@@ -1,14 +1,18 @@
 <?php 
 session_start();
+
 include '../includes/init.php';
+
 
 if(!isset($_SESSION['id'])){
     header('Location:../index.php');
     exit;
 }
-$id = $_SESSION['id'];
 
+$id = $_SESSION['id'];
+$current_user = User::getUserById($id, $db);
 $all_users = User::getAllUsersExcept($id, $db); 
+
 ?>
 
 <!DOCTYPE html>

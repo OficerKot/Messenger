@@ -9,7 +9,7 @@ $notificationManager = new NotificationManager($db, $_SESSION['id']);
 $unread_count = $notificationManager->getUnreadCount();
 $notifications = $notificationManager->getRecent(5);
 ?>
-
+<link rel="stylesheet" href="../assets/css/style.css">
 <div class="notifications-wrapper">
     <button class="notifications-btn" id="notificationsBtn">
         <svg class="bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
