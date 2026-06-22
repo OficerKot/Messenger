@@ -33,17 +33,28 @@ $all_users = User::getAllUsersExcept($id, $db);
         <div class="center-panel">
             <div class="top-block">
                 <h2>Все пользователи</h2>
+                
+                <!-- ===== ПОЛЕ ПОИСКА ===== -->
+                <div class="search-users-container">
+                    <input type="text" id="searchUsersInput" 
+                           placeholder="Поиск по имени, фамилии или логину..."
+                           class="search-users-input">
+                </div>
             </div>
 
             <div class="center-panel1">
-                <div class="users-list">
+                <div class="users-list" id="usersList">
                     <?php if (count($all_users) > 0): ?>
-                        <?php foreach ($all_users as $user_data): ?>
+                        <?php foreach ($all_users as $user_data): 
+                            $avatar = $user_data['avatar'] ?? 'baseimage.jpg';
+                        ?>
                             <a href="../profile/userWall.php?user_id=<?php echo $user_data['user_id']; ?>" 
                                style="text-decoration: none; color: inherit; display: block;">
                                 <div class="user-card">
                                     <div class="user-avatar">
-                                        <?php echo strtoupper(substr($user_data['first_name'], 0, 1)); ?>
+                                        <img src="../assets/uploads/<?php echo $avatar; ?>" 
+                                             alt="Avatar" 
+                                             style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
                                     </div>
                                     <div class="user-info">
                                         <div class="user-name">
@@ -69,7 +80,9 @@ $all_users = User::getAllUsersExcept($id, $db);
         <?php include "../includes/menuRight.php";?>
     </div>
 
+    <!-- ===== ПОДКЛЮЧАЕМ СКРИПТЫ ===== -->
     <script src="../assets/js/script.js" defer></script>
+    <script src="../assets/js/search_users.js" defer></script>
 </body>
 
 </html>

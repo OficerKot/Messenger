@@ -137,12 +137,12 @@ class User {
         return ['success' => false, 'message' => 'Ошибка базы данных'];
     }
     
-    public static function getAllUsersExcept($user_id, $db) {
-        $query = "SELECT user_id, first_name, last_name, login 
-                  FROM users 
-                  WHERE user_id != ?";
+        public static function getAllUsersExcept($user_id, $db) {
+        $query = "SELECT user_id, first_name, last_name, login, avatar 
+                FROM users 
+                WHERE user_id != ?";
         $result = $db->fetchAll($query, [$user_id]);
-		return $result;
+        return $result;
     }
     // Проверяет, отправил ли текущий пользователь заявку другому
     public function hasSentRequestTo($other_user_id) {
@@ -163,6 +163,15 @@ class User {
 	function areFriends(User $user1, User $user2){
 		return  $user1->getFriendshipStatus($user2) == FriendshipStatus::ACCEPTED;
 	}
+    // Поиск пользователей
+    public static function searchUsers($query, $current_user_id, $db) {
+        $search = '%' . $query . '%';
+        $sql = "SELECT user_id, first_name, last_name, login, avatar 
+                FROM users 
+                WHERE (first_name LIKE ? OR last_name LIKE ? OR login LIKE ?) 
+                AND user_id != ?";
+        return $db->fetchAll($sql, [$search, $search, $search, $current_user_id]);
+    }
 
 }
 ?>

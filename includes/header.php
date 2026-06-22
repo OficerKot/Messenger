@@ -1,16 +1,23 @@
 <div class="header-fullwidth">
-	<h1>Название</h1>
+    <h1>Название</h1>
 
-	<!-- ПОИСКОВАЯ СТРОКА -->
-	<div class="search-container">
-		<div class="search-box">
-			<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-				<circle cx="10.5" cy="10.5" r="6.5" />
-				<line x1="21" y1="21" x2="15" y2="15" />
-			</svg>
-			<input type="text" class="search-input" placeholder="Поиск">
-		</div>
-	</div>
+    <!-- ПОИСКОВАЯ СТРОКА -->
+    <div class="search-container">
+        <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="10.5" cy="10.5" r="6.5" />
+                <line x1="21" y1="21" x2="15" y2="15" />
+            </svg>
+            <input type="text" class="search-input" id="headerSearchInput" placeholder="Поиск по имени или логину...">
+            
+            <!-- ВЫПАДАЮЩИЙ СПИСОК РЕЗУЛЬТАТОВ -->
+            <div class="search-results-dropdown" id="searchResultsDropdown">
+                <div class="search-results-list" id="searchResultsList">
+                    <div class="search-empty">Начните вводить для поиска</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<!-- ПРАВАЯ ЧАСТЬ ХЕДЕРА -->
 	<div class="header-right">
@@ -40,4 +47,6 @@
 		<?php endif;?>
 	</div>
 </div>
-<script src="../assets/js/notifications.js" defer></script>
+
+<script src="../assets/js/live_notifications.js" defer></script>
+<script src="../assets/js/header_search.js" defer></script>
