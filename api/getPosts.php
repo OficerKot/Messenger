@@ -3,19 +3,40 @@ header('Content-Type: application/json');
 require_once '../classes/Post.php';
 require_once '../includes/init.php';
 $postModel = new Post($db);
+
+
 if(isset($_SESSION['id'])){
 	$current_user_id = $_SESSION['id'];
 }
 else $current_user_id=null;
 
 
-
 if (isset($_GET['user_id'])) {
 	$wall_owner_id = $_GET['user_id'] ?? null;
-    $posts = $postModel->getUserPosts($wall_owner_id); //стена
+	
+	if(!AccessHelper::HasAccessToWall($current_user_id, $wall_owner_id, $db)){
+		echo json_encode(['error' => 'Страница закрыта', 'is_private' => true]);
+        exit;
+	}
+
+	//стена
+	 $posts = $postModel->getUserPosts($wall_owner_id);
+
+
 } else {
-    $posts = $postModel->getNewestPosts(); //общая лента
+	//общая лента
+    $posts = $postModel->getNewestPosts(); 
+	//Из закрытых страниц посты не попадают
+	$allowedPosts = [];
+	foreach($posts as $post){
+		$owner = $post[PostField::OWNER_ID] ;
+		if(AccessHelper::HasAccessToWall($current_user_id, $owner, $db)){
+			$allowedPosts[] = $post;
+		}
+	}
+	$posts = $allowedPosts;
 }
+
 
 foreach ($posts as &$post) {
 	$is_author = ($current_user_id && $post['autor_id'] == $current_user_id);

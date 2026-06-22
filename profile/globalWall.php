@@ -29,82 +29,9 @@ include '../classes/User.php';
 			<div class="top-block">
 				<h2>Основной контент</h2>
 			</div>
-			<div class="center-panel1">
-				<!-- ПОСТЫ -->
-				<div class="post">
-					<div class="post-header">
-						<div class="post-avatar">С</div>
-						<div class="post-author">Софья Милютина</div>
-						<div class="post-time">2 ч назад</div>
-					</div>
-					<div class="post-content">
-						Привет!
-					</div>
-					<div class="post-actions">
-						<div class="post-action">❤️ 24</div>
-						<div class="post-action">💬 7</div>
-					</div>
-				</div>
+			<div class="center-panel1" id="postsContainer">
 
-				<div class="post">
-					<div class="post-header">
-						<div class="post-avatar">А</div>
-						<div class="post-author">Алексей Иванов</div>
-						<div class="post-time">5 ч назад</div>
-					</div>
-					<div class="post-content">
-						Ухты!
-					</div>
-					<div class="post-actions">
-						<div class="post-action">❤️ 56</div>
-						<div class="post-action">💬 12</div>
-					</div>
-				</div>
 
-				<div class="post">
-					<div class="post-header">
-						<div class="post-avatar">С</div>
-						<div class="post-author">Софья Милютина</div>
-						<div class="post-time">2 ч назад</div>
-					</div>
-					<div class="post-content">
-						Отличный день
-					</div>
-					<div class="post-actions">
-						<div class="post-action">❤️ 24</div>
-						<div class="post-action">💬 7</div>
-					</div>
-				</div>
-
-				<div class="post">
-					<div class="post-header">
-						<div class="post-avatar">А</div>
-						<div class="post-author">Алексей Иванов</div>
-						<div class="post-time">5 ч назад</div>
-					</div>
-					<div class="post-content">
-						Ухты!
-					</div>
-					<div class="post-actions">
-						<div class="post-action">❤️ 56</div>
-						<div class="post-action">💬 12</div>
-					</div>
-				</div>
-
-				<div class="post">
-					<div class="post-header">
-						<div class="post-avatar">А</div>
-						<div class="post-author">Алина Гдалёва</div>
-						<div class="post-time">Вчера</div>
-					</div>
-					<div class="post-content">
-						Хочу спать
-					</div>
-					<div class="post-actions">
-						<div class="post-action">❤️ 1933</div>
-						<div class="post-action">💬 340</div>
-					</div>
-				</div>
 			</div>
 		</div>
 
@@ -113,6 +40,13 @@ include '../classes/User.php';
 	</div>
 
 	<script src="../assets/js/script.js" defer></script>
+	<script src="../assets/js/postView.js"></script>
+	<script src="../assets/js/postApi.js"></script>
+
+	<script src="../assets/js/comments/CommentView.js"></script>
+	<script src="../assets/js/comments/commentApi.js"></script>
+
+	<script src="../assets/js/postsLoader.js"></script>
 </body>
 
 </html>

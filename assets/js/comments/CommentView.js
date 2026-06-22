@@ -53,11 +53,19 @@ class CommentView {
 
     container.appendChild(commentsList);
 
-    this.showCommentForm(container);
+    this.showCommentForm(container, IS_LOGGED_IN);
     this.attachEvents();
   }
 
-  showCommentForm(container) {
+  showCommentForm(container, isLoggedIn) {
+    if (!isLoggedIn) {
+      container.innerHTML += `
+            <div class="login-to-comment">
+                <a href="/index.php">Войдите</a>, чтобы оставить комментарий
+            </div>
+        `;
+      return;
+    }
     const formHTML = `
         <form class="commentForm">
             <textarea placeholder="Какие мысли насчёт этого?"></textarea>

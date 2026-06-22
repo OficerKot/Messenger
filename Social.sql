@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 22 2026 г., 04:29
+-- Время создания: Июн 22 2026 г., 15:23
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.9
 
@@ -66,17 +66,26 @@ INSERT INTO `complain_types` (`complain_type_id`, `complain`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `direct_message`
+-- Структура таблицы `direct_messages`
 --
 
-CREATE TABLE `direct_message` (
+CREATE TABLE `direct_messages` (
   `message_id` int NOT NULL,
-  `user1_ID` int NOT NULL,
-  `user2_ID` int NOT NULL,
-  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sender_id` int NOT NULL,
+  `receiver_id` int NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `direct_messages`
+--
+
+INSERT INTO `direct_messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `image_path`, `date`) VALUES
+(7, 14, 1, 'руддщ', NULL, '2026-06-22 14:58:43'),
+(8, 14, 1, 'json', NULL, '2026-06-22 15:17:08'),
+(9, 14, 1, 'hallo\r\n', NULL, '2026-06-22 15:18:14');
 
 -- --------------------------------------------------------
 
@@ -103,7 +112,8 @@ INSERT INTO `friends` (`friendship_id`, `user_id`, `friend_id`, `status`, `date`
 (11, 8, 9, 'pending', '2026-06-16'),
 (12, 10, 7, 'pending', '2026-06-16'),
 (13, 8, 10, 'pending', '2026-06-18'),
-(14, 1, 2, 'pending', '2026-06-18');
+(14, 1, 2, 'pending', '2026-06-18'),
+(15, 13, 2, 'accepted', '2026-06-20');
 
 -- --------------------------------------------------------
 
@@ -129,7 +139,8 @@ INSERT INTO `notifications` (`notification_id`, `receiver_id`, `sender_id`, `mes
 (1, 9, 8, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-16 10:33:56'),
 (2, 7, 10, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-16 10:44:18'),
 (3, 10, 8, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-18 00:51:48'),
-(4, 2, 1, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-18 09:17:35');
+(4, 2, 1, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-18 09:17:35'),
+(5, 2, 13, 'отправил(а) вам заявку в друзья', 'friend_request', 1, '2026-06-20 02:03:17');
 
 -- --------------------------------------------------------
 
@@ -141,7 +152,7 @@ CREATE TABLE `posts` (
   `post_id` int NOT NULL,
   `autor_id` int NOT NULL,
   `wall_owner_id` int NOT NULL,
-  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `image_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -153,7 +164,6 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`post_id`, `autor_id`, `wall_owner_id`, `message`, `image_path`, `date`) VALUES
 (1, 2, 2, 'hello\r\n', NULL, '2026-06-18 09:42:51'),
 (2, 2, 2, 'admin', NULL, '2026-06-18 10:52:14'),
-(3, 2, 2, 'ю', NULL, '2026-06-18 10:54:48'),
 (4, 2, 2, 'где', NULL, '2026-06-18 10:55:05'),
 (5, 2, 2, '', NULL, '2026-06-18 10:59:09'),
 (6, 2, 2, 'всем добрый день я опять сломал сайт', NULL, '2026-06-18 10:59:44'),
@@ -167,8 +177,12 @@ INSERT INTO `posts` (`post_id`, `autor_id`, `wall_owner_id`, `message`, `image_p
 (18, 1, 1, 'ВСЕМ УТРА! УТРО НЕ ДОБРОЕ - ЗАКОНЧИЛОСЬ МОЛОКО. ЭТА ПЕЧАЛЬНАЯ НОВОСТЬ ПОВЕРГЛА МЕНЯ В ШОК, НО Я СПРАВЛЯЮСЬ ❤️❤️❤️\r\nЛЕНОЧКА ПРИВЕТ ДА ХРАНИТ ТЕБЯ БОГ', NULL, '2026-06-19 04:35:37'),
 (21, 1, 7, '', '6a34eb070a00e_s-maslenicej (1).gif', '2026-06-19 10:08:55'),
 (22, 1, 7, 'ДОБРЫЙ ДЕНЬ 👍👍👍👍👍👍👍👍👍', NULL, '2026-06-19 10:09:21'),
-(26, 8, 7, 'БОБА', NULL, '2026-06-22 04:01:40'),
-(27, 8, 7, 'боба', '6a38898b48b1d_test.jpg', '2026-06-22 04:02:03');
+(25, 13, 13, 'Всем привет, я скоро стану админом', NULL, '2026-06-20 03:37:31'),
+(26, 2, 1, 'Наталья, доброе утро. Не кричите', NULL, '2026-06-20 03:59:16'),
+(28, 14, 14, 'Всем привет! Предупреждаю: НЕ ДОБАВЛЯЙТЕ МЕНЯ В ДРУЗЬЯ! Я изгой. Я создан, чтобы смотреть на закрытые странички\r\nЯ не приму ваши заявки! Мне никто не нужен, у меня есть... ээ доступ к бд и я и так читаю все ваши личные сообщения.\r\nВсем удачи и хорошего дня 🤗🤗', NULL, '2026-06-22 06:44:59'),
+(29, 14, 14, 'Я его фанат! Классный был чел, я бы с ним дружил и в соседней бочке жил, блин \r\nхавхахвахвазхвызывазхащзхыщыщазыхывзщхаызхывахвщавыащывхзавызщахвзщазыащвызхащхзыващывзхавазхвхзвхвамааааааааааааааааааааааааааааааааАААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААААА', '6a38afe61c504_post_crop_small_1080.jpg', '2026-06-22 06:45:42');
+(30, 8, 7, 'БОБА', NULL, '2026-06-22 04:01:40'),
+(31, 8, 7, 'боба', '6a38898b48b1d_test.jpg', '2026-06-22 04:02:03');
 
 -- --------------------------------------------------------
 
@@ -192,6 +206,9 @@ INSERT INTO `post_comments` (`comment_id`, `comment`, `post_id`, `author_id`, `d
 (8, 'Почему у вас айди 1', 18, 13, '2026-06-19 15:52:14'),
 (9, 'Вы первый юзер?', 18, 13, '2026-06-19 15:52:20'),
 (10, 'Наталья, вы вызываете подозрения', 18, 13, '2026-06-19 15:52:31'),
+(23, 'comment', 5, 2, '2026-06-20 04:01:29'),
+(28, 'Оставляю комментарий из ленты', 26, 13, '2026-06-22 06:35:08'),
+(29, 'СПАСИБО!! 💥💥❤️❤️❤️', 26, 1, '2026-06-22 13:22:37');
 (17, 'fm,j\'', 22, 7, '2026-06-22 03:54:33');
 
 -- --------------------------------------------------------
@@ -232,13 +249,13 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `login`, `first_name`, `last_name`, `password`, `role`, `is_private`, `birthday_date`, `creation_date`, `avatar`) VALUES
 (1, 'natali1936', 'Natali', 'Ivanovna', '$2y$10$47tInV7bU59Ak.m9dIGee.7cIl.GmNMMWnt/HdgZEch7mscLI1mmq', '0', 0, '1936-06-16', '2026-06-11', 'user_1_1781786590.webp'),
 (2, 'admin', 'Admin', 'Administrator', '$2y$10$il.YtAUf6k8yXplXrQqsDuphCw4IVkAVxHKtJZsBmoJx6tE7m1xQO', '1', 1, '2006-08-02', '2026-06-11', 'baseimage.jpg'),
-(3, 'd', 'd', 'd', '$2y$10$p51tWb7DXxHvY4ztHrgvSOojh3trLMzT9puow2ZQN5oLqyM6XUs2u', '0', 0, '2432-03-31', '2026-06-12', 'baseimage.jpg'),
 (4, 'ds', 'd', 'd', '$2y$10$HNe1k08dfA5Gm0sAEKyPW.MICudA.7iqEWU8FG4ccMRlkl2NCMmva', '0', 0, '2432-03-31', '2026-06-12', 'baseimage.jpg'),
 (6, 'логин', 'имя', 'фамилия', '$2y$10$4oSWq9AVamP2Jwj3W.lZZOq/rMbjHuahmxHDWlJSHj42seudVe6Lu', '0', 0, '0001-01-01', '2026-06-12', 'baseimage.jpg'),
 (7, 'BEBE', 'BOBO', 'PEPE', '$2y$10$hsTSifcvbHYOMOTopunQ4eVBjePnv0XLANAKSGip4MgC45wUkjroy', '0', 0, '9999-09-23', '2026-06-13', 'user_7_1781338757.jpg'),
 (8, 'KEKE', 'K', 'E', '$2y$10$BUFRuB6rH3t/fDMyXExyY.eKCoiQPXy0quoWt7PijdYOEGpzfh1F6', '1', 0, '0004-03-12', '2026-06-16', 'baseimage.jpg'),
 (12, 'abramovCryptoAnalytic1986', 'Cryptograph', 'Abramov', '$2y$10$nzmHs9y1S8hs29nHkMOv..q4TQXoltdaD31h8wEmJWrdC5yN93P36', '0', 0, '1986-02-02', '2026-06-18', 'user_12_1781787526.webp'),
-(13, 'user228', 'User', 'Krutoi', '$2y$10$Z0iHEIxaCvj7VW/8fXYK9.qE36GBYMTtCpR.2ejH87sUA.qQkul/2', '0', 0, '2020-04-02', '2026-06-19', 'baseimage.jpg');
+(13, 'user228', 'User', 'Krutoi', '$2y$10$Z0iHEIxaCvj7VW/8fXYK9.qE36GBYMTtCpR.2ejH87sUA.qQkul/2', '0', 0, '2020-04-02', '2026-06-19', 'baseimage.jpg'),
+(14, 'userIzgoi', 'Изгой', 'Сайта', '$2y$10$4/gx81zYRNrZrXTB3e7wBur1Bh6Hmvvh1VbZpUvLXtK8tS3W3NNea', '0', 0, '2016-08-05', '2026-06-22', 'baseimage.jpg');
 
 --
 -- Индексы сохранённых таблиц
@@ -257,9 +274,9 @@ ALTER TABLE `complain_types`
   ADD PRIMARY KEY (`complain_type_id`);
 
 --
--- Индексы таблицы `direct_message`
+-- Индексы таблицы `direct_messages`
 --
-ALTER TABLE `direct_message`
+ALTER TABLE `direct_messages`
   ADD PRIMARY KEY (`message_id`);
 
 --
@@ -316,42 +333,42 @@ ALTER TABLE `complain_types`
   MODIFY `complain_type_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT для таблицы `direct_message`
+-- AUTO_INCREMENT для таблицы `direct_messages`
 --
-ALTER TABLE `direct_message`
-  MODIFY `message_id` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `direct_messages`
+  MODIFY `message_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `friendship_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `friendship_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `notification_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 
 --
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `post_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `post_comments`
 --
 ALTER TABLE `post_comments`
-  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `comment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

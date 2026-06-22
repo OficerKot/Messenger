@@ -1,15 +1,26 @@
 const PostApi = {
   async loadPosts(wall_owner_id) {
     try {
-      const response = await fetch(
-        `../../api/getPosts.php?user_id=${wall_owner_id}`,
-      );
+      const id = wall_owner_id ? `?user_id=${wall_owner_id}` : ``;
+      const response = await fetch(`../../api/getPosts.php${id}`);
+
       if (!response.ok) {
         throw new Error(`HTTP ошибка: ${response.status}`);
       }
 
-      const posts = await response.json();
-      postView.renderAllPosts(posts, "postsContainer");
+      const data = await response.json();
+
+      // Проверка на закрытую страницу (если смотрим именно стену пользователя!)
+      if (data.error && data.is_private) {
+        document.getElementById("postsContainer").innerHTML = `
+                <div class="private-message">
+                    🔒 Страница закрыта. Добавьте пользователя в друзья, чтобы видеть посты.
+                </div>
+            `;
+        return;
+      }
+
+      postView.renderAllPosts(data, "postsContainer");
     } catch (error) {
       console.error("Ошибка загрузки:", error);
       document.getElementById("postsContainer").innerHTML =
@@ -43,6 +54,7 @@ const PostApi = {
       if (newPost.success) {
         postView.addPostToWall(newPost.post, "postsContainer");
 
+        //Очистка формы
         document.getElementById("postMessage").value = "";
         document.getElementById("postImage").value = "";
       } else {

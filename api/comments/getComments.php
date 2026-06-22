@@ -8,7 +8,7 @@ $comm = new Comment($db);
 $comments = $comm->getPostComments($post_id);
 
 $current_user_id = $_SESSION['id'] ?? null;
-$isAdmin = User::getUserById($current_user_id, $db)->isAdmin();
+$isAdmin = $current_user_id? User::getUserById($current_user_id, $db)->isAdmin() : 0;
 
 foreach ($comments as &$c) {
     $c['can_edit'] = ($current_user_id && $c['author_id'] == $current_user_id);

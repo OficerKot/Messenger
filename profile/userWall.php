@@ -264,6 +264,8 @@ if (isset($_SESSION['id'])) {
 	<script src="../assets/js/postApi.js"></script>
 	<script src="../assets/js/userWall.js"></script>
 
+		<script src="../assets/js/postsLoader.js"></script>
+	</div>
 </body>
 
 </html>

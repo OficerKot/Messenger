@@ -1,3 +1,6 @@
+<script>
+const IS_LOGGED_IN = <?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>;
+</script>
 
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="path/to/style.css">

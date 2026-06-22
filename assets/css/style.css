@@ -221,6 +221,7 @@ h1 {
 .center-panel1 {
 	padding: 16px 20px;
 	height: 100%;
+	overflow-y: auto;
 }
 
 /* БЛОКИ ЗАГОЛОВКОВ ЦЕНТРА - КАК В VK */

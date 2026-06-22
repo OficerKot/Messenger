@@ -64,6 +64,8 @@ function getUrlParam(name) {
 // Основная....программа т_т
 const wall_owner_id = getUrlParam("user_id");
 PostApi.loadPosts(wall_owner_id);
-document
-  .getElementById("postForm")
-  .addEventListener("submit", async (e) => PostApi.createPost(e));
+
+const postForm = document.getElementById("postForm");
+if (postForm) {
+  postForm.addEventListener("submit", async (e) => PostApi.createPost(e));
+}
