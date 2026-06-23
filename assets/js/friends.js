@@ -87,4 +87,51 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+    // Удаление из друзей
+    document.querySelectorAll('.remove-friend').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = this.dataset.userId;
+            const button = this;
+            const originalText = button.textContent;
+            
+            if (!confirm('Вы уверены, что хотите удалить этого пользователя из друзей?')) {
+                return;
+            }
+            
+            button.textContent = 'Удаление...';
+            button.disabled = true;
+            
+            fetch('../friends/remove_friend.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'user_id=' + userId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Меняем кнопку на "Добавить в друзья"
+                    button.textContent = 'Добавить в друзья';
+                    button.classList.remove('remove-friend', 'friends');
+                    button.classList.add('send-request');
+                    button.style.backgroundColor = '#5c9ce6';
+                    button.style.color = 'white';
+                    button.disabled = false;
+                    // Обновляем страницу через секунду
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('Ошибка: ' + data.message);
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка');
+                button.textContent = originalText;
+                button.disabled = false;
+            });
+        });
+    });
 });

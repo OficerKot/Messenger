@@ -5,7 +5,7 @@ session_start();
 ?>
 <link rel="stylesheet" href="../assets/css/menuLeft.css">
 
-
+<div class="menu-btn" id="menuBtn">&#9776;</div>
 <div class="left-panel">
 	<h2>Меню</h2>
 	<ul>
@@ -28,14 +28,17 @@ session_start();
 				Лента
 			</a>
 		</li>
+		<!--
 		<li>
-			<a href="../messages/messages.php" style="
+			 <a href="../messages/chatList.php" style="
 				text-decoration: none;
 				display: block;
 				">
 				Чат
 			</a>
+		
 		</li>
+		-->
 		<li>
 
 			<a href="../friends/friends.php" style="
@@ -72,4 +75,5 @@ session_start();
 		</li>
 		<?php endif;?>
 	</ul>
+	<script src="../assets/js/leftMenu.js"></script>
 </div>

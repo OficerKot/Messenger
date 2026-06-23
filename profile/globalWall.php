@@ -10,11 +10,11 @@ include '../classes/User.php';
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Мой сайт</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
-	<link rel="icon" type="image/x-icon" href="Olesya_iconka.ico">
+	<link rel="stylesheet" href="../assets/css/user_wall.css">
 </head>
 
 <body>
-	<div class="menu-btn" id="menuBtn">&#9776;</div>
+
 
 	<!-- ВЕРХНИЙ БЛОК С ПОИСКОМ -->
 	<?php include "../includes/header.php";?>
@@ -39,6 +39,7 @@ include '../classes/User.php';
 		<?php include "../includes/menuRight.php";?>
 	</div>
 
+
 	<script src="../assets/js/script.js" defer></script>
 	<script src="../assets/js/postView.js"></script>
 	<script src="../assets/js/postApi.js"></script>
@@ -47,6 +48,7 @@ include '../classes/User.php';
 	<script src="../assets/js/comments/commentApi.js"></script>
 
 	<script src="../assets/js/postsLoader.js"></script>
+
 </body>
 
 </html>

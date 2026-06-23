@@ -1,8 +1,7 @@
 <?php
 
-	$servername = "localhost";
 
-	/*$servername = "messenger";*/
+	$servername = "messenger";
 	$username = "root";
 	$password = "";
 	$dbname = "Social";

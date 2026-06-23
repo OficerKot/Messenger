@@ -1,5 +1,5 @@
 <?php
-include "../includes/init.php";
+
 
 class UserField {
 
@@ -175,6 +175,13 @@ class User {
                 WHERE (first_name LIKE ? OR last_name LIKE ? OR login LIKE ?) 
                 AND user_id != ?";
         return $db->fetchAll($sql, [$search, $search, $search, $current_user_id]);
+    }
+    //Удаляет друга (удаляет запись о дружбе)
+    public function removeFriend($friend_id) {
+        $sql = "DELETE FROM friends 
+                WHERE (user_id = ? AND friend_id = ?) 
+                OR (user_id = ? AND friend_id = ?)";
+        return $this->db->query1($sql, [$this->id, $friend_id, $friend_id, $this->id])->rowCount() > 0;
     }
 
 }
