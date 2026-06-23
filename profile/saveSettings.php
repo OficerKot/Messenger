@@ -14,6 +14,16 @@ $last_name = trim($_POST['last_name'] ?? '');
 $birthday_date = trim($_POST['birthday_date'] ?? '');
 $is_private = isset($_POST['is_private']) ? 1 : 0;
 
+if (strlen($first_name) > 20) {
+    echo json_encode(['success' => false, 'error' => 'Имя не должно превышать 20 символов']);
+    exit();
+}
+
+if (strlen($last_name) > 20) {
+    echo json_encode(['success' => false, 'error' => 'Фамилия не должна превышать 20 символов']);
+    exit();
+}
+
 // Проверка даты
 if ($birthday_date && !strtotime($birthday_date)) {
     echo "Ошибка: неверный формат даты";

@@ -250,7 +250,7 @@ if (isset($_SESSION['id'])) {
                     foreach ($types as $type):
                     ?>
 					<label class="complaint-type-option">
-						<input type="radio" name="complaint_type" value="<?php echo $type['complain_type_id']; ?>"
+						<input type="radio" name="complaint_type" maxlength="1000" value="<?php echo $type['complain_type_id']; ?>"
 							<?php echo ($type['complain_type_id'] == 4) ? 'checked' : ''; ?>>
 						<?php echo htmlspecialchars($type['complain']); ?>
 					</label>
