@@ -18,7 +18,7 @@
     gap: 8px;
 }
 
-/* ========== СООБЩЕНИЯ (ПУЗЫРИ) ========== */
+/* ========== СООБЩЕНИЯ (ПУЗЫРИ) ========== 
 .msg,
 .message {
     display: flex;
@@ -28,6 +28,18 @@
     animation: msgFadeIn 0.2s ease;
     min-width: 0;
     margin: 0 14px 8px;
+ Отдельное сообщение */
+/* Каждое сообщение */
+.msg {
+    background: #ffffff;
+    width: 100%;
+    border-bottom: 1px solid #e7e8ec;
+    padding: 16px 20px;  /* ← ЭТО УЖЕ ЕСТЬ */
+    transition: background 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;  /* ← ДОБАВИТЬ */
 }
 
 @keyframes msgFadeIn {
@@ -114,7 +126,7 @@
 .message.own .message-sender {
     display: none;
 }
-
+/*
 .msg-time,
 .message-time {
     color: #818c99;
@@ -126,7 +138,7 @@
     color: rgba(255,255,255,0.85);
 }
 
-/* ========== ТЕКСТ СООБЩЕНИЯ ========== */
+/* ========== ТЕКСТ СООБЩЕНИЯ ========== *
 .msg-content,
 .message-content {
     background: #ffffff;
@@ -148,7 +160,52 @@
     max-width: 100%;
     border-radius: 8px;
     margin-top: 6px;
-    display: block;
+    display: block;*/
+/* Контент сообщения (пузырь) — для всех */
+.msg-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #2c3e50;
+    margin: 0 16px 0 16px;  /* ← ОТСТУПЫ СЛЕВА И СПРАВА */
+    padding: 10px 14px;
+    background: #f0f2f5;
+    border-radius: 12px;
+    max-width: 80%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    align-self: flex-start;
+}
+
+/* Свои сообщения — только цвет меняем, отступы те же */
+.msg.own .msg-content {
+    background: #5c9ce6;
+    color: #ffffff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    /* margin НЕ МЕНЯЕМ — наследуется от .msg-content */
+}
+
+/* Чужие сообщения — только цвет меняем, отступы те же */
+.msg.other .msg-content {
+    background: #f0f2f5;
+    color: #2c3e50;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    /* margin НЕ МЕНЯЕМ — наследуется от .msg-content */
+}
+
+/* Изображения в сообщениях */
+.msg-content img {
+    max-width: 100% !important;
+    max-height: 300px !important;
+    height: auto !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    border-radius: 8px !important;
+    margin-top: 8px !important;
 }
 
 /* ========== МЕНЮ (...) ========== */
@@ -430,4 +487,50 @@
         width: 100%;
         margin-top: 8px;
     }
+}
+	.msg {
+		padding: 12px 16px;
+	}
+	
+	.msg-content {
+		max-width: 90%;
+		padding: 8px 12px;
+	}
+	
+	.msg-form {
+		padding: 12px 16px;
+	}
+	
+	.msg-form button {
+		padding: 10px 20px;
+	}
+}
+
+/* Скроллбар для контейнера сообщений */
+.center-panel1::-webkit-scrollbar {
+	width: 6px;
+}
+
+.center-panel1::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.center-panel1::-webkit-scrollbar-thumb {
+	background: #d1d1d1;
+	border-radius: 10px;
+}
+
+.center-panel1::-webkit-scrollbar-thumb:hover {
+	background: #b8b8b8;
+}
+/* Полный сброс overflow для всех контейнеров */
+.msg-container,
+.msg-list,
+.msg,
+.msg-content,
+.msg-content * {
+    max-width: 80% !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
 }
