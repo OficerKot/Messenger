@@ -204,7 +204,7 @@ if (isset($_SESSION['id'])) {
 				<!-- Форма для создания поста -->
 				<div>
 					<form id="postForm" class="postForm">
-						<textarea id="postMessage" placeholder="Что у вас нового?"></textarea>
+						<textarea id="postMessage" placeholder="Что у вас нового?" maxlength="5000"></textarea>
 						<input id="postImage" type="file">
 						<button>Поделиться</button>
 					</form>
