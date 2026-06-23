@@ -14,7 +14,7 @@ include '../classes/User.php';
 </head>
 
 <body>
-	<div class="menu-btn" id="menuBtn">&#9776;</div>
+
 
 	<!-- ВЕРХНИЙ БЛОК С ПОИСКОМ -->
 	<?php include "../includes/header.php";?>
@@ -39,6 +39,7 @@ include '../classes/User.php';
 		<?php include "../includes/menuRight.php";?>
 	</div>
 
+
 	<script src="../assets/js/script.js" defer></script>
 	<script src="../assets/js/postView.js"></script>
 	<script src="../assets/js/postApi.js"></script>
@@ -47,6 +48,7 @@ include '../classes/User.php';
 	<script src="../assets/js/comments/commentApi.js"></script>
 
 	<script src="../assets/js/postsLoader.js"></script>
+
 </body>
 
 </html>

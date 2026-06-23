@@ -5,7 +5,7 @@ session_start();
 ?>
 <link rel="stylesheet" href="../assets/css/menuLeft.css">
 
-
+<div class="menu-btn" id="menuBtn">&#9776;</div>
 <div class="left-panel">
 	<h2>Меню</h2>
 	<ul>
@@ -75,4 +75,5 @@ session_start();
 		</li>
 		<?php endif;?>
 	</ul>
+	<script src="../assets/js/leftMenu.js"></script>
 </div>
