@@ -1,4 +1,5 @@
 <?php 
+
 class CommentField {
     const COMMENT_ID = 'comment_id';
     const POST_ID = 'post_id';

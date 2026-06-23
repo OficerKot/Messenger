@@ -21,4 +21,7 @@ else{
 }
 
 $messages = $messageModel->getDialog($current_user_id, $other_user_id);
+foreach ($messages as &$msg) {
+    $msg['is_author'] = ($current_user_id == $msg['sender_id']);
+}
 echo json_encode($messages);
