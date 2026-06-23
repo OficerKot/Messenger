@@ -6,7 +6,7 @@ if(!isset($_SESSION['id'])){
 	exit;
 };
 
-include '../includes/connectDB.php';
+
 
 $user = User::getUserById($_SESSION['id'], $db);
 $editableFields = $user->getEditableFields();
