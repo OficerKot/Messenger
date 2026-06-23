@@ -1018,6 +1018,100 @@ h1 {
 }
 /**************************************/
 /************УВЕДЫ*****************/
+
+
+/* Контейнер для поиска */
+.search-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+/* Поле ввода */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #edeef0;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    font-family: inherit;
+}
+
+.search-input::placeholder {
+    color: #818c99;
+}
+
+/* ===== ВЫПАДАЮЩИЙ СПИСОК ===== */
+.search-results-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.search-results-dropdown.show {
+    display: block;
+}
+
+.search-results-list {
+    padding: 4px 0;
+}
+
+.search-empty {
+    padding: 16px 20px;
+    color: #818c99;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ===== ЭЛЕМЕНТ РЕЗУЛЬТАТА ===== */
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #2c3e50;
+}
+
+.search-result-item:hover {
+    background: #f0f2f5;
+}
+
+.search-result-avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.search-result-name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.search-result-login {
+    font-size: 12px;
+    color: #818c99;
+}
+
+
 /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
 @media (max-width: 768px) {
     .menu-btn { display: flex; }

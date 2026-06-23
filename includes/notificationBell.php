@@ -8,9 +8,15 @@ include_once __DIR__ . '/../classes/NotificationManager.php';
 $notificationManager = new NotificationManager($db, $_SESSION['id']);
 $unread_count = $notificationManager->getUnreadCount();
 $notifications = $notificationManager->getRecent(5);
+
+// Получаем ID последнего уведомления
+$last_id = 0;
+if (!empty($notifications)) {
+    $last_id = $notifications[0]['notification_id'];
+}
 ?>
 <link rel="stylesheet" href="../assets/css/style.css">
-<div class="notifications-wrapper">
+<div class="notifications-wrapper" data-last-id="<?php echo $last_id; ?>">
     <button class="notifications-btn" id="notificationsBtn">
         <svg class="bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
