@@ -208,14 +208,18 @@ h1 {
 /* ЦЕНТРАЛЬНАЯ КОЛОНКА */
 .center-panel {
 	flex: 1;
+    /*ex-shrink: 0 !important; */
 	background-color: #ffffff;
 	color: #2c3e50;
 
-	box-sizing: border-box;
+	/*box-sizing: border-box;*/
 	overflow-y: auto;
-	min-width: 300px;
+    overflow-x: hidden;
+	/*min-width: 300px;*/
+    width: calc(100%+5px);
 	max-width: 600px;
-
+    /* padding-right: 5px; */
+    
 	border-radius: 12px;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 
@@ -223,12 +227,22 @@ h1 {
 	flex-direction: column;
 
 }
-
+/* Скрываем горизонтальный скролл по умолчанию (для эстетики) */
+.center-panel::-webkit-scrollbar {
+    width:6px;
+    height: 8px; /* Горизонтальный скролл */
+}
 /* ОСНОВНОЙ КОНТЕНТ, КОТОРЫЙ ПРОКРУЧИВАЕТСЯ */
 .center-panel1 {
 	padding: 16px 20px;
 	height: 100%;
 }
+.center-panel1 img {
+    max-width: 100%;
+	height: auto;
+    display: block;
+}
+
 
 /* БЛОКИ ЗАГОЛОВКОВ ЦЕНТРА - КАК В VK */
 .top-block {
@@ -1437,6 +1451,142 @@ h1 {
 	color: #818c99;
 }
 
+/* ========== ЦЕНТРИРОВАНИЕ СТРАНИЦЫ ПОЛЬЗОВАТЕЛЯ ========== */
+
+/* Центральная панель */
+.center-panel {
+    flex: 1;
+    max-width: 600px;
+    min-width: 300px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+    margin: 0 auto; /* Центрируем саму панель */
+}
+
+/* Контейнер внутри центральной панели */
+.center-panel1 {
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Контейнер информации о пользователе */
+.userInfoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin: 0 auto 20px; /* Центрируем и добавляем отступ снизу */
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Заголовок "Все посты" */
+.center-panel1 h3 {
+    text-align: center;
+    margin: 24px 0 16px;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Контейнер постов */
+.postsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем посты */
+    align-items: stretch !important; /* Убираем центрирование */
+    width: 100%;
+    padding: 0;
+    max-width: 100%;
+    margin: 0 auto;
+}
+/* 2. Убираем горизонтальные отступы у карточки поста */
+.post {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+/* 3. Шапка поста — на всю ширину с внутренними отступами */
+.post-header {
+    width: 100%;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* 4. Картинка поста — строго на всю ширину, без отступов и скруглений */
+.post-image,
+.post-content img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    display: block;
+}
+
+/* 5. Текст поста — возвращаем комфортные отступы */
+.post-content {
+    padding: 12px 20px 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 6. Блок кнопок — возвращаем отступы */
+.post-actions {
+    padding: 12px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+/* Опционально: скругление углов только у первого и последнего поста */
+.postsContainer .post:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.postsContainer .post:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom: none;
+}
+
+
+/* Форма создания поста */
+.postForm {
+    margin: 0 auto 20px; /* Центрируем форму */
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Сообщение "Страница не найдена" */
+.pageNotFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 100%;
+    font-size: 24px;
+    font-weight: 600;
+    color: #818c99;
+    text-align: center;
+    padding: 20px;
+}
+
+
 /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
 @media (max-width: 768px) {
 	.menu-btn {
@@ -1482,7 +1632,11 @@ h1 {
 		min-width: 0;
 		margin: 0;
 		max-width: 100%;
+
+        padding-right: 4px; /* Отступ от скроллбара */
+        box-sizing: border-box;
 	}
+    
 
 	.left-panel {
 		position: fixed;
@@ -1535,4 +1689,19 @@ h1 {
 	width: 100%;
 	padding: 10px 16px;
 }
+
+ .userInfoContainer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+    }
+    
+    .center-panel {
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    .center-panel1 {
+        padding: 12px;
+    }
 }
