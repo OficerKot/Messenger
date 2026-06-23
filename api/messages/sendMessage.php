@@ -13,9 +13,9 @@ $sender_id = $_SESSION['id'];
 $sender = User::getUserById($sender_id, $db);
 
 $image_path = null;
-if (isset($_FILES['image_path']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $filename = uniqid() . '_' . $_FILES['image']['name'];
-    move_uploaded_file($_FILES['image']['tmp_name'], '../assets/uploads/' . $filename);
+    move_uploaded_file($_FILES['image']['tmp_name'], '../../assets/uploads/' . $filename);
     $image_path = $filename;
 }
 
@@ -43,8 +43,10 @@ if($result){
             'sender_last_name' => $sender->get(UserField::LAST_NAME),
 			'sender_avatar' => $sender->get(UserField::AVATAR),
 			'sender_id' => $sender_id,     
-            'reciever_id' => $other_user_id,
-            'date' => date('Y-m-d H:i:s')
+            'receiver_id' => $other_user_id,
+            'date' => date('Y-m-d H:i:s'),
+			'is_read' => false,
+			'is_author' => true
         ]
     ]);
 } 

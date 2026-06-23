@@ -22,13 +22,16 @@ class MessageView {
         <div class="message" id="${message.message_id}"> 
             <div class="message-header">
                 <div>
-                    <img class="msg-avatar" src="../assets/uploads/${message.sender_avatar}">
+                    <img class="msg-avatar" src="../../assets/uploads/${message.sender_avatar}">
                 </div>
                 <div class="message-sender">
                     ${message.sender_first_name} ${message.sender_last_name}
                 </div>
                 <div class="message-time">
                     ${message.date}
+                </div>
+				    <div class="message-is-read">
+                    ${message.is_read}
                 </div>
                 <div class="msg-menu-wrapper">
                     <button class="message-menu-btn" data-msg-id="${message.message_id}" data-is_author="${message.is_author === true}">
@@ -50,7 +53,6 @@ class MessageView {
 
   showMessageActionsMenu(msgId, is_author) {
     if (!is_author) {
-      console.log(is_author);
       return;
     }
 
@@ -191,12 +193,18 @@ class MessageView {
 
   addMessage(message, containerId) {
     const container = document.getElementById(containerId);
+    console.log("Контейнер:", container);
+    console.log("scrollHeight:", container.scrollHeight);
+    console.log("clientHeight:", container.clientHeight);
+    console.log("scrollTop до:", container.scrollTop);
+    container.scrollTop = container.scrollHeight;
+    console.log("scrollTop после:", container.scrollTop);
     if (this.empty) {
       container.innerHTML = "";
       this.empty = false;
     }
     container.innerHTML = container.innerHTML + this.renderMessage(message);
-
+    container.scrollTop = container.scrollHeight;
     this.attachEvents();
   }
 
@@ -222,14 +230,24 @@ class MessageView {
     }
   }
 
-  // Привязка событий к кнопкам после рендера
   attachEvents() {
-    document.querySelectorAll(".message-menu-btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
+    const container = document.getElementById("messagesContainer");
+
+    // Убираем старый обработчик, чтобы не дублировать
+    container.removeEventListener("click", this._handleMenuClick);
+
+    // Навешиваем один обработчик на ВСЕ кнопки в контейнере
+    container.addEventListener(
+      "click",
+      (this._handleMenuClick = (e) => {
+        const btn = e.target.closest(".message-menu-btn");
+        if (!btn) return;
+
         const msgId = btn.dataset.msgId;
-        const is_author = btn.dataset.is_author;
+        const is_author =
+          btn.dataset.is_author === "true" || btn.dataset.is_author === "1";
         this.showMessageActionsMenu(msgId, is_author);
-      });
-    });
+      }),
+    );
   }
 }
