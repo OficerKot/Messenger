@@ -24,7 +24,6 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 </head>
 
 <body>
-	<div class="menu-btn" id="menuBtn">&#9776;</div>
 
 	<!-- ВЕРХНИЙ БЛОК С ПОИСКОМ -->
 	<?php include "../includes/header.php";?>
