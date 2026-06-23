@@ -1,15 +1,24 @@
 <?php 
 session_start();
+if (!isset($_SESSION['id'])) {
+    echo "Не авторизован";
+    exit();
+}
 
-include "../includes/connectDB.php";
-include "../classes/User.php";
-include "../includes/init.php";
+include '../includes/init.php';
 
-$first_name = $_POST['first_name'] ?? '';
-$last_name = $_POST['last_name'] ?? '';
-$birthday_date = $_POST['birthday_date'] ?? '';
+
+
+$first_name = trim($_POST['first_name'] ?? '');
+$last_name = trim($_POST['last_name'] ?? '');
+$birthday_date = trim($_POST['birthday_date'] ?? '');
 $is_private = isset($_POST['is_private']) ? 1 : 0;
 
+// Проверка даты
+if ($birthday_date && !strtotime($birthday_date)) {
+    echo "Ошибка: неверный формат даты";
+    exit();
+}
 
 $user = User::getUserById($_SESSION['id'], $db);
 

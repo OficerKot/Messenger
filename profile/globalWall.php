@@ -1,6 +1,6 @@
 <?php session_start();
-include '../includes/connectDB.php';
-include '../classes/User.php';
+include '../includes/init.php';
+
 ?>
 <!DOCTYPE html>
 <html>
