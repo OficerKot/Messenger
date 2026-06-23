@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json');
 
-require_once '../../classes/Message.php';
 require_once '../../includes/init.php';
 
 $msg = trim($_POST['message'] ?? '');
@@ -14,9 +13,9 @@ $sender_id = $_SESSION['id'];
 $sender = User::getUserById($sender_id, $db);
 
 $image_path = null;
-if (isset($_FILES['image_path']) && $_FILES['image_path']['error'] === UPLOAD_ERR_OK) {
-    $filename = uniqid() . '_' . $_FILES['image_path']['name'];
-    move_uploaded_file($_FILES['image']['tmp_name'], '../assets/uploads/' . $filename);
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $filename = uniqid() . '_' . $_FILES['image']['name'];
+    move_uploaded_file($_FILES['image']['tmp_name'], '../../assets/uploads/' . $filename);
     $image_path = $filename;
 }
 
@@ -24,6 +23,16 @@ $messageModel = new Message($db);
 $result = $messageModel->sendMessage($sender_id, $other_user_id, $msg, $image_path);
 
 if($result){
+    
+    $notificationManager = new NotificationManager($db, $other_user_id);
+    
+    $result_notification = $notificationManager->create(
+        $other_user_id,
+        $sender_id,
+        'message',
+        $msg
+    );
+
 	 echo json_encode([
         'success' => true,
         'message' => [
@@ -34,8 +43,10 @@ if($result){
             'sender_last_name' => $sender->get(UserField::LAST_NAME),
 			'sender_avatar' => $sender->get(UserField::AVATAR),
 			'sender_id' => $sender_id,     
-            'reciever_id' => $other_user_id,
-            'date' => date('Y-m-d H:i:s')
+            'receiver_id' => $other_user_id,
+            'date' => date('Y-m-d H:i:s'),
+			'is_read' => false,
+			'is_author' => true
         ]
     ]);
 } 

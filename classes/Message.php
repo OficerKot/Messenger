@@ -6,6 +6,8 @@ class MessageField {
     const MESSAGE = 'message';
     const IMAGE_PATH = 'image_path';
     const DATE = 'date';
+	
+	const IS_READ = 'is_read';
 }
 
 class Message {
@@ -37,6 +39,7 @@ class Message {
         return $this->db->fetchAll($sql, [$user1_id, $user2_id, $user2_id, $user1_id]);
     }
 
+
     /**
      * Получить одно сообщение по ID
      */
@@ -63,6 +66,7 @@ class Message {
             MessageField::MESSAGE => $message,
             MessageField::IMAGE_PATH => $image_path,
             MessageField::DATE => date('Y-m-d H:i:s'),
+			MessageField::IS_READ => 0
         ];
         return $this->db->insert('direct_messages', $data);
     }
@@ -88,6 +92,20 @@ class Message {
     public function deleteMessage($message_id) {
         return $this->db->delete('direct_messages', MessageField::MESSAGE_ID . ' = ?', [$message_id]);
     }
+public function markMessagesAsRead($message_ids, $cur_user_id) {
+    if (empty($message_ids)) {
+        return 0;
+    }
+    
+    $placeholders = implode(',', array_fill(0, count($message_ids), '?'));
+    $params = array_merge($message_ids, [$cur_user_id]);
+    
+    $where = MessageField::MESSAGE_ID . " IN ($placeholders) 
+            AND " . MessageField::RECEIVER_ID . " = ?";
+    $data = [MessageField::IS_READ => 1];
+    
+    return $this->db->update('direct_messages',$data, $where, $params);
+}
 
 }
 ?>

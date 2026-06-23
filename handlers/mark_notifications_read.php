@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 include '../includes/init.php';
-include '../classes/NotificationManager.php';
+
 
 if (!isset($_SESSION['id'])) {
     echo json_encode(['success' => false]);
