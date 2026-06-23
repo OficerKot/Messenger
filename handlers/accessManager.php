@@ -17,6 +17,14 @@ class AccessHelper{
 	return $canView;
 
 	}
+
+	// public static function CanSendMessages(int|null $senderId, int|null $receiverId, Database $db){
+	// 	$msgModel = new Message($db);
+	// 	$msgModel->getDialog($senderId, $receiverId);
+	// 	if($msgModel != []){
+	// 		return true;
+	// 	}
+	// }
 }
 
 ?>
