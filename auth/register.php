@@ -8,6 +8,8 @@ $first_name = $_POST['first_name'] ?? '';
 $last_name = $_POST['last_name'] ?? '';
 $birthday_date = $_POST['birthday_date'] ?? '';
 
+
+
 // Проверка на пустые поля
 if (empty($login) || empty($password) || empty($first_name) || empty($last_name)) {
     echo "Ошибка: Все поля обязательны для заполнения";

@@ -51,14 +51,18 @@ $activeTab = isset($_GET['tab'])? $_GET['tab'] : null;
 	<div id="register-window" style="visibility: hidden">
 		<form action="" method="post" id="registForm">
 			<div style="display: flex; flex-direction: column;">
-				<label for="login">Логин</label>
-				<input type="text" name="login" id="login">
+				<label for="login">Логин</label>				
+				<input type="text" maxlength="50" name="login" id="login">
+
 				<label for="password">Пароль</label>
-				<input type="password" name="password" id="password">
+				<input type="password" name="password" maxlength="255" id="password">
+
 				<label for="first_name">Имя</label>
-				<input type="text" name="first_name" id="first_name">
+				<input type="text" name="first_name" maxlength="20" id="first_name">
+
 				<label for="last_name">Фамилия</label>
-				<input type="text" name="last_name" id="last_name">
+				<input type="text" name="last_name" maxlength="20" id="last_name">
+				
 				<label for="birthday_date">Дата рождения</label>
 				<input type="date" name="birthday_date" id="birthday_date">
 			</div>
