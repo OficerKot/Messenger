@@ -930,6 +930,8 @@ h1 {
 	cursor: pointer;
 	transition: background 0.1s;
 	border-bottom: 1px solid #f0f2f5;
+	max-width: 100%;
+    overflow: hidden;
 }
 
 .notification-item:hover {
@@ -960,6 +962,9 @@ h1 {
 
 .notification-content {
 	flex: 1;
+	min-width: 0;
+    overflow: hidden;
+	max-width: 80%;
 }
 
 .notification-text {
@@ -967,6 +972,9 @@ h1 {
 	line-height: 1.4;
 	color: #2c3e50;
 	margin-bottom: 4px;
+
+	
+    max-width: 100%;
 }
 
 .notification-text strong {

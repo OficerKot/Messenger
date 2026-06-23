@@ -32,6 +32,11 @@ const MessageApi = {
     const message = document.getElementById("msgText").value;
     const imageFile = document.getElementById("msgImage").files[0];
 
+    if (message.length > 5000) {
+        alert('Сообщение слишком длинное (максимум 5000 символов)');
+        return;
+    }
+
     const formData = new FormData();
     formData.append("message", message);
     formData.append("image", imageFile);
@@ -121,4 +126,5 @@ const MessageApi = {
       return false;
     }
   },
+  
 };
