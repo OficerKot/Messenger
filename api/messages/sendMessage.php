@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-require_once '../../classes/Message.php';
 require_once '../../includes/init.php';
+
 
 $msg = $_POST['message'];
 $other_user_id = $_POST['other_user_id'];
@@ -10,8 +10,8 @@ $sender_id = $_SESSION['id'];
 $sender = User::getUserById($sender_id, $db);
 
 $image_path = null;
-if (isset($_FILES['image_path']) && $_FILES['image_path']['error'] === UPLOAD_ERR_OK) {
-    $filename = uniqid() . '_' . $_FILES['image_path']['name'];
+if (isset($_FILES['image_path']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $filename = uniqid() . '_' . $_FILES['image']['name'];
     move_uploaded_file($_FILES['image']['tmp_name'], '../assets/uploads/' . $filename);
     $image_path = $filename;
 }
@@ -20,6 +20,16 @@ $messageModel = new Message($db);
 $result = $messageModel->sendMessage($sender_id, $other_user_id, $msg, $image_path);
 
 if($result){
+    
+    $notificationManager = new NotificationManager($db, $other_user_id);
+    
+    $result_notification = $notificationManager->create(
+        $other_user_id,
+        $sender_id,
+        'message',
+        $msg
+    );
+
 	 echo json_encode([
         'success' => true,
         'message' => [

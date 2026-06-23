@@ -1,5 +1,5 @@
 <?php
-include "../includes/init.php";
+
 class NotificationManager {
     private $db;
     private $current_user_id;

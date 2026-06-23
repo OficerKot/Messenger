@@ -48,6 +48,9 @@ if (empty($notifications)) {
             case 'friend_accept':
                 $message = 'принял(а) вашу заявку в друзья';
                 break;
+			case 'message':
+				$message = 'отправил(а) вам сообщение: '. htmlspecialchars($notif['message']);
+				break;
             default:
                 $message = htmlspecialchars($notif['message']);
         }
