@@ -1,348 +1,219 @@
-/* ================= Пользователи ================= */
+/* ==========================================
+   USER_WALL.CSS - СТЕНА ПРОФИЛЯ, ПОСТЫ И КОММЕНТАРИИ
+   ========================================== */
 
+/* --- Контейнер профиля --- */
 .userInfoContainer {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: flex-start;
-    gap: 24px;
-    margin: 20px;
+    gap: 20px 24px;
     padding: 20px;
+    margin: 20px 0;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
 
+/* "Растворяем" правый блок, чтобы кнопки и аватар стали прямыми детьми */
+.userInfoContainer > div:last-child { display: contents; }
+
+/* Левая часть: имя, логин, инфо */
+.userInfoContainer > div:first-child {
+    flex: 1;
+    min-width: 280px;
+    order: 1;
 }
-.profile-avatar {
+
+/* Аватар профиля */
+.userInfoContainer img {
+    order: 2;
+    width: 200px;
     height: 200px;
-    max-width: 240px;
+    border-radius: 50%;
     object-fit: cover;
-    border-radius: 12px;
     flex-shrink: 0;
+    align-self: flex-start;
+    margin-bottom: 10px;
 }
-/* Альтернативный селектор */
-div.userInfoContainer div[style*="flex-direction: column"]:last-child > img {
-    width: 200px !important;
-    height: 200px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    display: block !important;
-}
+
+/* Текст профиля */
 .userName {
     font-size: 32px;
     font-weight: 700;
     color: #2c3e50;
     margin: 0 0 8px 0;
     line-height: 1.2;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .userLogin {
-	font-size: 24px;
-	margin: 2px 0px 16px;
-}
-
-.pageNotFound {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	height: 60%;
-	width: 100%;
-	font-size: 40px;
-	font-weight: bold;
-}
-
-/* Контейнер с аватаром и кнопками (правый блок) */
-.userInfoContainer > div:last-child {
-    display: flex;
-    justify-content: flex-start; /* Было: center → ИЗМЕНИ НА flex-start */
-    align-items: flex-start;     /* Было: center → ИЗМЕНИ НА flex-start */
-    flex-shrink: 0;
-    gap: 15px; /* Добавь отступ между элементами */
-}
-
-/* Само изображение профиля */
-.userInfoContainer > div:last-child img {
-    height: 200px !important;
-    width: auto !important;
-    max-width: 250px !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    border-radius: 12px !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-}
-
-/* Кнопки - выравнивание по левому краю */
-.userInfoContainer .friend-btn,
-.userInfoContainer .complaint-btn,
-.userInfoContainer .admin-delete-btn {
-    align-self: flex-start !important; /* Кнопки прижимаются влево */
-    text-align: left !important;       /* Текст внутри кнопок слева */
-    margin: 5px 0 !important;          /* Отступы между кнопками */
-}
-/* ================= Посты ================= */
-
-
-.postsContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: start;
-	align-items: start;
-}
-
-
-.postImg {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 16px;
-}
-
-.postForm {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px;
-    margin: 12px auto;
-    background: #ffffff;
-    border-radius: 8px;
-    gap: 8px;
-    width: 100%;
-    max-width: 550px;
-    box-sizing: border-box;
-}
-
-.postForm textarea {
-    resize: none;
-    width: 100%;
-    min-height: 60px;
-    padding: 8px 12px;
-    border: 1px solid #dfe2e5;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    background: #ffffff;
-    transition: border-color 0.15s ease;
-    box-sizing: border-box;
-}
-
-.postForm textarea:focus {
-    outline: none;
-    border-color: #5c9ce6;
-}
-
-.postForm textarea::placeholder {
+    font-size: 24px;
+    margin: 2px 0 16px;
+    word-break: break-all;
+    overflow-wrap: break-word;
     color: #818c99;
 }
 
-.postForm input[type="file"] {
-    padding: 4px 0;
-    font-size: 13px;
+.otherInfo {
+    word-break: break-word;
+    overflow-wrap: break-word;
     color: #2c3e50;
+}
+
+/* Кнопки профиля (под именем) */
+.userInfoContainer .friend-btn,
+.userInfoContainer .complaint-btn,
+.userInfoContainer .admin-delete-btn {
+    order: 3;
     width: 100%;
-}
-
-.postForm input[type="file"]::-webkit-file-upload-button {
-    background-color: #edeef0;
-    border: 1px solid #dfe2e5;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 8px;
-    transition: background-color 0.15s ease;
-}
-
-.postForm input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #e4e5e8;
-}
-
-.postForm button[type="submit"],
-.postForm button:not([type]) {
-    background-color: #5c9ce6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
+    max-width: 280px;
+    margin: 0 !important;
+    text-align: left;
     font-family: inherit;
-    /*align-self: flex-end;*/
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.postForm button[type="submit"]:hover,
-.postForm button:not([type]):hover {
-    background-color: #4a8fd6;
+.userInfoContainer .friend-btn + *,
+.userInfoContainer .complaint-btn + *,
+.userInfoContainer .admin-delete-btn + * {
+    margin-top: 10px !important;
 }
 
-/* ========== СТРУКТУРА ПОСТА ========== */
-.post-wrapper,
-.post-container {
-    background: #ffffff;
+/* Состояния кнопок */
+.friend-btn.send-request { background: #5c9ce6; color: #fff; }
+.friend-btn.send-request:hover { background: #4a8fd6; box-shadow: 0 2px 8px rgba(92, 156, 230, 0.35); }
+
+.friend-btn.friends { background: #e7e8ec; color: #818c99; cursor: default; }
+.friend-btn.pending { background: #f0f2f5; color: #6f7885; cursor: default; }
+
+.friend-btn.accept-request { background: #4bb34b; color: #fff; }
+.friend-btn.accept-request:hover { background: #3da83d; box-shadow: 0 2px 8px rgba(75, 179, 75, 0.35); }
+
+.friend-btn[disabled] { opacity: 1; }
+
+.complaint-btn { background: #fff; color: #e74c3c; border: 1px solid #e7e8ec; }
+.complaint-btn:hover { background: #ffebee; border-color: #ffcdd2; }
+
+.admin-delete-btn { background: #e74c3c; color: #fff; }
+.admin-delete-btn:hover { background: #c0392b; box-shadow: 0 2px 8px rgba(231, 76, 60, 0.35); }
+
+/* --- Посты: Контейнер и Структура --- */
+.postsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+}
+
+.post {
+    padding: 12px 0;
     border-bottom: 1px solid #e7e8ec;
-    padding: 12px;
-    margin-bottom: 0;
+    transition: background 0.1s;
 }
+.post:hover { background: #fafbfc; }
 
 .post-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 8px;
-    padding-bottom: 8px;
+    padding: 0 20px 8px;
     gap: 12px;
 }
 
-.post-info {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    flex: 1;
+.post-content {
+    padding: 0 20px 12px;
+    margin: 0;
 }
 
-/* АВАТАР В ПОСТЕ - МАЛЕНЬКИЙ */
-.post-avatar {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    max-width: 32px !important;
-    border-radius: 50% !important;
-    background: #5c9ce6;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.post-avatar img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 50% !important;
-}
-
-/* Если аватар не в контейнере .post-avatar - всё равно делаем маленьким */
-.post-header > img,
-.post-wrapper > img:first-child,
-.post-header img:not(.postImg img):not(.post-avatar img) {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    max-width: 32px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    flex-shrink: 0;
-}
-
-.post-author {
-    font-weight: 600;
-    font-size: 14px;
-    color: #2c3e50;
-    text-decoration: none;
-    line-height: 1.3;
-}
-
-.post-author:hover {
-    color: #5c9ce6;
-}
-
-.post-date {
-    font-size: 12px;
-    color: #818c99;
-    margin-left: 4px;
-    line-height: 1.3;
-}
-
-.post-footer {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 8px;
-    border-top: 1px solid #e7e8ec;
+.post-actions {
     margin-top: 8px;
+    padding: 8px 20px 12px;
+    border-top: 1px solid #e7e8ec;
 }
 
-/* ========== ИЗОБРАЖЕНИЯ В ПОСТАХ ========== */
-.postImg,
-.post-img-wrapper {
+/* Аватар в посте */
+.post-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%; background: #5c9ce6;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: bold; flex-shrink: 0;
+}
+.post-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* Автор и дата */
+.post-author { font-weight: 600; font-size: 14px; color: #2c3e50; text-decoration: none; line-height: 1.3; }
+.post-author:hover { color: #5c9ce6; }
+.post-date { font-size: 12px; color: #818c99; margin-left: 4px; line-height: 1.3; }
+
+/* Текст и изображения */
+.post-text, .post-content p {
+    word-break: break-word; overflow-wrap: anywhere; white-space: pre-wrap;
+    font-size: 14px; line-height: 1.5; color: #2c3e50; margin-bottom: 8px;
+}
+
+.post-image, .post-content img {
+    width: 100%; max-height: 400px; object-fit: cover;
+    border-radius: 0; margin: 0; display: block;
+}
+
+/* Кнопка комментариев */
+.comment-btn {
+    background: #eaeff5; border: 1px solid #c8ccd5; color: #5c9ce6;
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px; font-family: inherit;
+}
+.comment-btn:hover { background: #f0f7ff; border-color: #5c9ce6; }
+
+/* --- Форма создания поста --- */
+.postForm {
+    margin: 0 auto 20px;
     width: 100%;
-    max-height: 250px;
-    overflow: hidden;
+    padding: 12px;
+    background: #ffffff;
     border-radius: 8px;
-    background-color: #f0f2f5;
-    margin: 8px 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
 }
 
-.postImg img,
-.post-img-wrapper img,
-.postsContainer img {
-    max-width: 100% !important;
-    max-height: 250px !important;
-    height: auto !important;
-    width: auto !important;
-    object-fit: contain !important;
-    display: block;
-    border-radius: 8px;
-    margin: 0 auto;
+.postForm textarea {
+    width: 100%; min-height: 80px; padding: 12px 14px;
+    border: 1px solid #dfe2e8; border-radius: 10px; font-size: 15px;
+    resize: vertical; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
 }
+.postForm textarea:focus { border-color: #5c9ce6; box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.15); }
+.postForm textarea::placeholder { color: #818c99; }
 
-/* ========== ТЕКСТ ПОСТА ========== */
-.post-text,
-.post-content,
-.post-wrapper p {
-    word-break: break-word;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #2c3e50;
-    margin-bottom: 8px;
+.postForm button[type="submit"],
+.postForm button:not([type]) {
+    align-self: flex-end; padding: 10px 20px; background: #5c9ce6; color: #fff;
+    border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s; font-family: inherit;
 }
+.postForm button[type="submit"]:hover,
+.postForm button:not([type]):hover { background: #4a8fd6; }
 
-/* ========== КНОПКА КОММЕНТАРИЕВ ========== */
-#postsContainer button,
-.postsContainer button,
-button.comments-toggle-btn,
-.post-footer button,
-button[id*="comment"],
-button[class*="comment"] {
-    background-color: #edeef0 !important;
-    color: #2c3e50 !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 6px 12px !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    cursor: pointer !important;
-    transition: background-color 0.15s ease !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 4px !important;
-    margin: 6px 0 !important;
-    font-family: inherit !important;
+.postForm input[type="file"] { padding: 4px 0; font-size: 13px; color: #2c3e50; width: 100%; }
+.postForm input[type="file"]::-webkit-file-upload-button {
+    background: #edeef0; border: 1px solid #dfe2e5; border-radius: 6px;
+    padding: 6px 12px; font-size: 13px; font-weight: 500; cursor: pointer; margin-right: 8px; transition: background 0.15s;
 }
+.postForm input[type="file"]::-webkit-file-upload-button:hover { background: #e4e5e8; }
 
-#postsContainer button:hover,
-.postsContainer button:hover,
-button.comments-toggle-btn:hover {
-    background-color: #e4e5e8 !important;
-}
+/* ========== ЕДИНЫЙ СТИЛЬ МЕНЮ "..." (ПОСТЫ И КОММЕНТАРИИ) ========== */
+/* Этот блок заменяет все разрозненные определения меню в обоих файлах */
 
-/* ========== МЕНЮ ПОСТА (ТРИ ТОЧКИ) - ИСПРАВЛЕННОЕ ПОЗИЦИОНИРОВАНИЕ ========== */
-.post, .post-item, .post-wrapper {
-    position: relative;
-}
-
-/* Контейнер кнопки "..." — точка отсчёта для абсолютного позиционирования */
 .post-menu-wrapper,
 .comment-menu-wrapper {
     position: relative !important;
@@ -352,1237 +223,6 @@ button.comments-toggle-btn:hover {
     z-index: 10;
 }
 
-/* ================= ПЕРЕНОС СЛОВ В ПОСТАХ ================= */
-
-/* Контейнер контента поста */
-.post-content {
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	word-break: break-word;
-	white-space: pre-wrap;
-	hyphens: auto;
-	max-width: 100%;
-}
-
-/* Текст поста */
-.post-content > div {
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	word-break: break-word;
-	white-space: pre-wrap;
-	line-height: 1.6;
-}
-
-/* Изображения в постах */
-.post-content img {
-	max-width: 100%;
-	height: auto;
-	display: block;
-}
-
-/* Комментарии тоже с переносом */
-.comment-content {
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	word-break: break-word;
-	white-space: pre-wrap;
-}
-/* ================= КОМПАКТНОСТЬ ПОСТА ================= */
-
-/* 1. Уменьшаем внутренние отступы самого блока поста */
-.post {
-	padding-top: 12px !important; /* Было 16px */
-	padding-bottom: 12px !important;
-}
-
-/* 2. Уменьшаем отступ между шапкой (автор) и контентом */
-.post-header {
-	margin-bottom: 6px !important; /* Было 12px */
-}
-
-/* 3. Убираем лишние отступы у контента */
-.post-content {
-	margin: 0 !important;
-	padding: 0 !important;
-}
-
-/* 4. Уменьшаем отступ перед кнопками действий (комментарии) */
-.post-actions {
-	margin-top: 8px !important; /* Было 12px */
-	padding-top: 8px !important;
-}
-/* ================= Комментарии ================= */
-/* ================= КНОПКА "..." У КОММЕНТАРИЯ (как у поста) ================= */
-
-.comment-menu-btn {
-	background: #edeef0;
-	border: none;
-	color: #818c99;
-	font-size: 18px;
-	font-weight: 700;
-	cursor: pointer;
-	padding: 6px 6px;
-	border-radius: 6px;
-	transition: all 0.2s ease;
-	letter-spacing: 2px;
-	line-height: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 24px;
-	height: 24px;
-}
-
-.comment-menu-btn:hover {
-	background: #e4e5e8;
-	color: #2c3e50;
-}
-
-.comment-menu-btn:active {
-	background: #dfe2e8;
-}
-
-/* Имя пользователя */
-.userName {
-    font-size: 32px;
-    font-weight: 700;
-    color: #2c3e50;
-    margin: 0 0 8px 0;
-    line-height: 1.2;
-    word-break: break-word;      /* Перенос длинных слов */
-    overflow-wrap: break-word;   /* Альтернативный перенос */
-    max-width: 100%;             /* Ограничение ширины */
-}
-
-/* Логин пользователя */
-.userLogin {
-    font-size: 24px;
-    margin: 2px 0px 16px;
-    word-break: break-all;       /* Разрыв даже в середине слова */
-    overflow-wrap: break-word;
-    max-width: 100%;
-}
-
-/* Дополнительная информация (день рождения) */
-.otherInfo {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-}
-
-/* Контейнер с текстом (левая часть)
-
-/* ================= ШАПКА КОММЕНТАРИЯ ================= */
-
-/* Контейнер шапки комментария */
-.comment-item > div:first-child,
-.comment-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	width: 100%;
-}
-
-/* Левая часть: аватар + имя + дата */
-.comment-header-left {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	flex: 1;
-}
-
-/* Правая часть: кнопка "..." */
-.comment-menu-wrapper {
-	position: relative !important;
-	margin-left: auto;
-	flex-shrink: 0;
-	align-self: flex-start;
-}
-
-/* Кнопка "..." у комментария */
-.comment-menu-btn {
-	background: #edeef0;
-	border: none;
-	color: #818c99;
-	font-size: 18px;
-	font-weight: 700;
-	cursor: pointer;
-	padding: 6px 6px;
-	border-radius: 6px;
-	transition: all 0.2s ease;
-	letter-spacing: 2px;
-	line-height: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 24px;
-	height: 24px;
-}
-
-.comment-menu-btn:hover {
-	background: #e4e5e8;
-	color: #2c3e50;
-}
-
-/* Если кнопка "..." находится отдельно после даты, поднимаем её */
-.comment-item .comment-menu-wrapper {
-	position: absolute;
-	top: 12px;
-	right: 12px;
-}
-
-.comment-item {
-	position: relative;
-}
-
-/* ================= МЕНЮ ПОСТА И КОММЕНТАРИЯ — ИСПРАВЛЕННОЕ ПОЗИЦИОНИРОВАНИЕ ================= */
-
-/* Меню поста — появляется под кнопкой "..." */
-.post-menu {
-    position: absolute !important;
-    top: calc(100% + 4px) !important;
-    right: 0 !important;
-    width: 160px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    z-index: 1000 !important;
-    overflow: hidden;
-    padding: 4px 0;
-    animation: menuSlideDown 0.15s ease forwards;
-}
-
-/* Меню комментария — аналогично */
-.comment-menu {
-    position: absolute !important;
-    top: calc(100% + 4px) !important;
-    right: 0 !important;
-    width: 160px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    z-index: 1000 !important;
-    overflow: hidden;
-    padding: 4px 0;
-    animation: menuSlideDown 0.15s ease forwards;
-}
-
-/* Анимация появления */
-@keyframes menuSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* === ИСПРАВЛЕННЫЕ КНОПКИ МЕНЮ (EDIT/DELETE) — РАБОЧИЕ === */
-
-/* Кнопки в меню поста */
-.post-menu .edit-btn,
-.post-menu .delete-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 14px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer !important;
-    transition: all 0.15s ease;
-    text-align: left;
-}
-
-.post-menu .edit-btn {
-    color: #5c9ce6;
-}
-
-.post-menu .edit-btn:hover {
-    background: #f0f7ff;
-    color: #4a8fd6;
-}
-
-.post-menu .delete-btn {
-    color: #e74c3c;
-    margin-top: 4px;
-}
-
-.post-menu .delete-btn:hover {
-    background: #fff5f5;
-    color: #c0392b;
-}
-
-/* Разделитель между кнопками */
-.post-menu > div {
-    display: flex;
-    flex-direction: column;
-    padding: 4px 0;
-}
-
-.post-menu > div::after {
-    content: "";
-    display: block;
-    height: 1px;
-    background: #f0f2f5;
-    margin: 4px 12px;
-}
-
-.post-menu > div:last-child::after {
-    display: none;
-}
-
-/* Кнопки в меню комментария */
-.comment-menu button:first-child,
-.comment-menu .edit-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 14px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer !important;
-    transition: all 0.15s ease;
-    text-align: left;
-    color: #5c9ce6;
-}
-
-.comment-menu button:first-child:hover,
-.comment-menu .edit-btn:hover {
-    background: #f0f7ff;
-    color: #4a8fd6;
-}
-
-.comment-menu button:last-child,
-.comment-menu .delete-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px 14px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer !important;
-    transition: all 0.15s ease;
-    text-align: left;
-    color: #e74c3c;
-    margin-top: 4px;
-}
-
-.comment-menu button:last-child:hover,
-.comment-menu .delete-btn:hover {
-    background: #fff5f5;
-    color: #c0392b;
-}
-
-
-/* Гарантированный отступ для ВСЕХ комментариев */
-.comments-list .comment-item {
-	margin-top: 16px !important;
-	margin-bottom: 16px !important;
-}
-
-/* Если первый комментарий - особый случай */
-.comments-list > *:first-child {
-	margin-top: 16px !important;
-}
-
-/* Контейнер комментариев */
-.comments-list {
-	margin-top: 16px !important;
-	padding-top: 0 !important;
-}
-
-/* Или используйте gap */
-.comments-list {
-	display: flex;
-	flex-direction: column;
-	gap: 16px !important;
-}
-
-.comments-list .comment-item {
-	margin: 0 !important;
-}
-
-/* ================= ПОЛЕ ВВОДА ПОСТА ================= */
-
-.postForm textarea {
-	width: 100%;
-	min-height: 100px;
-	padding: 14px 16px;
-	border: 1px solid #dfe2e8;
-	border-radius: 12px;
-	font-size: 15px;
-	font-family: inherit;
-	line-height: 1.5;
-	color: #2c3e50;
-	background: #ffffff;
-	resize: vertical;
-	outline: none;
-	transition: all 0.2s ease;
-	box-sizing: border-box;
-}
-
-/* При наведении */
-.postForm textarea:hover {
-	border-color: #c4c8d0;
-	background: #fafbfc;
-}
-
-/* При фокусе (когда пишешь) */
-.postForm textarea:focus {
-	border-color: #5c9ce6;
-	background: #ffffff;
-	box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.15);
-}
-
-/* Placeholder (подсказка) */
-.postForm textarea::placeholder {
-	color: #818c99;
-	font-size: 15px;
-}
-
-/* Для Firefox */
-.postForm textarea::-moz-placeholder {
-	color: #818c99;
-	opacity: 1;
-}
-
-/* Убираем стандартное выделение */
-.postForm textarea:focus-visible {
-	outline: none;
-}
-
-/* Адаптация для мобильных */
-@media (max-width: 768px) {
-	.postForm textarea {
-		min-height: 80px;
-		padding: 12px 14px;
-		font-size: 14px;
-	}
-}
-
-/* ================= СНЯТИЕ ЖИРНОСТИ С ТЕКСТА КОММЕНТАРИЕВ ================= */
-
-/* Снимаем жирность со всех элементов внутри списка комментариев */
-.comments-list,
-.comments-list * {
-	font-weight: normal !important;
-}
-
-/* Имя автора комментария — можно оставить полужирным, если нужно */
-.comments-list .comment-author,
-.comments-list .user-name {
-	font-weight: 600 !important;
-}
-
-/* Сам текст комментария — точно не жирный */
-.comments-list .comment-text,
-.comments-list .comment-message,
-.comments-list p {
-	font-weight: normal !important;
-	line-height: 1.5;
-}
-
-/* Дата комментария */
-.comments-list .comment-time,
-.comments-list .comment-date {
-	font-weight: normal !important;
-	color: #818c99;
-	font-size: 13px;
-}
-.commentForm {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 8px;
-    margin: 6px 0;
-    background: #f8f9fa;
-    border-radius: 8px;
-    gap: 6px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.commentForm textarea {
-    resize: none;
-    width: 100%;
-    min-height: 50px;
-    padding: 8px;
-    border: 1px solid #dfe2e5;
-    border-radius: 6px;
-    font-size: 13px;
-    font-family: inherit;
-    background: #ffffff;
-    box-sizing: border-box;
-}
-
-.commentForm textarea:focus {
-    outline: none;
-    border-color: #5c9ce6;
-}
-/* ================= РАЗМЕР И ВЫРАВНИВАНИЕ ТЕКСТА КОММЕНТАРИЯ ================= */
-
-/* Если текст комментария находится в другом элементе */
-.comment-item > div:not(.comment-header):not(.comment-avatar):not(.comment-menu-wrapper) {
-    text-align: left !important;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-}
-
-/* Убираем центрирование у всего контейнера комментария */
-.comment-item {
-    text-align: left !important;
-    align-items: flex-start !important;
-}
-
-/* Проверяем, чтобы шапка комментария тоже была слева */
-.comment-header,
-.comment-header-left {
-    text-align: left !important;
-    justify-content: flex-start !important;
-}
-
-/* ========== ФОРМА РЕДАКТИРОВАНИЯ КОММЕНТАРИЯ ========== */
-.commentFormEdit {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 8px;
-    margin: 6px 0;
-    background: #f8f9fa;
-    border-radius: 8px;
-    gap: 6px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.commentFormEdit textarea {
-    resize: none;
-    min-height: 80px;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #dfe2e5;
-    border-radius: 6px;
-    font-size: 13px;
-    font-family: inherit;
-    background: #ffffff;
-    box-sizing: border-box;
-}
-
-/* ========== АВАТАР В КОММЕНТАРИЯХ ========== */
-
-.comment-avatar {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    max-width: 32px !important;
-    border-radius: 50% !important;
-    background: #5c9ce6;
-    overflow: hidden !important;
-    flex-shrink: 0;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
-}
-
-/* Изображение внутри аватара */
-.comment-avatar img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 50% !important;
-    display: block;
-}
-
-/* Если аватар в шапке комментария */
-.comment-header .comment-avatar,
-.comment-item > .comment-avatar {
-    width: 32px !important;
-    height: 32px !important;
-    margin-right: 10px;
-}
-
-/* Для формы комментария (если нужно) */
-.commentForm .comment-avatar,
-.commentFormEdit .comment-avatar {
-    width: 32px !important;
-    height: 32px !important;
-}
-/* ========== СПИСОК КОММЕНТАРИЕВ ========== */
-.comments-list {
-	max-height: 300px;
-	overflow-y: auto;
-	margin-bottom: 10px;
-}
-
-.comment-menu {
-	max-width: 150px;
-}
-
-
-.comment-menu-wrapper {
-	position: relative;
-}
-
-/* ================= ВИД КНОПОК ================= */
-
-/* Базовый стиль для всех кнопок действий */
-.friend-btn,
-.complaint-btn,
-.admin-delete-btn {
-	font-family: inherit;
-	font-size: 14px;
-	font-weight: 500;
-	padding: 10px 20px;
-	border-radius: 8px;
-	border: none;
-	cursor: pointer;
-	transition: all 0.2s ease;
-	outline: none;
-	letter-spacing: 0.2px;
-	margin-top: 8px;
-}
-
-/* Первая кнопка после аватара — больший отступ сверху */
-.userInfoContainer .friend-btn:first-child,
-.userInfoContainer .admin-delete-btn:first-child {
-	margin-top: 12px;
-}
-
-/* Кнопка "Добавить в друзья" — синяя */
-.friend-btn.send-request {
-	background: #5c9ce6;
-	color: #ffffff;
-}
-
-.friend-btn.send-request:hover {
-	background: #4a8fd6;
-	box-shadow: 0 2px 8px rgba(92, 156, 230, 0.35);
-}
-
-/* Кнопка "Вы друзья" — серая, неактивная */
-.friend-btn.friends {
-	background: #e7e8ec;
-	color: #818c99;
-	cursor: default;
-}
-
-/* Кнопка "Заявка отправлена" — серая */
-.friend-btn.pending {
-	background: #f0f2f5;
-	color: #6f7885;
-	cursor: default;
-}
-
-/* Кнопка "Принять заявку" — зелёная */
-.friend-btn.accept-request {
-	background: #4bb34b;
-	color: #ffffff;
-}
-
-.friend-btn.accept-request:hover {
-	background: #3da83d;
-	box-shadow: 0 2px 8px rgba(75, 179, 75, 0.35);
-}
-
-/* Кнопка "Это ваш профиль" (disabled с inline-стилем) */
-.friend-btn[disabled] {
-	opacity: 1;
-}
-
-/* Кнопка "Пожаловаться" — обводка */
-.complaint-btn {
-	background: #ffffff;
-	color: #e74c3c;
-	border: 1px solid #e7e8ec;
-	margin-top: 8px;
-}
-
-.complaint-btn:hover {
-	background: #ffebee;
-	border-color: #ffcdd2;
-}
-
-/* Кнопка "Удалить пользователя" (админ) — красная */
-.admin-delete-btn {
-	background: #e74c3c;
-	color: #ffffff;
-	margin-top: 8px;
-}
-
-.admin-delete-btn:hover {
-	background: #c0392b;
-	box-shadow: 0 2px 8px rgba(231, 76, 60, 0.35);
-}
-
-/* Кнопка "Поделиться" в форме поста */
-.postForm button {
-	font-family: inherit;
-	font-size: 14px;
-	font-weight: 500;
-	padding: 10px 20px;
-	background: #5c9ce6;
-	color: #ffffff;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: all 0.2s ease;
-	outline: none;
-	margin-top: 12px;
-}
-
-.postForm button:hover {
-	background: #4a8fd6;
-	box-shadow: 0 2px 8px rgba(92, 156, 230, 0.35);
-}
-
-.postForm button:active {
-	opacity: 0.9;
-}
-
-/* Кнопка закрытия модалки */
-.complaint-modal-close {
-	background: transparent;
-	border: none;
-	color: #818c99;
-	font-size: 24px;
-	cursor: pointer;
-	transition: color 0.2s;
-	padding: 0 4px;
-	line-height: 1;
-}
-
-.complaint-modal-close:hover {
-	color: #2c3e50;
-}
-
-/* Отступы для кнопок в футере модалки */
-.complaint-modal-footer {
-	display: flex;
-	justify-content: flex-end;
-	gap: 10px;
-	padding: 16px 18px;
-	border-top: 1px solid #e7e8ec;
-	background: #f8f9fa;
-}
-
-.complaint-btn-cancel {
-	padding: 10px 20px;
-	background: #ffffff;
-	color: #2c3e50;
-	border: 1px solid #dfe2e8;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	cursor: pointer;
-	transition: all 0.2s;
-}
-
-.complaint-btn-cancel:hover {
-	background: #f0f2f5;
-	border-color: #c4c8d0;
-}
-
-.complaint-btn-send {
-	padding: 10px 20px;
-	background: #e74c3c;
-	color: #ffffff;
-	border: none;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	cursor: pointer;
-	transition: all 0.2s;
-}
-
-.complaint-btn-send:hover {
-	background: #c0392b;
-	box-shadow: 0 2px 8px rgba(231, 76, 60, 0.35);
-}
-
-/* ================= КНОПКИ В ПОСТАХ (JS) ================= */
-
-/* Кнопка "..." меню поста */
-.post-menu-btn {
-	background: #edeef0;
-	border: none;
-	color: #818c99;
-	font-size: 18px;
-	font-weight: 700;
-	cursor: pointer;
-	padding: 6px 6px;
-	border-radius: 6px;
-	transition: all 0.2s ease;
-	letter-spacing: 2px;
-	line-height: 1;
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 24px;
-	height: 24px;
-}
-
-.post-menu-btn:hover {
-	background: #e4e5e8;
-	color: #2c3e50;
-}
-
-.post-menu-btn:active {
-	background: #dfe2e8;
-}
-
-/* Выпадающее меню поста */
-.post-menu {
-	position: absolute;
-	top: 100%;
-	right: 0;
-	width: 160px;
-	background: #ffffff;
-	border-radius: 8px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-	z-index: 100;
-	overflow: hidden;
-	padding: 4px 0;
-	outline: none !important;
-}
-
-.post-menu > div {
-	display: flex;
-	flex-direction: column;
-}
-
-/* Кнопка "Посмотреть комментарии" */
-.comment-btn {
-	background: transparent;
-	background: #eaeff5;
-	border: 1px solid #c8ccd5;
-	color: #5c9ce6;
-	padding: 8px 16px;
-	border-radius: 8px;
-	font-size: 13px;
-	font-weight: 500;
-	font-family: inherit;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin-top: 8px;
-}
-
-.comment-btn:hover {
-	background: #f0f7ff;
-	border-color: #5c9ce6;
-}
-
-/* ================= СТИЛИЗАЦИЯ INPUT FILE ================= */
-
-/* Для Chrome, Edge, Safari */
-.postForm input[type="file"]::-webkit-file-upload-button {
-	padding: 10px 20px;
-	background: #ffffff;
-	border: 1px solid #dfe2e8;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	font-family: inherit;
-	color: #2c3e50;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin-right: 12px;
-}
-
-.postForm input[type="file"]::-webkit-file-upload-button:hover {
-	background: #f5f6f8;
-	border-color: #5c9ce6;
-}
-
-/* Для Firefox */
-.postForm input[type="file"]::file-selector-button {
-	padding: 10px 20px;
-	background: #ffffff;
-	border: 1px solid #dfe2e8;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	font-family: inherit;
-	color: #2c3e50;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin-right: 12px;
-}
-
-.postForm input[type="file"]::file-selector-button:hover {
-	background: #f5f6f8;
-	border-color: #5c9ce6;
-}
-
-/* Сам input file */
-.postForm input[type="file"] {
-	font-size: 13px;
-	color: #818c99;
-	cursor: pointer;
-	margin-top: 12px;
-}
-/* ================= ФОРМА РЕДАКТИРОВАНИЯ ПОСТА ================= */
-
-/* Контейнер для кнопок формы */
-.postFormEdit > div:last-child {
-	display: flex;
-	gap: 10px;
-	margin-top: 16px;
-	padding-top: 12px;
-	border-top: 1px solid #e7e8ec;
-}
-
-/* Кнопка "Сохранить" */
-.postFormEdit .save-btn {
-	background: #5c9ce6;
-	color: #ffffff;
-	border: none;
-	padding: 10px 24px;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	font-family: inherit;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin: 0;
-}
-
-.postFormEdit .save-btn:hover {
-	background: #4a8fd6;
-	box-shadow: 0 2px 8px rgba(92, 156, 230, 0.35);
-}
-
-/* Кнопка "Отмена" */
-.postFormEdit .cancel-btn {
-	background: #ffffff;
-	color: #2c3e50;
-	border: 1px solid #dfe2e8;
-	padding: 10px 24px;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	font-family: inherit;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin: 0;
-}
-
-.postFormEdit .cancel-btn:hover {
-	background: #f5f6f8;
-	border-color: #c4c8d0;
-}
-
-/* Контейнер для выбора файла и удаления фото */
-.postFormEdit > div:nth-child(2) {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	margin: 12px 0;
-	flex-wrap: wrap;
-}
-
-/* Кнопка "Удалить фото" */
-.postFormEdit .remove-image-btn {
-	background: #ffffff;
-	color: #e74c3c;
-	border: 1px solid #ffcdd2;
-	padding: 8px 16px;
-	border-radius: 8px;
-	font-size: 13px;
-	font-weight: 500;
-	font-family: inherit;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin: 0;
-}
-
-.postFormEdit .remove-image-btn:hover {
-	background: #ffebee;
-	border-color: #e74c3c;
-}
-
-/* Input file в форме редактирования */
-.postFormEdit input[type="file"] {
-	font-size: 13px;
-	color: #6f7885;
-	font-family: inherit;
-	cursor: pointer;
-}
-
-.postFormEdit input[type="file"]::-webkit-file-upload-button {
-	padding: 8px 16px;
-	background: #edeef0;
-	border: 1px solid #dfe2e8;
-	border-radius: 6px;
-	font-size: 13px;
-	font-family: inherit;
-	cursor: pointer;
-	margin-right: 12px;
-	transition: all 0.2s;
-}
-
-.postFormEdit input[type="file"]::-webkit-file-upload-button:hover {
-	background: #e4e5e8;
-}
-
-/* Textarea в форме редактирования */
-.postFormEdit textarea {
-	width: 100%;
-	min-height: 120px;
-	padding: 12px;
-	border: 1px solid #dfe2e8;
-	border-radius: 8px;
-	font-size: 14px;
-	font-family: inherit;
-	resize: vertical;
-	outline: none;
-}
-
-.postFormEdit textarea:focus {
-	border-color: #5c9ce6;
-	box-shadow: 0 0 0 2px rgba(92, 156, 230, 0.1);
-}
-/* ================= КОММЕНТАРИИ ================= */
-
-/* Кнопка в форме комментария */
-.commentForm button,
-.commentFormEdit button {
-	background: #5c9ce6;
-	color: #ffffff;
-	border: none;
-	padding: 8px 16px;
-	border-radius: 8px;
-	font-size: 13px;
-	font-weight: 500;
-	font-family: inherit;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin-top: 8px;
-}
-
-.commentForm button:hover,
-.commentFormEdit button:hover {
-	background: #4a8fd6;
-	box-shadow: 0 2px 6px rgba(92, 156, 230, 0.3);
-}
-
-/* Кнопка "Удалить" комментария */
-.comment-menu {
-	max-width: 150px;
-	position: absolute;
-	top: 100%;
-	right: 0;
-	background: #ffffff;
-	border-radius: 8px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-	z-index: 100;
-	overflow: hidden;
-	padding: 4px 0;
-}
-
-.comment-menu button {
-	display: block;
-	width: 100%;
-	padding: 10px 16px;
-	background: transparent;
-	border: none;
-	text-align: left;
-	font-size: 14px;
-	font-family: inherit;
-	color: #e74c3c;
-	cursor: pointer;
-	transition: background 0.15s;
-}
-
-.comment-menu button:hover {
-	background: #fff5f5;
-}
-
-/* ================= ПОСТ: КАРТИНКА ================= */
-
-.post-image {
-	max-width: 100%;
-	border-radius: 8px;
-	margin-top: 10px;
-}
-
-/* ================= ПУСТАЯ ЛЕНТА ================= */
-
-.no-posts {
-	width: 100%;
-	padding: 40px 20px;
-	text-align: center;
-	font-size: 15px;
-	color: #818c99;
-	font-style: italic;
-}
-
-
-/*Файл не выбран*/
-.postForm input[type="file"] {
-	width: auto;
-	min-width: 300px;
-	color: #818c99;
-	background: transparent;
-	border: none;
-	padding: 10px 0;
-	margin-top: 12px;
-	font-size: 13px;
-	overflow: visible;
-}
-
-/* ================= ОКНО РЕДАКТИРОВАНИЯ КОММЕНТАРИЯ ================= */
-
-/* Основной контейнер */
-.commentEditForm {
-	background: #ffffff;
-	padding: 14px;
-	border-radius: 12px;
-	border: 1px solid #e7e8ec;
-	margin: 12px 0 16px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* Поле ввода (перебиваем inline-стили width/min-height) */
-.commentEditForm textarea {
-	width: 100% !important;
-	min-height: 80px !important;
-	padding: 10px 12px !important;
-	border: 1px solid #dfe2e8 !important;
-	border-radius: 8px !important;
-	font-size: 14px !important;
-	font-family: inherit !important;
-	line-height: 1.5 !important;
-	color: #2c3e50 !important;
-	background: #ffffff !important;
-	resize: vertical !important;
-	outline: none !important;
-	transition: border-color 0.2s, box-shadow 0.2s !important;
-	box-sizing: border-box !important;
-}
-
-.commentEditForm textarea:focus {
-	border-color: #5c9ce6 !important;
-	box-shadow: 0 0 0 2px rgba(92, 156, 230, 0.15) !important;
-}
-
-/* Обертка кнопок (перебиваем inline margin-top: 8px) */
-.commentEditForm > div {
-	display: flex !important;
-	gap: 10px !important;
-	margin-top: 10px !important;
-	flex-wrap: wrap;
-}
-
-/* Базовые стили для всех кнопок формы */
-.commentEditForm button {
-	padding: 8px 16px !important;
-	border-radius: 8px !important;
-	font-size: 14px !important;
-	font-weight: 500 !important;
-	font-family: inherit !important;
-	cursor: pointer !important;
-	transition: all 0.2s ease !important;
-	border: none !important;
-	outline: none !important;
-	line-height: 1.2 !important;
-}
-
-/* Кнопка "Сохранить" */
-.commentEditForm .save-btn {
-	background: #5c9ce6 !important;
-	color: #ffffff !important;
-}
-.commentEditForm .save-btn:hover {
-	background: #4a8fd6 !important;
-	box-shadow: 0 2px 6px rgba(92, 156, 230, 0.3) !important;
-}
-
-/* Кнопка "Отмена" */
-.commentEditForm .cancel-btn {
-	background: #f0f2f5 !important;
-	color: #2c3e50 !important;
-	border: 1px solid #dfe2e8 !important;
-}
-.commentEditForm .cancel-btn:hover {
-	background: #e4e5e8 !important;
-	border-color: #c4c8d0 !important;
-}
-
-/* === ПЕРЕМЕЩЕНИЕ КНОПОК ПОД ИМЯ (CSS-ONLY) === */
-
-/* 1. Делаем контейнер гибким с переносом */
-.userInfoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 20px 24px;
-    padding: 20px;
-}
-
-/* 2. "Растворяем" правый блок. Аватар и кнопки становятся прямыми детьми .userInfoContainer */
-.userInfoContainer > div:last-child {
-    display: contents;
-}
-
-/* 3. Левая часть (Имя, логин, дата) — идёт первой */
-.userInfoContainer > div:first-child {
-    flex: 1;
-    min-width: 280px;
-    order: 1;
-}
-
-/* 4. Аватар — идёт вторым (справа) */
-.userInfoContainer img {
-    order: 2;
-    width: 200px !important;
-    height: 200px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    flex-shrink: 0;
-    align-self: flex-start;
-
-    margin-bottom: 10px;
-}
-
-/* 5. Кнопки действий — идут третьими (под текстом) */
-.userInfoContainer .friend-btn,
-.userInfoContainer .complaint-btn,
-.userInfoContainer .admin-delete-btn {
-    order: 3;
-    width: 100%;
-    max-width: 280px;
-    margin: 0 !important; /* Сбрасываем старые отступы */
-    text-align: left;     /* Выравнивание текста внутри кнопок */
-}
-
-/* 6. Аккуратные отступы между кнопками */
-.userInfoContainer .friend-btn + *,
-.userInfoContainer .complaint-btn + *,
-.userInfoContainer .admin-delete-btn + * {
-    margin-top: 10px !important;
-}
-
-/* ========== ЕДИНЫЙ СТИЛЬ МЕНЮ "..." (ПОСТЫ И КОММЕНТАРИИ) ========== */
 .post-menu,
 .comment-menu {
     position: absolute !important;
@@ -1598,50 +238,349 @@ button.comments-toggle-btn:hover {
     animation: menuSlideDown 0.15s ease forwards;
 }
 
+/* Сброс стилей для всех кнопок внутри меню */
 .post-menu button,
-.comment-menu button {
-    display: block;
-    width: 100%;
-    padding: 8px 12px;
-    background: transparent;
-    border: none;
-    text-align: left;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: inherit;
-    color: #2c3e50;
-    cursor: pointer;
-    transition: background 0.15s;
+.post-menu .edit-btn,
+.post-menu .delete-btn,
+.comment-menu button,
+.comment-menu .edit-btn,
+.comment-menu .delete-btn {
+    display: block !important;
+    width: 100% !important;
+    padding: 10px 14px !important;
+    background: transparent !important;
+    border: none !important;
+    text-align: left !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+    cursor: pointer !important;
+    transition: background 0.15s !important;
 }
 
-/* Кнопка "Редактировать" */
+/* Кнопка "Редактировать" — СИНИЯ */
 .post-menu .edit-btn,
 .comment-menu .edit-btn,
 .comment-menu button:first-child {
-    color: #5c9ce6;
+    color: #5c9ce6 !important;
 }
 .post-menu .edit-btn:hover,
 .comment-menu .edit-btn:hover,
 .comment-menu button:first-child:hover {
-    background: #f5f6f8;
-    color: #4a8fd6;
+    background: #f0f7ff !important;
 }
 
-/* Кнопка "Удалить" */
+/* Кнопка "Удалить" — КРАСНАЯ */
 .post-menu .delete-btn,
 .comment-menu .delete-btn,
 .comment-menu button:last-child {
-    color: #e74c3c;
+    color: #e74c3c !important;
+    margin-top: 4px !important;
 }
 .post-menu .delete-btn:hover,
 .comment-menu .delete-btn:hover,
 .comment-menu button:last-child:hover {
-    background: #fff5f5;
-    color: #c0392b;
+    background: #fff5f5 !important;
 }
 
-/* Анимация появления */
 @keyframes menuSlideDown {
     from { opacity: 0; transform: translateY(-6px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Комментарии --- */
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.comment-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.comment-header-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+
+.comment-avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: #5c9ce6;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: bold; flex-shrink: 0; overflow: hidden;
+}
+.comment-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+.comment-author { font-weight: 600; font-size: 14px; color: #2c3e50; }
+.comment-time { font-size: 12px; color: #818c99; }
+
+.comment-content {
+    font-size: 14px; line-height: 1.5; color: #2c3e50;
+    word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap;
+    padding-left: 44px; width: 100%;
+}
+
+/* Форма комментария */
+.commentForm, .commentFormEdit {
+    display: flex; flex-direction: column; gap:4px; width: 100%; margin-top: 12px;
+    padding: 12px; background: #f8f9fa; border-radius: 8px;
+}
+.commentForm textarea, .commentFormEdit textarea {
+    width: 100%; min-height: 60px; padding: 10px; border: 1px solid #dfe2e5;
+    border-radius: 8px; font-size: 14px; resize: vertical; outline: none; font-family: inherit;
+}
+.commentForm textarea:focus, .commentFormEdit textarea:focus { border-color: #5c9ce6; }
+
+.commentForm button, .commentFormEdit button {
+    align-self: flex-end; padding: 8px 16px; background: #5c9ce6; color: #fff;
+    border: none; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+}
+
+/* 2. Делаем сами кнопки больше и заметнее */
+.commentFormEdit button,
+.commentForm button {
+    padding: 10px 24px !important; /* Увеличиваем размер кнопок (было меньше) */
+    font-size: 14px !important;    /* Чуть крупнее шрифт */
+    font-weight: 600 !important;   /* Текст жирнее */
+    margin-top: 8px !important;    /* Небольшой отступ от текста, чтобы не слипалось */
+    border-radius: 8px !important; /* Красивое скругление */
+    cursor: pointer;
+}
+.commentForm button:hover, .commentFormEdit button:hover { background: #4a8fd6; }
+
+/* Форма редактирования поста */
+.postFormEdit {
+    display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 12px;
+    padding: 16px; background: #f8f9fa; border-radius: 8px; border-top: 1px solid #e7e8ec;
+}
+
+.postFormEdit textarea {
+    width: 100%; min-height: 100px; padding: 12px; border: 1px solid #dfe2e8;
+    border-radius: 8px; font-size: 14px; resize: vertical; outline: none; font-family: inherit;
+}
+
+.postFormEdit > div:last-child { display: flex; gap: 10px; margin-top: 8px; }
+.postFormEdit .save-btn { padding: 8px 16px; background: #5c9ce6; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+.postFormEdit .cancel-btn { padding: 8px 16px; background: #e7e8ec; color: #2c3e50; border: none; border-radius: 8px; cursor: pointer; }
+.postFormEdit .remove-image-btn { padding: 6px 12px; background: #fff; color: #e74c3c; border: 1px solid #ffcdd2; border-radius: 6px; cursor: pointer; }
+
+/* --- Пустые состояния --- */
+.no-posts, .pageNotFound {
+    width: 100%; padding: 40px 20px; text-align: center;
+    font-size: 15px; color: #818c99; font-style: italic;
+}
+.pageNotFound { font-size: 24px; font-weight: 600; height: auto; min-height: 200px; display: flex; align-items: center; justify-content: center; }
+
+/* =========================================================
+   СТИЛИ ДЛЯ КНОПОК, СОЗДАВАЕМЫХ ЧЕРЕЗ JS (DIV / INNERHTML)
+   ========================================================= */
+
+/* 1. Базовый сброс для всех кнопок внутри динамических блоков */
+.post-menu button,
+.comment-menu button,
+.msg-menu button,
+.postFormEdit button,
+.commentForm button,
+.commentFormEdit button,
+.msgFormEdit button,
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn,
+.remove-image-btn {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    outline: none;
+    line-height: 1.2;
+}
+
+/* 2. Кнопки "Редактировать" / "Сохранить" */
+.edit-btn,
+.save-btn,
+.post-menu .edit-btn,
+.comment-menu .edit-btn,
+.msg-menu .edit-btn {
+    background: #5c9ce6;
+    color: #ffffff;
+}
+.edit-btn:hover, .save-btn:hover,
+.post-menu .edit-btn:hover, .comment-menu .edit-btn:hover, .msg-menu .edit-btn:hover {
+    background: #4a8fd6;
+}
+
+/* 3. Кнопки "Удалить" / "Удалить фото" */
+.delete-btn,
+.remove-image-btn,
+.post-menu .delete-btn,
+.comment-menu .delete-btn,
+.msg-menu .delete-btn {
+    background: #e74c3c;
+    color: #ffffff;
+}
+.delete-btn:hover, .remove-image-btn:hover,
+.post-menu .delete-btn:hover, .comment-menu .delete-btn:hover, .msg-menu .delete-btn:hover {
+    background: #c0392b;
+}
+
+/* 4. Кнопка "Отмена" */
+.cancel-btn,
+.postFormEdit .cancel-btn,
+.commentFormEdit .cancel-btn,
+.msgFormEdit .cancel-btn {
+    background: #e7e8ec;
+    color: #2c3e50;
+}
+.cancel-btn:hover,
+.postFormEdit .cancel-btn:hover,
+.commentFormEdit .cancel-btn:hover,
+.msgFormEdit .cancel-btn:hover {
+    background: #dfe2e8;
+}
+
+/* 5. fallback: если JS создаёт кнопки без классов внутри <div> */
+.post-menu > div > button,
+.comment-menu > div > button,
+.msg-menu > div > button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    background: transparent;
+    color: #2c3e50;
+}
+.post-menu > div > button:hover,
+.comment-menu > div > button:hover,
+.msg-menu > div > button:hover {
+    background: #f5f6f8;
+}
+
+/* Последняя кнопка в меню всегда "Удалить" → красная */
+.post-menu > div > button:last-child,
+.comment-menu > div > button:last-child,
+.msg-menu > div > button:last-child {
+    color: #e74c3c;
+}
+.post-menu > div > button:last-child:hover,
+.comment-menu > div > button:last-child:hover,
+.msg-menu > div > button:last-child:hover {
+    background: #fff5f5;
+}
+/* --- ФИКС: СТИЛИЗАЦИЯ КНОПКИ "..." И TEXTAREA --- */
+
+/* 1. Кнопка "..." (три точки) */
+/* Используем !important, чтобы убрать стандартную рамку браузера */
+.comment-menu-btn,
+.post-menu-btn,
+button[class*="menu-btn"] {
+    background: #edeef0 !important;
+    border: none !important;
+    color: #818c99 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    line-height: 1;
+}
+
+.comment-menu-btn:hover,
+.post-menu-btn:hover {
+    background: #e4e5e8 !important;
+    color: #2c3e50 !important;
+}
+
+/* 2. Текстовое поле ввода (Textarea) */
+/* Применяем стили ко всем textarea в комментариях и постах */
+.comment-content textarea,
+.post-content textarea,
+.commentForm textarea,
+.postForm textarea,
+.commentFormEdit textarea,
+.postFormEdit textarea,
+.commentEditForm textarea {
+    width: 100% !important;
+    min-height: 100px !important;
+    padding: 12px 16px !important;
+    border: 1px solid #dfe2e5 !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-family: inherit !important;
+    line-height: 1.5 !important;
+    color: #2c3e50 !important;
+    background: #ffffff !important;
+    resize: none !important; /* Убираем уголок изменения размера для чистоты */
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Состояние фокуса (когда пишем) */
+textarea:focus {
+    border-color: #5c9ce6 !important;
+    box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.15) !important;
+}
+
+textarea::placeholder {
+    color: #818c99 !important;
+}
+
+/* === ИСПРАВЛЕНИЕ ПЕРЕПОЛНЕНИЯ КОММЕНТАРИЕВ === */
+
+/* 1. Принудительный перенос текста внутри комментария */
+.comment-content,
+.comment-text,
+.comment-message {
+    word-break: break-word !important;       /* Разрывает длинные слова */
+    overflow-wrap: break-word !important;    /* Современный аналог */
+    white-space: pre-wrap !important;        /* Сохраняет пробелы, но переносит текст */
+    max-width: 100% !important;              /* Не шире родителя */
+    box-sizing: border-box !important;
+}
+
+/* 2. Ограничиваем ширину самого блока комментария */
+.comment-item {
+    max-width: 100% !important;
+    overflow: hidden !important;             /* Обрезает всё лишнее */
+}
+
+/* 3. На случай, если текст обернут в div или p внутри комментария */
+.comment-content > div,
+.comment-content > p,
+.comment-content > span {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+}
+/* --- Адаптивность профиля --- */
+@media (max-width: 768px) {
+    .userInfoContainer { flex-direction: column; gap: 16px; padding: 16px; }
+    .userInfoContainer img { width: 120px; height: 120px; }
+    .userName { font-size: 24px; }
+    .userLogin { font-size: 18px; }
+    .post-header, .post-content, .post-actions { padding-left: 12px; padding-right: 12px; }
+    .comment-content { padding-left: 0; }
 }

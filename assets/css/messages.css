@@ -310,6 +310,111 @@
     color: #5c9ce6;
 }
 
+/* ========== ФОРМА РЕДАКТИРОВАНИЯ СООБЩЕНИЯ ========== */
+
+.msgFormEdit {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    border: 1px solid #e7e8ec;
+}
+
+.msgFormEdit textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px 16px;
+    border: 1px solid #dfe2e8;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.msgFormEdit textarea:focus {
+    border-color: #5c9ce6;
+    box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.1);
+}
+
+/* Блок с файлом */
+.msgFormEdit > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.msgFormEdit input[type="file"] {
+    font-size: 13px;
+    color: #6f7885;
+}
+
+.msgFormEdit .remove-image-btn {
+    background: #ffebee;
+    color: #e74c3c;
+    border: 1px solid #ffcdd2;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.msgFormEdit .remove-image-btn:hover {
+    background: #ffcdd2;
+    border-color: #e74c3c;
+}
+
+/* Блок с кнопками — выровнен по левому краю */
+.msgFormEdit > div:last-child {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: center;
+}
+
+.msgFormEdit .save-btn {
+    background: #5c9ce6;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.msgFormEdit .save-btn:hover {
+    background: #4a8fd6;
+}
+
+.msgFormEdit .cancel-btn {
+    background: #e7e8ec;
+    color: #2c3e50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.msgFormEdit .cancel-btn:hover {
+    background: #dfe2e8;
+}
+
+.profile-actions button.secondary,
+.profile-actions a.secondary {
+    background-color: #edeef0;
+    color: #2c3e50;
+}
+
+
 /* ========== АДАПТИВНОСТЬ ========== */
 @media (max-width: 768px) {
     .msg, .message { max-width: 85%; margin: 0 8px 8px; }
