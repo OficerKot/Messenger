@@ -3,8 +3,11 @@ header('Content-Type: application/json');
 
 require_once '../../includes/init.php';
 
-
-$msg = $_POST['message'];
+$msg = trim($_POST['message'] ?? '');
+if (strlen($msg) > 5000) {
+    echo json_encode(['success' => false, 'error' => 'Сообщение слишком длинное (максимум 5000 символов)']);
+    exit();
+}
 $other_user_id = $_POST['other_user_id'];
 $sender_id = $_SESSION['id'];
 $sender = User::getUserById($sender_id, $db);

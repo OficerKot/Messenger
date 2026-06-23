@@ -32,6 +32,11 @@ class NotificationManager {
 
     
     public function create($receiver_id, $sender_id, $type, $message) {
+        if (strlen($message) > 5000) {
+            $message = substr($message, 0, 5000) . '...';
+        }
+    
+    
         $data = [
             'receiver_id' => $receiver_id,
             'sender_id' => $sender_id,

@@ -11,6 +11,13 @@ if (!isset($_SESSION['id'])) {
 }
 
 $message = $_POST['message'] ?? '';
+if (strlen($message) > 5000) {
+    echo json_encode(['success' => false, 'error' => 'Сообщение слишком длинное (максимум 5000 символов)']);
+    exit();
+}
+
+
+
 $wall_owner_id = $_POST['wall_owner_id'] ?? $_SESSION['id'];
 $author_id = $_SESSION['id']; 
 

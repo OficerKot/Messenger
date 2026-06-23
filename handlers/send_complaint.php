@@ -13,6 +13,12 @@ $target_user_id = intval($_POST['user_id']);
 $complain_type_id = intval($_POST['type'] ?? 1);
 $additional_message = trim($_POST['message'] ?? '');
 
+// ===== ПРОВЕРКА ДЛИНЫ =====
+if (strlen($additional_message) > 1000) {
+    echo json_encode(['success' => false, 'message' => 'Сообщение жалобы слишком длинное (максимум 1000 символов)']);
+    exit();
+}
+
 // Нельзя жаловаться на себя
 if ($sender_id == $target_user_id) {
     echo json_encode(['success' => false, 'message' => 'Нельзя пожаловаться на себя']);
