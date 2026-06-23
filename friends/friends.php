@@ -27,7 +27,7 @@ $all_users = User::getAllUsersExcept($id, $db);
 </head>
 
 <body>
-	<div class="menu-btn" id="menuBtn">&#9776;</div>
+
 
 	<?php include "../includes/header.php";?>
 
