@@ -46,7 +46,7 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 				<?php if(AccessHelper::HasAccessToWall($this_user, $other_user_id, $db)){ ?>
 				<form id="msg-form" class="msg-form">
 					<div style="display: flex; flex-direction: row;">
-						<textarea id="msgText" placeholder="Введите сообщение..."></textarea>
+						<textarea id="msgText" placeholder="Введите сообщение..." maxlength="5000"></textarea>
 						<button type="submit">Отправить</button>
 					</div>
 					<input id="msgImage" type="file">
