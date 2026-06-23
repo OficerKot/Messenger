@@ -2,7 +2,10 @@
 
 include "../includes/init.php";
 $wall_owner_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
-$wall_owner = User::getUserById($_GET['user_id'], $db);
+
+$wall_owner = User::getUserById($wall_owner_id, $db);
+
+
 	$editableFields = $wall_owner? $wall_owner->getEditableFields(): [];
 	$profile_img = $wall_owner? $wall_owner->get(UserField::AVATAR): 'baseimage.jpg';
 	$first_name = $wall_owner? $wall_owner->get(UserField::FIRST_NAME): 'Пользователь';
@@ -15,7 +18,7 @@ if ($wall_owner_id == 0) {
     exit;
 }
 
-$wall_owner = User::getUserById($wall_owner_id, $db);
+
 
 if (!$wall_owner) {
     ?>
@@ -127,68 +130,73 @@ if (isset($_SESSION['id'])) {
 							style="height: 200px; border-radius: 12px;">
 
 						<!-- ===== КНОПКИ ДЕЙСТВИЙ ===== -->
-						<?php if (isset($_SESSION['id']) && !$is_owner): ?>
-						<a href="../messages/messages.php?user_id=<?php echo $wall_owner_id; ?>"
-							class="friend-btn friends" disabled>
-							Отправить сообщение
-						</a>
-						<!-- АДМИН: показываем жалобы и кнопку удаления -->
-						<?php if ($is_admin): ?>
-						<?php if ($complaints_count > 0): ?>
-						<div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
-							<span style="color: #e74c3c; font-size: 14px;">
-								⚠ Жалоб на пользователя: <strong><?php echo $complaints_count; ?></strong>
-							</span>
-						</div>
-						<?php else: ?>
-						<div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
-							<span style="color: #818c99; font-size: 14px;">
-								✅ Жалоб нет
-							</span>
-						</div>
-						<?php endif; ?>
+                        <?php if (isset($_SESSION['id']) && !$is_owner): ?>
+                            
+                            <!-- Кнопка "Отправить сообщение" -->
+                            <a href="../messages/messages.php?user_id=<?php echo $wall_owner_id; ?>" 
+                            class="friend-btn" style="background-color: #5c9ce6; color: white; text-decoration: none; text-align: center;">
+                                💬 Отправить сообщение
+                            </a>
+                            
+                            <!-- АДМИН: показываем жалобы и кнопку удаления -->
+                            <?php if ($is_admin): ?>
+                                <?php if ($complaints_count > 0): ?>
+                                    <div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
+                                        <span style="color: #e74c3c; font-size: 14px;">
+                                            ⚠ Жалоб на пользователя: <strong><?php echo $complaints_count; ?></strong>
+                                        </span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="complaints-info" style="text-align: center; margin-bottom: 4px;">
+                                        <span style="color: #818c99; font-size: 14px;">
+                                            ✅ Жалоб нет
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
 
-						<button class="admin-delete-btn" data-user-id="<?php echo $wall_owner_id; ?>">
-							🗑 Удалить пользователя
-						</button>
+                                <button class="admin-delete-btn" data-user-id="<?php echo $wall_owner_id; ?>">
+                                    🗑 Удалить пользователя
+                                </button>
 
-						<!-- ОБЫЧНЫЙ ПОЛЬЗОВАТЕЛЬ: кнопки дружбы и жалобы -->
-						<?php else: ?>
+                            <!-- ОБЫЧНЫЙ ПОЛЬЗОВАТЕЛЬ: кнопки дружбы и жалобы -->
+                            <?php else: ?>
 
-						<?php if ($friendship_status == 'accepted'): ?>
-						<button class="friend-btn friends" disabled>
-							Вы друзья ✓
-						</button>
+                                <?php if ($friendship_status == 'accepted'): ?>
+                                    <!-- ✅ УЖЕ ДРУЗЬЯ → показываем кнопку "Удалить из друзей" -->
+                                    <button class="friend-btn remove-friend" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        ❌ Удалить из друзей
+                                    </button>
 
-						<?php elseif ($sent_request): ?>
-						<button class="friend-btn pending" disabled>
-							Заявка отправлена
-						</button>
+                                <?php elseif ($sent_request): ?>
+                                    <button class="friend-btn pending" disabled>
+                                        ⏳ Заявка отправлена
+                                    </button>
 
-						<?php elseif ($incoming_request): ?>
-						<button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
-							Принять заявку в друзья
-						</button>
+                                <?php elseif ($incoming_request): ?>
+                                    <button class="friend-btn accept-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        ✅ Принять заявку в друзья
+                                    </button>
 
-						<?php else: ?>
-						<button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
-							Добавить в друзья
-						</button>
-						<?php endif; ?>
+                                <?php else: ?>
+                                    <button class="friend-btn send-request" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        ➕ Добавить в друзья
+                                    </button>
+                                <?php endif; ?>
 
-						<!-- Кнопка жалобы -->
-						<button class="complaint-btn" data-user-id="<?php echo $wall_owner_id; ?>">
-							⚠ Пожаловаться
-						</button>
+                                <!-- Кнопка жалобы (всегда показывается, если не друзья) -->
+                                <?php if ($friendship_status != 'accepted'): ?>
+                                    <button class="complaint-btn" data-user-id="<?php echo $wall_owner_id; ?>">
+                                        ⚠ Пожаловаться
+                                    </button>
+                                <?php endif; ?>
 
-						<?php endif; ?>
+                            <?php endif; ?>
 
-						<?php elseif ($is_owner): ?>
-						<button class="friend-btn" style="background-color: #e7e8ec; color: #818c99; cursor: default;"
-							disabled>
-							Это ваш профиль
-						</button>
-						<?php endif; ?>
+                        <?php elseif ($is_owner): ?>
+                            <button class="friend-btn" style="background-color: #e7e8ec; color: #818c99; cursor: default;" disabled>
+                                Это ваш профиль
+                            </button>
+                        <?php endif; ?>
 					</div>
 
 				</div>

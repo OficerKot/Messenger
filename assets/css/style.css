@@ -1275,7 +1275,10 @@ h1 {
 		width: 100%;
 		max-width: 250px;
 	}
-}
+
+	.user-card {
+		padding: 12px 16px;
+	}
 
 .user-card {
 	padding: 12px 16px;
