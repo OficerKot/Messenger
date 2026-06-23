@@ -77,7 +77,7 @@ const MessageApi = {
       const result = await response.json();
 
       if (result.success) {
-        postView.removePost(postId);
+        messageView.removeMessage(msgId);
       } else {
         alert("Ошибка: " + result.error);
       }
@@ -89,7 +89,7 @@ const MessageApi = {
 
   async saveEditMsg(msgId, message, imagePath, removeImage) {
     const formData = new FormData();
-    formData.append("post_id", postId);
+    formData.append("msg_id", msgId);
     formData.append("message", message);
 
     if (removeImage) {
@@ -106,7 +106,7 @@ const MessageApi = {
       const result = await response.json();
 
       if (result.success) {
-        messageView.update(
+        messageView.updateMessage(
           msgId,
           result.message.message,
           result.message.image_path,

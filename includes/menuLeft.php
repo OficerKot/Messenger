@@ -28,14 +28,17 @@ session_start();
 				Лента
 			</a>
 		</li>
+		<!--
 		<li>
-			<a href="../messages/messages.php" style="
+			 <a href="../messages/chatList.php" style="
 				text-decoration: none;
 				display: block;
 				">
 				Чат
 			</a>
+		
 		</li>
+		-->
 		<li>
 
 			<a href="../friends/friends.php" style="

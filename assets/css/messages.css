@@ -4,8 +4,38 @@
 .msg-container {
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
-	align-items: start;
+	flex: 1;
+	/* ← вместо height: 100% */
+	overflow: hidden;
+	/* ← убрал overflow-y: auto */
+	background: #f5f5f5;
+	border-radius: 12px;
+	min-height: 0;
+	/* ← важно для flex */
+	box-sizing: border-box;
+}
+
+/* ===== СПИСОК СООБЩЕНИЙ ===== */
+.msg-list {
+	flex: 1;
+	/* ← занимает всё свободное место */
+	overflow-y: auto;
+	/* ← скроллится здесь! */
+	padding: 10px 0;
+	display: flex;
+	flex-direction: column;
+}
+
+/* ===== ФОРМА ===== */
+.msg-form {
+	flex-shrink: 0;
+	/* ← не сжимается */
+	background: white;
+	padding: 10px 16px;
+	border-top: 1px solid #ccc;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 
@@ -15,18 +45,6 @@
 	align-items: center;
 	margin: 16px;
 	height: 40px;
-}
-
-.msg-form {
-	display: flex;
-	flex-direction: column;
-	position: sticky;
-	background: white;
-	padding: 10px;
-	border-top: 1px solid #ccc;
-	display: flex;
-	gap: 10px;
-	z-index: 1000;
 }
 
 .msg-form textarea {

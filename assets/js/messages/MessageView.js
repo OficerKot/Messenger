@@ -31,7 +31,7 @@ class MessageView {
                     ${message.date}
                 </div>
                 <div class="msg-menu-wrapper">
-                    <button class="message-menu-btn" data-msg-id="${message.message_id}" data-can-edit="${message.can_edit || false}" data-can-delete="${message.can_delete || false}">
+                    <button class="message-menu-btn" data-msg-id="${message.message_id}" data-is_author="${message.is_author === true}">
                         ...
                     </button>
                 </div>
@@ -48,8 +48,11 @@ class MessageView {
             </div>`;
   }
 
-  showMessageActionsMenu(msgId, canEdit, canDelete) {
-    if (!canEdit && !canDelete) return;
+  showMessageActionsMenu(msgId, is_author) {
+    if (!is_author) {
+      console.log(is_author);
+      return;
+    }
 
     const existingMenu = document.getElementById(`menu-${msgId}`);
     if (existingMenu) {
@@ -57,23 +60,21 @@ class MessageView {
       return;
     }
 
-    document.querySelectorAll(".message-menu").forEach((menu) => menu.remove());
+    document.querySelectorAll(".msg-menu").forEach((menu) => menu.remove());
     const menu = document.createElement("div");
     menu.id = `menu-${msgId}`;
-    menu.classList.add("message-menu");
+    menu.classList.add("msg-menu");
 
     let buttonsHTML = "";
 
-    if (canEdit) {
+    if (is_author) {
       buttonsHTML +=
-        '<button class="edit-btn" data-msg-id="' +
+        '<button class="edit-btn" data-msgId="' +
         msgId +
         '">Редактировать</button>';
-    }
 
-    if (canDelete) {
       buttonsHTML +=
-        '<button class="delete-btn" data-msg-id="' +
+        '<button class="delete-btn" data-msgId="' +
         msgId +
         '">Удалить</button>';
     }
@@ -113,7 +114,7 @@ class MessageView {
     }, 0);
 
     const message = document.getElementById(msgId);
-    const wrapper = message.querySelector(".message-menu-wrapper");
+    const wrapper = message.querySelector(".msg-menu-wrapper");
     if (wrapper) {
       wrapper.appendChild(menu);
     }
@@ -226,9 +227,8 @@ class MessageView {
     document.querySelectorAll(".message-menu-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         const msgId = btn.dataset.msgId;
-        const canEdit = btn.dataset.canEdit === "true";
-        const canDelete = btn.dataset.canDelete === "true";
-        this.showMessageActionsMenu(msgId, canEdit, canDelete);
+        const is_author = btn.dataset.is_author;
+        this.showMessageActionsMenu(msgId, is_author);
       });
     });
   }

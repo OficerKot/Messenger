@@ -3,7 +3,10 @@ include '../includes/init.php';
 
 $other_user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 $other_user = $other_user_id? User::getUserById($other_user_id, $db): null;
-
+if(!$other_user){
+	header('chatList.php');
+	exit;
+}
 $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 ?>
 <!DOCTYPE html>
@@ -12,11 +15,8 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?php if ($other_user){ ?>
 	<title><?php echo $other_user->get(UserField::FIRST_NAME);?> <?php echo $other_user->get(UserField::LAST_NAME); ?>
 	</title>
-	<?php } 
-	else { ?><title>Сообщения</title> <?php } ?>
 
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/messages.css">
@@ -39,22 +39,29 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 			<div class="top-block">
 				<!-- Заполняется через js -->
 			</div>
-			<div class="center-panel1" id="messagesContainer">
+			<div class="msg-container">
+				<div class="msg-list" id="messagesContainer"></div>
 
+				<!--Форма для отправки сообщения -->
+
+				<?php if(AccessHelper::HasAccessToWall($this_user, $other_user_id, $db)){ ?>
+				<form id="msg-form" class="msg-form">
+					<div style="display: flex; flex-direction: row;">
+						<textarea id="msgText" placeholder="Введите сообщение..."></textarea>
+						<button type="submit">Отправить</button>
+					</div>
+					<input id="msgImage" type="file">
+
+				</form>
+				<?php }else{?>
+				<form class="msg-form">
+					<div style="display: flex; flex-direction: row;">
+						<textarea placeholder="Отправка сообщений недоступна" readonly disabled></textarea>
+						<button disabled>Отправить</button>
+					</div>
+				</form>
+				<?php } ?>
 			</div>
-
-			<!--Форма для отправки сообщения -->
-
-			<?php if(AccessHelper::HasAccessToWall($this_user, $other_user_id, $db)){ ?>
-			<form id="msg-form" class="msg-form">
-				<div style="display: flex; flex-direction: row;">
-					<textarea id="msgText" placeholder="Введите сообщение..."></textarea>
-					<button type="submit">Отправить</button>
-				</div>
-				<input id="msgImage" type="file">
-
-			</form>
-			<?php } ?>
 		</div>
 
 		<!-- Правая колонка -->

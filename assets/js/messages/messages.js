@@ -2,11 +2,11 @@ window.messageView = new MessageView();
 
 // ============ события PostView
 messageView.on("delete", (msgId) => {
-  MessageApi.onDeleteMessage(msgId);
+  MessageApi.deleteMsg(msgId);
 });
 
 messageView.on("edit", (msgId) => {
-  messageView.showPostEditForm(msgId, MessageApi.saveEditMsg);
+  messageView.showMsgEditForm(msgId, MessageApi.saveEditMsg);
 });
 
 // ==================================
