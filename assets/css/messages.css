@@ -1,123 +1,71 @@
-/** Личные сообщения **/
+/** ЛИЧНЫЕ СООБЩЕНИЯ — ОБНОВЛЁННЫЕ СТИЛИ **/
 
-
+/* Контейнер сообщений */
 .msg-container {
 	display: flex;
 	flex-direction: column;
-	flex: 1;
-	/* ← вместо height: 100% */
-	overflow: hidden;
-	/* ← убрал overflow-y: auto */
-	background: #f5f5f5;
+	justify-content: start;
+	align-items: start;
+	width: 100%;
+	padding: 0;
+}
+
+/* Список диалогов (если есть) */
+.dialogs-list {
+	width: 100%;
+	background: #ffffff;
 	border-radius: 12px;
-	min-height: 0;
-	/* ← важно для flex */
-	box-sizing: border-box;
+	overflow: hidden;
 }
 
-/* ===== СПИСОК СООБЩЕНИЙ ===== */
-.msg-list {
-	flex: 1;
-	/* ← занимает всё свободное место */
-	overflow-y: auto;
-	/* ← скроллится здесь! */
-	padding: 10px 0;
-	display: flex;
-	flex-direction: column;
-}
-
-/* ===== ФОРМА ===== */
-.msg-form {
-	flex-shrink: 0;
-	/* ← не сжимается */
-	background: white;
-	padding: 10px 16px;
-	border-top: 1px solid #ccc;
+/* Отдельное сообщение */
+.msg {
+	background: #ffffff;
+	width: 100%;
+	border-bottom: 1px solid #e7e8ec;
+	padding: 16px 20px;
+	transition: background 0.15s;
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
-}
-
-
-.msg-img {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 16px;
-	height: 40px;
-}
-
-.msg-form textarea {
-	resize: none;
-	min-height: 60px;
-
-	width: 100%;
-}
-
-
-.msg-form-edit textarea {
-	resize: none;
-	min-height: 150px;
-
-	width: 100%;
-}
-
-.msg-form textarea {
-	resize: none;
-	width: 100%;
-}
-
-.msg-menu-wrapper {
-	position: relative;
-}
-
-.no-msg {
-	width: 100%;
-	height: 150px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 16px;
-	font-style: italic;
-
-}
-
-.msg {
-	background: #ffffff;
-	width: 95%;
-	border-bottom: 1px solid #e7e8ec;
-	padding: 16px 20px;
-	transition: background 0.1s;
 }
 
 .msg:hover {
 	background: #fafbfc;
 }
 
-
+/* Шапка сообщения */
 .msg-header {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	margin-bottom: 12px;
+	margin-bottom: 4px;
 }
-
 
 .msg-avatar {
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
-	background: #e6e6e6;
+	background: #5c9ce6;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: white;
-	font-weight: bold;
+	font-weight: 600;
+	font-size: 14px;
+	flex-shrink: 0;
+	overflow: hidden;
+}
+
+.msg-avatar img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .msg-author {
 	font-weight: 600;
-	font-size: 14px;
+	font-size: 15px;
 	color: #2c3e50;
 }
 
@@ -127,24 +75,57 @@
 	margin-left: auto;
 }
 
+/* Контент сообщения (пузырь) */
 .msg-content {
 	font-size: 14px;
-	line-height: 1.5;
+	line-height: 1.6;
 	color: #2c3e50;
-	margin-bottom: 12px;
+	margin: 0;
+	padding: 10px 14px;
+	background: #f0f2f5;
+	border-radius: 12px;
+	max-width: 85%;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	align-self: flex-start;
+}
+
+/* Сообщение от текущего пользователя (справа) */
+.msg.own .msg-content {
+	background: #5c9ce6;
+	color: #ffffff;
+	align-self: flex-end;
+	border-bottom-right-radius: 4px;
+}
+
+/* Сообщение от другого пользователя (слева) */
+.msg.other .msg-content {
+	background: #f0f2f5;
+	color: #2c3e50;
+	align-self: flex-start;
+	border-bottom-left-radius: 4px;
 }
 
 .msg-content img {
-	width: 100%;
+	max-width: 100%;
+	border-radius: 8px;
+	margin-top: 8px;
+	display: block;
 }
 
-
+/* Действия с сообщением */
 .msg-actions {
 	display: flex;
-	gap: 24px;
-	margin-top: 12px;
-	padding-top: 8px;
+	gap: 16px;
+	margin-top: 4px;
+	padding-top: 6px;
 	border-top: 1px solid #e7e8ec;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+.msg:hover .msg-actions {
+	opacity: 1;
 }
 
 .msg-action {
@@ -154,9 +135,237 @@
 	font-size: 13px;
 	color: #818c99;
 	cursor: pointer;
-	transition: color 0.1s;
+	transition: color 0.15s;
 }
 
 .msg-action:hover {
 	color: #5c9ce6;
+}
+
+/* Форма отправки сообщений */
+.msg-form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px 20px;
+	background: #ffffff;
+	border-top: 1px solid #e7e8ec;
+	position: sticky;
+	bottom: 0;
+	z-index: 100;
+}
+
+.msg-form > div:first-child {
+	display: flex;
+	gap: 12px;
+	align-items: flex-end;
+}
+
+.msg-form textarea {
+	flex: 1;
+	resize: none;
+	min-height: 60px;
+	max-height: 150px;
+	padding: 12px 16px;
+	border: 1px solid #dfe2e8;
+	border-radius: 12px;
+	font-size: 14px;
+	font-family: inherit;
+	line-height: 1.5;
+	color: #2c3e50;
+	background: #ffffff;
+	outline: none;
+	transition: all 0.2s;
+}
+
+.msg-form textarea:focus {
+	border-color: #5c9ce6;
+	box-shadow: 0 0 0 3px rgba(92, 156, 230, 0.1);
+}
+
+.msg-form textarea::placeholder {
+	color: #818c99;
+}
+
+.msg-form button {
+	padding: 12px 24px;
+	background: #5c9ce6;
+	color: #ffffff;
+	border: none;
+	border-radius: 12px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s;
+	white-space: nowrap;
+	height: fit-content;
+	align-self: flex-end;
+}
+
+.msg-form button:hover {
+	background: #4a8fd6;
+	box-shadow: 0 2px 8px rgba(92, 156, 230, 0.35);
+	transform: translateY(-1px);
+}
+
+.msg-form button:active {
+	transform: translateY(0);
+}
+
+.msg-form input[type="file"] {
+	font-size: 13px;
+	color: #6f7885;
+}
+
+.msg-form input[type="file"]::-webkit-file-upload-button {
+	padding: 8px 16px;
+	background: #edeef0;
+	border: 1px solid #dfe2e8;
+	border-radius: 8px;
+	font-size: 13px;
+	cursor: pointer;
+	margin-right: 12px;
+	transition: all 0.2s;
+}
+
+.msg-form input[type="file"]::-webkit-file-upload-button:hover {
+	background: #e4e5e8;
+}
+
+/* Пустой список сообщений */
+.no-msg {
+	width: 100%;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 15px;
+	color: #818c99;
+	font-style: italic;
+	gap: 8px;
+}
+
+.no-msg svg {
+	width: 48px;
+	height: 48px;
+	opacity: 0.3;
+}
+
+/* Индикатор онлайн/офлайн */
+.online-status {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	display: inline-block;
+	margin-left: 6px;
+}
+
+.online-status.online {
+	background: #4bb34b;
+	box-shadow: 0 0 0 2px #ffffff;
+}
+
+.online-status.offline {
+	background: #818c99;
+}
+
+/* Меню сообщения (три точки) */
+.msg-menu-wrapper {
+	position: relative;
+	margin-left: auto;
+}
+
+.msg-menu-btn {
+	background: transparent;
+	border: none;
+	color: #818c99;
+	font-size: 18px;
+	cursor: pointer;
+	padding: 4px 8px;
+	border-radius: 6px;
+	transition: all 0.2s;
+}
+
+.msg-menu-btn:hover {
+	background: #edeef0;
+	color: #2c3e50;
+}
+
+/* Выпадающее меню */
+.msg-menu {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	min-width: 160px;
+	background: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	z-index: 100;
+	overflow: hidden;
+	padding: 4px 0;
+}
+
+.msg-menu button {
+	display: block;
+	width: 100%;
+	padding: 10px 16px;
+	background: transparent;
+	border: none;
+	text-align: left;
+	font-size: 14px;
+	font-family: inherit;
+	color: #2c3e50;
+	cursor: pointer;
+	transition: background 0.15s;
+}
+
+.msg-menu button.delete-btn {
+	color: #e74c3c;
+}
+
+.msg-menu button:hover {
+	background: #f0f2f5;
+}
+
+.msg-menu button.delete-btn:hover {
+	background: #fff5f5;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+	.msg {
+		padding: 12px 16px;
+	}
+	
+	.msg-content {
+		max-width: 90%;
+		padding: 8px 12px;
+	}
+	
+	.msg-form {
+		padding: 12px 16px;
+	}
+	
+	.msg-form button {
+		padding: 10px 20px;
+	}
+}
+
+/* Скроллбар для контейнера сообщений */
+.center-panel1::-webkit-scrollbar {
+	width: 6px;
+}
+
+.center-panel1::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.center-panel1::-webkit-scrollbar-thumb {
+	background: #d1d1d1;
+	border-radius: 10px;
+}
+
+.center-panel1::-webkit-scrollbar-thumb:hover {
+	background: #b8b8b8;
 }

@@ -10,7 +10,7 @@ include '../classes/User.php';
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Мой сайт</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
-	<link rel="icon" type="image/x-icon" href="Olesya_iconka.ico">
+	<link rel="stylesheet" href="../assets/css/user_wall.css">
 </head>
 
 <body>
