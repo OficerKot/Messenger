@@ -5,8 +5,8 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-include "../includes/connectDB.php";
-include "../classes/User.php";
+include '../includes/init.php';
+
 
 
 $first_name = trim($_POST['first_name'] ?? '');
