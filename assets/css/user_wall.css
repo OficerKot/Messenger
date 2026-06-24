@@ -28,15 +28,18 @@
 }
 
 /* Аватар профиля */
+
 .userInfoContainer img {
-	order: 2;
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
-	object-fit: cover;
-	flex-shrink: 0;
-	align-self: flex-start;
-	margin-bottom: 10px;
+    order: 2;
+    width: 200px;
+    max-width: 100%;
+    height: 200px !important;        /* ← перебиваем height: auto из style.css */
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-bottom: 10px;
 }
 
 /* Текст профиля */
@@ -888,35 +891,62 @@ textarea::placeholder {
 	max-width: 100% !important;
 }
 
-/* --- Адаптивность профиля --- */
+
 @media (max-width: 768px) {
-	.userInfoContainer {
-		flex-direction: column;
-		gap: 16px;
-		padding: 16px;
-	}
+    .userInfoContainer {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+        align-items: center;           /* ← центрируем по горизонтали */
+        text-align: center;            /* ← центрируем текст */
+    }
 
-	.userInfoContainer img {
-		width: 120px;
-		height: 120px;
-	}
+    .userInfoContainer > div:first-child {
+        text-align: center;            /* ← центрируем текст внутри левой части */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-	.userName {
-		font-size: 24px;
-	}
+    .userInfoContainer img {
+        width: 150px !important;
+        height: 150px !important;
+        max-width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
 
-	.userLogin {
-		font-size: 18px;
-	}
+        align-self: center !important;  /* ← центрируем саму аватарку */
+    }
 
-	.post-header,
-	.post-content,
-	.post-actions {
-		padding-left: 12px;
-		padding-right: 12px;
-	}
+    .userName {
+        font-size: 24px;
+        text-align: center;
+    }
 
-	.comment-content {
-		padding-left: 0;
-	}
+    .userLogin {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .otherInfo {
+        text-align: center;
+    }
+
+    .userInfoContainer .friend-btn,
+    .userInfoContainer .complaint-btn,
+    .userInfoContainer .admin-delete-btn {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .post-header,
+    .post-content,
+    .post-actions {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .comment-content {
+        padding-left: 0;
+    }
 }
