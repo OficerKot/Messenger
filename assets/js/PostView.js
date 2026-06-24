@@ -6,12 +6,12 @@ class PostView {
         <div class="post" id="${post.post_id}"> 
             <div class="post-header">
                 <div>
-                    <img class="post-avatar" src="../assets/uploads/${post.author_avatar}">
+                    <img class="comment-avatar" src="../assets/uploads/${post.author_avatar}">
                 </div>
                 <div class="post-author">
                     ${post.author_first_name} ${post.author_last_name}
                 </div>
-                <div class="post-time">
+                <div class="post-date">
                     ${post.date}
                 </div>
 				<div class="post-menu-wrapper">

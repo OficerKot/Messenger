@@ -10,7 +10,7 @@ if (!isset($_SESSION['id'])) {
 $post_id = $_POST['post_id'] ?? 0;     
 $comment_text = trim($_POST['comment'] ?? '');
 
-// ✅ Проверка длины комментария
+// Проверка длины комментария
 if (strlen($comment_text) > 5000) {
     echo json_encode(['success' => false, 'error' => 'Комментарий слишком длинный (максимум 5000 символов)']);
     exit();

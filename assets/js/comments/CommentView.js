@@ -3,40 +3,38 @@ class CommentView {
 
   renderComment(comment) {
     return `
-            <div class="comment" id="comment-${comment.comment_id}">
-                <div class="comment-header">
-                    <img class="comment-avatar" src="../assets/uploads/${comment.author_avatar}">
-                    <div class="comment-author">
-                        ${comment.author_first_name} ${comment.author_last_name}
-                    </div>
-                    <div class="comment-time">
-                        ${comment.date}
-                    </div>
-                    ${
-                      comment.can_edit || comment.can_delete
-                        ? `
-                        <div class="comment-menu-wrapper">
-                            <button class="comment-menu-btn" data-comment-id="${comment.comment_id}" 
-                                data-can-edit="${comment.can_edit || false}" 
-                                data-can-delete="${comment.can_delete || false}">
-                                ...
-                            </button>
-                        </div>
-                    `
-                        : ""
-                    }
+        <div class="comment" id="comment-${comment.comment_id}">
+            <div class="comment-header">
+                <img class="comment-avatar" src="../assets/uploads/${comment.author_avatar}">
+                <div class="comment-author">
+                    ${comment.author_first_name} ${comment.author_last_name}
                 </div>
-                <div class="comment-content">
-                    ${comment.comment}
+                <div class="comment-time">
+                    ${comment.date}
                 </div>
+                ${
+                  comment.can_edit || comment.can_delete
+                    ? `
+                    <div class="comment-menu-wrapper">
+                        <button class="comment-menu-btn" data-comment-id="${comment.comment_id}" 
+                            data-can-edit="${comment.can_edit || false}" 
+                            data-can-delete="${comment.can_delete || false}">
+                            ...
+                        </button>
+                    </div>
+                `
+                    : ""
+                }
             </div>
-        `;
+            <div class="comment-content"></div>
+        </div>
+    `;
   }
 
+  // В методе renderAll нужно добавить установку текста
   renderAll(container, comments) {
     container.innerHTML = "";
 
-    // Комментарии в скроллящемся контейнере
     const commentsList = document.createElement("div");
     commentsList.className = "comments-list";
 
@@ -47,16 +45,41 @@ class CommentView {
       commentsList.appendChild(empty);
     } else {
       comments.forEach((comment) => {
-        commentsList.innerHTML += this.renderComment(comment);
+        // Создаем элемент через DOMParser или создаем вручную
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = this.renderComment(comment);
+        const commentEl = wrapper.firstElementChild;
+
+        // Устанавливаем текст комментария через textContent
+        const contentEl = commentEl.querySelector(".comment-content");
+        contentEl.textContent = comment.comment;
+
+        commentsList.appendChild(commentEl);
       });
     }
 
     container.appendChild(commentsList);
-
     this.showCommentForm(container, IS_LOGGED_IN);
     this.attachEvents();
   }
 
+  // Аналогично для add метода
+  add(container, comment) {
+    const commentsList = container.querySelector(".comments-list");
+    const empty = commentsList.querySelector(".no-comments");
+    if (empty) empty.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = this.renderComment(comment);
+    const commentEl = wrapper.firstElementChild;
+
+    // Устанавливаем текст комментария через textContent
+    const contentEl = commentEl.querySelector(".comment-content");
+    contentEl.textContent = comment.comment;
+
+    commentsList.appendChild(commentEl);
+    this.attachEvents();
+  }
   showCommentForm(container, isLoggedIn) {
     if (!isLoggedIn) {
       container.innerHTML += `
@@ -73,15 +96,6 @@ class CommentView {
         </form>
     `;
     container.innerHTML += formHTML;
-  }
-
-  add(container, comment) {
-    const commentsList = container.querySelector(".comments-list");
-    const empty = commentsList.querySelector(".no-comments");
-    if (empty) empty.remove();
-
-    commentsList.insertAdjacentHTML("beforeend", this.renderComment(comment));
-    this.attachEvents();
   }
 
   update(commentId, comment) {
