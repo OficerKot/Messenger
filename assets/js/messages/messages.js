@@ -26,7 +26,6 @@ if (msgForm) {
   msgForm.addEventListener("submit", async (e) => messageApi.sendMsg(e));
 }
 
-messageApi.startPolling(other_user_id);
 document.addEventListener("visibilitychange", function () {
   if (document.hidden) {
     console.log("Вкладка скрыта");

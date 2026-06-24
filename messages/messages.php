@@ -35,8 +35,8 @@ $this_user = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 
 		<!-- Центральная колонка (контент) -->
 		<div class="center-panel">
-			<div class="top-block">
-				<!-- Заполняется через js -->
+			<div class="top-block" style="align-self: center; display: flex; justify-content: center;">
+				<h>Ваш друг</h>
 			</div>
 			<div class="msg-container">
 				<div class="msg-list" id="messagesContainer"></div>

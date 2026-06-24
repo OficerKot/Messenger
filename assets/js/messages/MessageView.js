@@ -18,23 +18,22 @@ class MessageView {
   }
 
   renderMessage(message) {
+    const isAuthor = message.is_author === true;
+    const msgClass = isAuthor ? "own" : "other";
     return `
-        <div class="message" id="${message.message_id}"> 
-            <div class="message-header">
+        <div class="msg ${msgClass}" id="${message.message_id}"> 
+            <div class="msg-header">
                 <div>
                     <img class="msg-avatar" src="../../assets/uploads/${message.sender_avatar}">
                 </div>
-                <div class="message-sender">
+                <div class="msg-author">
                     ${message.sender_first_name} ${message.sender_last_name}
                 </div>
-                <div class="message-time">
+                <div class="msg-time">
                     ${message.date}
                 </div>
-				    <div class="message-is-read">
-                    ${message.is_read}
-                </div>
                 <div class="msg-menu-wrapper">
-                    <button class="message-menu-btn" data-msg-id="${message.message_id}" data-is_author="${message.is_author === true}">
+                    <button class="msg-menu-btn" data-msg-id="${message.message_id}" data-is_author="${isAuthor}">
                         ...
                     </button>
                 </div>
@@ -45,7 +44,7 @@ class MessageView {
   }
 
   createMessageContent(id, msg, img_path) {
-    return `<div class="message-content" id="content-${id}">
+    return `<div class="msg-content" id="content-${id}">
                 <div id="content-msg-${id}">${msg}</div>
                 ${img_path ? `<img src="../assets/uploads/${img_path}" class="msg-img">` : ""}
             </div>`;
@@ -240,7 +239,7 @@ class MessageView {
     container.addEventListener(
       "click",
       (this._handleMenuClick = (e) => {
-        const btn = e.target.closest(".message-menu-btn");
+        const btn = e.target.closest(".msg-menu-btn");
         if (!btn) return;
 
         const msgId = btn.dataset.msgId;
