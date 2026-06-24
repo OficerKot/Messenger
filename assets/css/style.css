@@ -1644,7 +1644,8 @@ body {
 	}
 
 	.header-fullwidth {
-		padding: 0 12px;
+		width: 95vw;
+		padding: 0 12px 0;
 		position: fixed;
 		z-index: 90;
 	}

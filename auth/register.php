@@ -9,6 +9,21 @@ $last_name = $_POST['last_name'] ?? '';
 $birthday_date = $_POST['birthday_date'] ?? '';
 
 
+if (strlen($login) > 50) {
+    echo json_encode(['success' => false, 'error' => 'Слишком длинный логин!']);
+    exit();
+}
+elseif (strlen($first_name) > 20)
+{
+    echo json_encode(['success' => false, 'error' => 'Слишком длинное имя!']);
+    exit();
+}
+elseif (strlen($last_name) > 20)
+{
+    echo json_encode(['success' => false, 'error' => 'Слишком длинная фамилия!']);
+    exit();
+}
+
 
 // Проверка на пустые поля
 if (empty($login) || empty($password) || empty($first_name) || empty($last_name)) {

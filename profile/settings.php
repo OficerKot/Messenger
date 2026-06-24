@@ -55,14 +55,14 @@ $editableFields = $user->getEditableFields();
 					<small>(Только друзья увидят ваши записи)</small>
 				</div>
 
-				<div>
+				<div class>
 					<label>Аватар:</label>
+					
+				</div>
 					<input type="file" name="avatar">
 					<img src="../assets/uploads/<?php echo $user->get(UserField::AVATAR); ?>" width="200">
-				</div>
 
-
-				<button type="submit">Сохранить</button>
+					<button class = "saveSettings" type="submit">Сохранить</button>
 			</form>
 
 			<div id="savingStatus"></div>

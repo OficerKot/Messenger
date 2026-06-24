@@ -178,6 +178,10 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
+.saveSettings{
+    max-width: 50%;
+}
+
 .profile-section h3 {
     font-size: 16px;
     font-weight: 600;
@@ -261,6 +265,8 @@
 .profile-actions a.secondary:hover {
     background-color: #e4e5e8;
 }
+
+
 
 /* АДАПТИВНОСТЬ */
 @media (max-width: 768px) {
