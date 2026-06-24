@@ -73,7 +73,7 @@ $all_users = User::getAllUsersExcept($id, $db);
 
 							<a class="friends-send-msg-btn"
 								href="../messages/messages.php?user_id=<?php echo $user_data['user_id']; ?>">Отправить
-								сообщение</button>
+								сообщение</a>
 						</div>
 					</a>
 					<?php endforeach; ?>
